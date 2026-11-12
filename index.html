@@ -1,0 +1,96 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Emir Savaş | Product Manager and Game Designer</title>
+  <meta name="description" content="Portfolio of Emir Savaş, a product manager and game designer working on casual and hybrid-casual mobile games.">
+  <meta name="theme-color" content="#171a23">
+  <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='14' fill='%23171a23'/%3E%3Ctext x='32' y='43' font-family='Arial' font-weight='700' font-size='30' text-anchor='middle' fill='%237fd0e6'%3ES%3C/text%3E%3C/svg%3E">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,500;12..96,700&family=Instrument+Sans:wght@400;500;600&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <a class="skip" href="#about" id="skip-link">Skip to content</a>
+
+  <header class="topbar">
+    <a class="brand" href="#top" id="brand">Emir Savaş</a>
+    <nav aria-label="Main">
+      <a href="#about">About</a>
+      <a href="#experience">Experience</a>
+      <a href="#cv">CV</a>
+      <a href="#projects">Projects</a>
+      <a href="#contact">Contact</a>
+    </nav>
+  </header>
+
+  <main id="top">
+    <section class="hero wrap" aria-labelledby="hero-name">
+      <h1 id="hero-name"></h1>
+      <p class="hero-role" id="hero-role"></p>
+      <p class="hero-intro" id="hero-intro"></p>
+      <p class="hero-links" id="hero-links"></p>
+    </section>
+
+    <section class="wrap section" id="about" aria-labelledby="about-h">
+      <h2 id="about-h"></h2>
+      <div class="about-grid">
+        <div class="prose" id="about-text"></div>
+        <dl class="facts" id="about-facts"></dl>
+      </div>
+    </section>
+
+    <section class="wrap section" id="experience" aria-labelledby="exp-h">
+      <h2 id="exp-h"></h2>
+      <ol class="timeline" id="timeline"></ol>
+    </section>
+
+    <section class="wrap section" id="cv" aria-labelledby="cv-h">
+      <h2 id="cv-h"></h2>
+      <div class="cv-block">
+        <div>
+          <p id="cv-text"></p>
+          <div class="btn-row">
+            <button type="button" class="btn btn-primary" id="cv-open"></button>
+            <a class="btn" id="cv-download" download></a>
+          </div>
+        </div>
+        <button type="button" class="cv-preview" id="cv-preview" aria-label="Read the CV"></button>
+      </div>
+    </section>
+
+    <section class="section projects" id="projects" aria-labelledby="proj-h">
+      <div class="wrap">
+        <h2 id="proj-h"></h2>
+        <p class="section-intro" id="proj-intro"></p>
+      </div>
+      <div class="banners" id="banners"></div>
+    </section>
+  </main>
+
+  <footer class="wrap section" id="contact" aria-labelledby="contact-h">
+    <h2 id="contact-h"></h2>
+    <p class="section-intro" id="contact-text"></p>
+    <p class="hero-links" id="contact-links"></p>
+    <p class="copyright" id="copyright"></p>
+  </footer>
+
+  <dialog id="cv-dialog" aria-label="CV">
+    <div class="dlg-bar">
+      <a class="btn btn-primary" id="cvd-download" download></a>
+      <button type="button" class="dlg-close dlg-close-inline" id="cvd-close"></button>
+    </div>
+    <div class="cv-pages" id="cv-pages"></div>
+  </dialog>
+
+  <dialog id="lightbox" aria-label="Image preview">
+    <button type="button" class="dlg-close" id="lb-close"></button>
+    <img id="lb-img" alt="">
+  </dialog>
+
+  <script src="content.js"></script>
+  <script src="script.js"></script>
+</body>
+</html>
