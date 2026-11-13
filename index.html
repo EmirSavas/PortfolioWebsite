@@ -11,7 +11,7 @@
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,500;12..96,700&family=Instrument+Sans:wght@400;500;600&display=swap" rel="stylesheet">
   <script>document.documentElement.classList.add("js");</script>
-  <link rel="stylesheet" href="style.css?v=4">
+  <link rel="stylesheet" href="style.css?v=5">
 </head>
 <body>
   <a class="skip" href="#about" id="skip-link">Skip to content</a>
@@ -86,17 +86,75 @@
       </div>
     </section>
 
-    <section class="wrap section" id="cv" aria-labelledby="cv-h">
-      <h2 id="cv-h"></h2>
-      <div class="cv-block">
-        <div>
-          <p id="cv-text"></p>
-          <div class="btn-row">
-            <button type="button" class="btn btn-primary" id="cv-open"></button>
-            <a class="btn" id="cv-download" download></a>
-          </div>
+    <section class="section cv-section" id="cv" aria-labelledby="cv-h">
+      <div class="cv-wrap">
+        <div class="cv-intro">
+          <p class="eyebrow" id="cv-eyebrow"></p>
+          <h2 id="cv-h"></h2>
+          <p class="cv-desc" id="cv-text"></p>
+          <div class="cv-actions" id="cv-actions"></div>
+          <ul class="cv-feats" id="cv-feats"></ul>
+          <svg class="cv-art" viewBox="0 0 380 252" aria-hidden="true" focusable="false">
+            <defs>
+              <linearGradient id="ca-board" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#6a58f0"/><stop offset="1" stop-color="#3b2fa8"/></linearGradient>
+              <linearGradient id="ca-pad" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#2d3790"/><stop offset="1" stop-color="#6d4dff"/></linearGradient>
+              <linearGradient id="ca-paper" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#f1edff"/><stop offset="1" stop-color="#cfc6ff"/></linearGradient>
+            </defs>
+            <ellipse cx="190" cy="236" rx="150" ry="11" fill="#05081a" opacity=".45"/>
+            <!-- book -->
+            <g transform="translate(8 150)">
+              <polygon points="0,30 100,30 112,18 12,18" fill="#7a5a4a"/>
+              <polygon points="12,18 112,18 112,4 12,4" fill="#efe3cf"/>
+              <polygon points="0,30 12,18 12,4 0,16" fill="#4a3a6a"/>
+              <polygon points="0,16 12,4 112,4 100,16" fill="#5a4a8a"/>
+              <polygon points="0,16 100,16 100,30 0,30" fill="#3d3170"/>
+              <polygon points="100,16 112,4 112,18 100,30" fill="#2c2358"/>
+            </g>
+            <!-- clipboard -->
+            <g transform="rotate(-7 170 105)">
+              <rect x="92" y="14" width="156" height="184" rx="18" fill="url(#ca-board)"/>
+              <polygon points="92,14 190,14 92,120" fill="#8c7bff" opacity=".35"/>
+              <rect x="106" y="40" width="128" height="146" rx="10" fill="url(#ca-paper)"/>
+              <polygon points="106,40 170,40 106,110" fill="#ffffff" opacity=".35"/>
+              <rect x="146" y="6" width="48" height="24" rx="8" fill="#2a2470"/>
+              <rect x="158" y="12" width="24" height="8" rx="4" fill="#33dbf0"/>
+              <circle cx="136" cy="76" r="15" fill="#5b4bd6"/>
+              <circle cx="136" cy="71" r="5.500" fill="#e9e4ff"/>
+              <path d="M126 86a10 7 0 0 1 20 0Z" fill="#e9e4ff"/>
+              <rect x="160" y="64" width="62" height="7" rx="3.500" fill="#7d6cf0"/>
+              <rect x="160" y="80" width="46" height="7" rx="3.500" fill="#a79bf7"/>
+              <rect x="118" y="108" width="104" height="6" rx="3" fill="#a79bf7"/>
+              <rect x="118" y="124" width="92" height="6" rx="3" fill="#bdb3fa"/>
+              <rect x="118" y="140" width="100" height="6" rx="3" fill="#bdb3fa"/>
+            </g>
+            <!-- pencil cup -->
+            <g transform="translate(262 92)">
+              <rect x="30" y="-4" width="9" height="62" rx="2" fill="#ff9d3a" transform="rotate(14 34 30)"/>
+              <polygon points="28,-4 41,-4 34.500,-18" fill="#f4d7a8" transform="rotate(14 34 30)"/>
+              <rect x="14" y="2" width="9" height="56" rx="2" fill="#33dbf0" transform="rotate(-10 18 30)"/>
+              <polygon points="12,2 25,2 18.500,-12" fill="#f4d7a8" transform="rotate(-10 18 30)"/>
+              <path d="M2 46h56l-6 70a8 8 0 0 1-8 7H16a8 8 0 0 1-8-7Z" fill="#3b2f9c"/>
+              <path d="M2 46h28l-9 77H16a8 8 0 0 1-8-7Z" fill="#5240c8"/>
+              <ellipse cx="30" cy="46" rx="28" ry="6" fill="#241c63"/>
+            </g>
+            <!-- controller -->
+            <g transform="translate(86 128)">
+              <path d="M40 8h120a42 42 0 0 1 40 30l12 38a24 24 0 0 1-23 31c-9 0-15-5-21-13l-9-12H61l-9 12c-6 8-12 13-21 13a24 24 0 0 1-23-31l12-38A42 42 0 0 1 40 8Z" fill="url(#ca-pad)"/>
+              <path d="M40 8h60L58 108l-27 8a24 24 0 0 1-23-31l12-38A42 42 0 0 1 40 8Z" fill="#8c7bff" opacity=".22"/>
+              <path d="M40 8h120a42 42 0 0 1 40 30l12 38a24 24 0 0 1-23 31c-9 0-15-5-21-13l-9-12H61l-9 12c-6 8-12 13-21 13a24 24 0 0 1-23-31l12-38A42 42 0 0 1 40 8Z" fill="none" stroke="#9e8dff" stroke-opacity=".5" stroke-width="2"/>
+              <rect x="42" y="44" width="40" height="13" rx="4" fill="#33dbf0"/>
+              <rect x="55.500" y="31" width="13" height="39" rx="4" fill="#33dbf0"/>
+              <circle cx="150" cy="38" r="7" fill="#ffd23f"/><circle cx="168" cy="52" r="7" fill="#ff6fae"/>
+              <circle cx="132" cy="52" r="7" fill="#33dbf0"/><circle cx="150" cy="66" r="7" fill="#8c7bff"/>
+              <rect x="92" y="52" width="14" height="5" rx="2.500" fill="#1b1550" opacity=".7"/><rect x="112" y="52" width="14" height="5" rx="2.500" fill="#1b1550" opacity=".7"/>
+            </g>
+            <!-- small geometric accents -->
+            <polygon points="344,40 360,70 328,70" fill="#33dbf0" opacity=".55"/>
+            <rect x="26" y="52" width="16" height="16" rx="3" fill="#8c7bff" opacity=".55" transform="rotate(20 34 60)"/>
+            <circle cx="318" cy="150" r="6" fill="#ff6fae" opacity=".6"/>
+          </svg>
         </div>
-        <button type="button" class="cv-preview" id="cv-preview" aria-label="Read the CV"></button>
+        <div class="cv-viewer-slot" id="cv-viewer-slot"></div>
       </div>
     </section>
   </main>
@@ -108,15 +166,8 @@
     <p class="copyright" id="copyright"></p>
   </footer>
 
-  <dialog id="cv-dialog" aria-label="CV">
-    <div class="dlg-bar">
-      <a class="btn btn-primary" id="cvd-download" download></a>
-      <button type="button" class="dlg-close dlg-close-inline" id="cvd-close"></button>
-    </div>
-    <div class="cv-pages" id="cv-pages"></div>
-  </dialog>
-
-  <script src="content.js?v=4"></script>
-  <script src="script.js?v=4"></script>
+  <script src="content.js?v=5"></script>
+  <script src="script.js?v=5"></script>
+  <script type="module" src="cv.js?v=5"></script>
 </body>
 </html>

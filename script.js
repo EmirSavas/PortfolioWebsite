@@ -132,17 +132,56 @@
     ]));
   });
 
-  $("cv-h").textContent = T.cv.heading;
-  $("cv-text").textContent = T.cv.text;
-  $("cv-open").textContent = T.cv.viewLabel;
-  $("cv-download").textContent = T.cv.downloadLabel;
-  $("cv-download").setAttribute("href", T.cv.file);
-  $("cvd-download").textContent = T.cv.downloadLabel;
-  $("cvd-download").setAttribute("href", T.cv.file);
-  $("cv-preview").appendChild(el("img", { src: T.cv.pages[0], alt: "First page of the CV", loading: "lazy" }));
-  T.cv.pages.forEach(function (src, i) {
-    $("cv-pages").appendChild(el("img", { src: src, alt: "CV page " + (i + 1), loading: "lazy" }));
+  /* ---------- CV: introduction column (the PDF viewer itself lives in cv.js) ---------- */
+  var C = T.cv;
+  function highlight(node, text, words) {
+    var list = (words || []).filter(Boolean).sort(function (x, y) { return y.length - x.length; });
+    if (!list.length) { node.textContent = text; return node; }
+    var re = new RegExp("(" + list.map(function (w) { return w.replace(/[.*+?^${}()|[\]\\]/g, "\\$&"); }).join("|") + ")", "ig");
+    text.split(re).forEach(function (part, i) {
+      if (i % 2) { node.appendChild(el("span", { class: "hl", text: part })); }
+      else if (part) { node.appendChild(document.createTextNode(part)); }
+    });
+    return node;
+  }
+  $("cv-eyebrow").textContent = C.eyebrow;
+  highlight($("cv-h"), C.heading, [C.headingHighlight]);
+  highlight($("cv-text"), C.text, C.highlights);
+
+  var DL = '<svg viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path class="dl-arrow" d="M12 4v11M7 11l5 5 5-5"/><path d="M4 20h16"/></svg>';
+  var EYE = '<svg viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M2 12s3.600-7 10-7 10 7 10 7-3.600 7-10 7S2 12 2 12Z"/><circle cx="12" cy="12" r="3"/></svg>';
+  var fileName = decodeURIComponent(C.file.split("/").pop());
+  var dl = el("a", { class: "cv-download", href: C.file, download: fileName }, [
+    svg(DL),
+    el("span", { class: "cv-dl-label", text: C.downloadLabel }),
+    el("span", { class: "cv-size", hidden: "" })
+  ]);
+  var read = el("button", { type: "button", class: "cv-read", id: "cv-read" }, [svg(EYE), document.createTextNode(C.readLabel)]);
+  $("cv-actions").appendChild(dl);
+  $("cv-actions").appendChild(read);
+  read.addEventListener("click", function () {
+    var v = $("cv-viewer");
+    if (!v) { return; }
+    v.scrollIntoView({ behavior: reduceMotion ? "auto" : "smooth", block: "start" });
+    window.setTimeout(function () { var f = v.querySelector(".v-scroll"); if (f) { f.focus({ preventScroll: true }); } }, reduceMotion ? 0 : 500);
   });
+
+  var FEAT = {
+    doc: '<svg viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M14 3H7a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2V8Z"/><path d="M14 3v5h5M9 13h6M9 17h6M9 9h2"/></svg>',
+    cursor: '<svg viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="m5 3 14 7-6 2-2 6Z"/><path d="m13 12 5 5"/></svg>',
+    printer: '<svg viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M7 9V3h10v6"/><rect x="3" y="9" width="18" height="8" rx="2"/><path d="M7 14h10v7H7Z"/></svg>'
+  };
+  C.features.forEach(function (f, i) {
+    var ico = el("span", { class: "feat-ico" });
+    ico.appendChild(svg(FEAT[f.icon] || FEAT.doc));
+    $("cv-feats").appendChild(el("li", { class: "feat" }, [
+      ico,
+      el("div", {}, [el("h3", { text: f.title }), el("p", { text: f.text })])
+    ]));
+  });
+  // entrance order: label, heading, text, buttons, features one by one, then the viewer
+  var cvSteps = [$("cv-eyebrow"), $("cv-h"), $("cv-text"), $("cv-actions")].concat(Array.prototype.slice.call($("cv-feats").children));
+  cvSteps.forEach(function (n, i) { n.classList.add("reveal"); n.style.setProperty("--d", i * 90 + "ms"); });
 
   $("proj-h").textContent = T.projects.heading;
   $("proj-intro").textContent = T.projects.intro;
@@ -153,60 +192,6 @@
   cl.appendChild(el("a", { class: "btn", href: P.linkedin, target: "_blank", rel: "noopener", text: T.ui.linkedin }));
   if (P.github) { cl.appendChild(el("a", { class: "btn", href: P.github, target: "_blank", rel: "noopener", text: T.ui.github })); }
   $("copyright").textContent = "© " + new Date().getFullYear() + " " + P.name;
-
-  /* ---------- Dialog helpers ---------- */
-  function lockScroll(on) { document.body.classList.toggle("lock", on); }
-
-  function openDialog(dlg, fromEl) {
-    dlg.showModal();
-    lockScroll(true);
-    if (reduceMotion || !fromEl || !dlg.animate) { return; }
-    var from = fromEl.getBoundingClientRect();
-    var to = dlg.getBoundingClientRect();
-    if (!to.width || !to.height) { return; }
-    var s = Math.max(0.3, Math.min(1, from.width / to.width));
-    var dx = (from.left + from.width / 2) - (to.left + to.width / 2);
-    var dy = (from.top + from.height / 2) - (to.top + to.height / 2);
-    dlg.animate(
-      [{ transform: "translate(" + dx + "px," + dy + "px) scale(" + s + ")", opacity: 0.2 }, { transform: "none", opacity: 1 }],
-      { duration: 340, easing: "cubic-bezier(.2,.8,.2,1)" }
-    );
-  }
-
-  function closeDialog(dlg, toEl) {
-    function done() { dlg.close(); }
-    if (reduceMotion || !toEl || !dlg.animate) { done(); return; }
-    var to = toEl.getBoundingClientRect();
-    var from = dlg.getBoundingClientRect();
-    var s = Math.max(0.3, Math.min(1, to.width / from.width));
-    var dx = (to.left + to.width / 2) - (from.left + from.width / 2);
-    var dy = (to.top + to.height / 2) - (from.top + from.height / 2);
-    var anim = dlg.animate(
-      [{ transform: "none", opacity: 1 }, { transform: "translate(" + dx + "px," + dy + "px) scale(" + s + ")", opacity: 0 }],
-      { duration: 240, easing: "ease-in" }
-    );
-    anim.onfinish = done;
-  }
-
-  function wireDialog(dlg, closeBtn, getReturnEl) {
-    closeBtn.addEventListener("click", function () { closeDialog(dlg, getReturnEl()); });
-    dlg.addEventListener("cancel", function (e) { e.preventDefault(); closeDialog(dlg, getReturnEl()); });
-    dlg.addEventListener("click", function (e) { if (e.target === dlg) { closeDialog(dlg, getReturnEl()); } });
-    dlg.addEventListener("close", function () {
-      var anyOpen = document.querySelector("dialog[open]");
-      if (!anyOpen) { lockScroll(false); }
-      var r = getReturnEl();
-      if (r && r.focus) { r.focus({ preventScroll: true }); }
-    });
-  }
-
-  var cvd = $("cv-dialog");
-  var cvReturn = null;
-  $("cvd-close").textContent = T.ui.close;
-  wireDialog(cvd, $("cvd-close"), function () { return cvReturn; });
-  function openCv(trigger) { cvReturn = trigger; openDialog(cvd, trigger); }
-  $("cv-open").addEventListener("click", function () { openCv($("cv-open")); });
-  $("cv-preview").addEventListener("click", function () { openCv($("cv-preview")); });
 
   /* ---------- Projects: stacked banners that open each project's own page ---------- */
   var PJ = T.projects;
@@ -235,7 +220,7 @@
   });
 
   /* ---------- Scroll reveal ---------- */
-  var revealEls = Array.prototype.slice.call(document.querySelectorAll(".section > h2, .sec-head, .core, .about-grid, .cv-block, .contact > *, .reveal"));
+  var revealEls = Array.prototype.slice.call(document.querySelectorAll(".section > h2, .sec-head, .core, .about-grid, .contact > *, .reveal"));
   revealEls.forEach(function (n) { n.classList.add("reveal"); });
   // stagger siblings that share a parent
   [$("expertise"), $("journey")].forEach(function (parent) {

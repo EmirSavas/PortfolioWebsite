@@ -139,12 +139,40 @@ window.SITE = {
     },
 
     cv: {
-      heading: "CV",
-      text: "Read it here, or download it as a PDF.",
-      viewLabel: "Read the CV",
-      downloadLabel: "Download PDF",
-      file: "assets/cv/EmirSavas_CV.pdf",
-      pages: ["assets/cv/cv-page-1.webp", "assets/cv/cv-page-2.webp"]
+      eyebrow: "Curriculum vitae",
+      heading: "My CV",
+      headingHighlight: "CV",
+      text: "A closer look at my experience, skills and background in game design and product management.",
+      highlights: ["game design", "product management"],
+      downloadLabel: "Download CV (PDF)",
+      readLabel: "View & Read Online",
+      file: "assets/cv/Emir_Savas_CV.pdf", // replace this file to update the CV. Page count and size are read from it automatically.
+      features: [
+        { icon: "doc", title: "Always up to date", text: "The latest version of my CV, including my current experience and skills." },
+        { icon: "cursor", title: "Interactive & selectable", text: "Read, select and copy text, and access clickable links directly from the document." },
+        { icon: "printer", title: "Print friendly", text: "Optimized for printing, sharing and offline reading." }
+      ],
+      viewer: {
+        label: "CV viewer",
+        loading: "Loading CV…",
+        error: "The CV could not be displayed here.",
+        errorHelp: "You can still download it as a PDF.",
+        pdf: "PDF",
+        pages: "pages",
+        page: "page",
+        prev: "Previous page",
+        next: "Next page",
+        zoomOut: "Zoom out",
+        zoomIn: "Zoom in",
+        fitWidth: "Fit to width",
+        fitPage: "Fit to page",
+        fullscreen: "Full screen",
+        exitFullscreen: "Exit full screen",
+        download: "Download CV (PDF)",
+        thumbs: "Show or hide page thumbnails",
+        thumbsLabel: "Page thumbnails",
+        goTo: "Go to page"
+      }
     },
 
     projects: {
