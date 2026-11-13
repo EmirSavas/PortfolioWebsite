@@ -4,8 +4,7 @@
   Edit the text on your site here. You do not need to touch index.html, style.css or script.js.
   Keep the quotes ("...") and commas exactly as they are, and change only the words inside the quotes.
 
-  Home page: change the hero text under "hero", the four skill boxes under "expertise",
-  and which three projects appear on the home page under "featured" > "ids".
+  Home page: change the hero text under "hero" and the four skill boxes under "expertise".
 
   To add a new project: copy a whole project block { ... } inside "projects", paste it after the last one
   (put a comma between blocks) and change the text and image paths.
@@ -44,7 +43,7 @@ window.SITE = {
       headlineAccent: "games.",
       text:
         "Game designer and product manager with experience in mobile games. I turn ideas into playable, engaging and data-informed experiences, from initial concept to live operations.",
-      primary: { label: "View Projects", href: "#featured" },
+      primary: { label: "View Projects", href: "#projects" },
       secondary: { label: "View CV", href: "#cv" },
       // Screenshots from your own games: left, center, right
       art: [
@@ -60,14 +59,6 @@ window.SITE = {
       { icon: "code", title: "Prototyping", text: "Unity, C#, rapid iteration" },
       { icon: "bars", title: "Data & Optimization", text: "KPI tracking, A/B testing, growth" }
     ],
-
-    featured: {
-      heading: "Selected Projects",
-      viewAll: { label: "View All Projects", href: "#projects" },
-      cardLink: "See details",
-      // ids of the projects below, in the order they should appear on the home page
-      ids: ["blast-defence", "lift-rush", "ember-born"]
-    },
 
     about: {
       heading: "About me",
@@ -157,8 +148,9 @@ window.SITE = {
     },
 
     projects: {
+      eyebrow: "My projects",
       heading: "Projects",
-      intro: "Mobile games I helped design and ship. Select a banner to see the details.",
+      intro: "Games I helped design and ship. Select a project to see my role and the details.",
       items: [
         {
           id: "blast-defence",
@@ -173,19 +165,23 @@ window.SITE = {
             "assets/projects/blast-defence/phone-3.webp"
           ],
           short: "A puzzle strategy game where color-matching shooters defeat incoming enemies.",
-          summary: "A hybrid-casual puzzle strategy game where players use color-matching shooters to defeat incoming enemies while solving a puzzle through strategic decisions.",
-          contributions: [
-            "Created the game concept, developed the initial prototype and prepared visual references to communicate the vision.",
-            "Designed all game levels and continuously developed new gameplay content.",
-            "Owned the project end to end, following the development process across all stages.",
-            "Analyzed KPIs and guided QA improvements and LiveOps initiatives based on performance insights."
-          ],
-          details: [], // longer paragraphs go here, one text per line
+          // Project page
+          overview: "A hybrid-casual puzzle strategy game where players use color-matching shooters to defeat incoming enemies while solving a puzzle through strategic decisions.",
+          highlights: ["puzzle strategy", "color-matching", "strategic decisions"], // words in the overview that are shown in cyan
+          gallery: [], // extra screenshots, e.g. "assets/projects/blast-defence/shot-4.webp". The three phone images are used when this is empty.
           video: "", // YouTube video id, optional
+          contributions: [
+            { icon: "bulb", title: "Game Concept", text: "Created the game concept and initial prototype.", highlights: ["game concept", "initial prototype"] },
+            { icon: "layers", title: "Level & Gameplay", text: "Designed all game levels and continuously developed new gameplay content.", highlights: ["all game levels", "new gameplay content"] },
+            { icon: "bars", title: "LiveOps & Data", text: "Analyzed KPIs and guided QA improvements and LiveOps initiatives based on performance insights.", highlights: ["KPIs", "LiveOps"] },
+            { icon: "people", title: "End-to-End Ownership", text: "Owned the project end to end, following the development process across all stages.", highlights: ["end to end"] }
+          ],
+          info: { platform: "Mobile (iOS / Android)", genre: "Puzzle, Strategy", model: "Hybrid-casual", role: "Game Designer, Product Manager" },
           links: [
             { label: "App Store", url: "" },
             { label: "Google Play", url: "" }
-          ]
+          ], // a link with an empty url is hidden automatically
+          tools: ["Unity", "Jira", "Tiled", "LiveOps", "A/B Testing", "Analytics"] // the Technologies & Tools box is hidden when this is empty
         },
         {
           id: "lift-rush",
@@ -200,19 +196,23 @@ window.SITE = {
             "assets/projects/lift-rush/phone-3.webp"
           ],
           short: "A color-matching puzzle where you run an elevator with limited capacity.",
-          summary: "A color-matching puzzle game where players manage an elevator, transport characters to their matching doors, and solve puzzles while managing limited capacity.",
+          // Project page
+          overview: "A color-matching puzzle game where players manage an elevator, transport characters to their matching doors, and solve puzzles while managing limited capacity.",
+          highlights: ["color-matching", "elevator", "limited capacity"], // words in the overview that are shown in cyan
+          gallery: [], // extra screenshots, e.g. "assets/projects/lift-rush/shot-4.webp". The three phone images are used when this is empty.
+          video: "", // YouTube video id, optional
           contributions: [
-            "Created the game concept and used AI-generated visuals to communicate and guide the development vision.",
-            "Designed all game levels, obstacles and new gameplay content.",
-            "Developed an AI-assisted level design tool to support and streamline level creation.",
-            "Took end-to-end ownership of the project, guiding the team and defining content direction."
+            { icon: "bulb", title: "Game Concept", text: "Created the game concept and used AI-generated visuals to communicate and guide the development vision.", highlights: ["game concept", "AI-generated visuals"] },
+            { icon: "layers", title: "Level & Gameplay", text: "Designed all game levels, obstacles and new gameplay content.", highlights: ["all game levels"] },
+            { icon: "code", title: "AI Level Tool", text: "Developed an AI-assisted level design tool to support and streamline level creation.", highlights: ["AI-assisted level design tool"] },
+            { icon: "people", title: "End-to-End Ownership", text: "Took end-to-end ownership of the project, guiding the team and defining content direction.", highlights: ["end-to-end ownership"] }
           ],
-          details: [],
-          video: "",
+          info: { platform: "Mobile", genre: "Puzzle", model: "Hybrid-casual", role: "Game Designer, Product Manager" },
           links: [
             { label: "App Store", url: "" },
             { label: "Google Play", url: "" }
-          ]
+          ], // a link with an empty url is hidden automatically
+          tools: [] // the Technologies & Tools box is hidden when this is empty
         },
         {
           id: "subway-flow",
@@ -227,18 +227,22 @@ window.SITE = {
             "assets/projects/subway-flow/phone-3.webp"
           ],
           short: "An idle management game about growing a metro station with color-matched passengers.",
-          summary: "An idle management game where players grow a metro station by transporting color-matched passengers and upgrading its operations.",
+          // Project page
+          overview: "An idle management game where players grow a metro station by transporting color-matched passengers and upgrading its operations.",
+          highlights: ["idle management", "color-matched passengers"], // words in the overview that are shown in cyan
+          gallery: [], // extra screenshots, e.g. "assets/projects/subway-flow/shot-4.webp". The three phone images are used when this is empty.
+          video: "", // YouTube video id, optional
           contributions: [
-            "Created the game concept and used AI-generated visuals to communicate the vision to the team.",
-            "Designed the in-game economy, progression, and all game levels and systems.",
-            "Took end-to-end ownership of the project, leading the team and directing development from concept to completion."
+            { icon: "bulb", title: "Game Concept", text: "Created the game concept and used AI-generated visuals to communicate the vision to the team.", highlights: ["game concept", "AI-generated visuals"] },
+            { icon: "bars", title: "Economy & Progression", text: "Designed the in-game economy, progression, and all game levels and systems.", highlights: ["in-game economy", "progression"] },
+            { icon: "people", title: "End-to-End Ownership", text: "Took end-to-end ownership of the project, leading the team and directing development from concept to completion.", highlights: ["end-to-end ownership"] }
           ],
-          details: [],
-          video: "",
+          info: { platform: "Mobile", genre: "Idle, Management", model: "Hybrid-casual", role: "Game Designer, Product Manager" },
           links: [
             { label: "Gameplay video", url: "" },
             { label: "CPI video", url: "" }
-          ]
+          ], // a link with an empty url is hidden automatically
+          tools: [] // the Technologies & Tools box is hidden when this is empty
         },
         {
           id: "royal-words",
@@ -253,19 +257,23 @@ window.SITE = {
             "assets/projects/royal-words/phone-3.webp"
           ],
           short: "A casual crossword game where you place matching object icons into the grid.",
-          summary: "A casual word puzzle game where players solve crosswords by placing matching object icons into the correct positions.",
+          // Project page
+          overview: "A casual word puzzle game where players solve crosswords by placing matching object icons into the correct positions.",
+          highlights: ["word puzzle", "crosswords", "object icons"], // words in the overview that are shown in cyan
+          gallery: [], // extra screenshots, e.g. "assets/projects/royal-words/shot-4.webp". The three phone images are used when this is empty.
+          video: "", // YouTube video id, optional
           contributions: [
-            "Improved the overall game design and introduced new monetization features.",
-            "Designed all game levels, shaping the puzzle progression and gameplay experience.",
-            "Managed the development of a new game version alongside the existing one to support A/B testing.",
-            "Planned and executed LiveOps activities to improve player engagement."
+            { icon: "bulb", title: "Design & Monetization", text: "Improved the overall game design and introduced new monetization features.", highlights: ["game design", "monetization"] },
+            { icon: "layers", title: "Level Design", text: "Designed all game levels, shaping the puzzle progression and gameplay experience.", highlights: ["all game levels", "puzzle progression"] },
+            { icon: "flask", title: "A/B Testing", text: "Managed the development of a new game version alongside the existing one to support A/B testing.", highlights: ["A/B testing"] },
+            { icon: "bars", title: "LiveOps", text: "Planned and executed LiveOps activities to improve player engagement.", highlights: ["LiveOps"] }
           ],
-          details: [],
-          video: "",
+          info: { platform: "Mobile", genre: "Puzzle, Word", model: "Casual", role: "Game Designer, Product Manager" },
           links: [
             { label: "App Store", url: "" },
             { label: "Google Play", url: "" }
-          ]
+          ], // a link with an empty url is hidden automatically
+          tools: [] // the Technologies & Tools box is hidden when this is empty
         },
         {
           id: "move-it-all",
@@ -280,17 +288,21 @@ window.SITE = {
             "assets/projects/move-it-all/phone-3.webp"
           ],
           short: "A puzzle about fitting everyday items into suitcases before time runs out.",
-          summary: "A hybrid-casual puzzle game where players fit everyday items into suitcases before time runs out.",
+          // Project page
+          overview: "A hybrid-casual puzzle game where players fit everyday items into suitcases before time runs out.",
+          highlights: ["fit everyday items", "before time runs out"], // words in the overview that are shown in cyan
+          gallery: [], // extra screenshots, e.g. "assets/projects/move-it-all/shot-4.webp". The three phone images are used when this is empty.
+          video: "", // YouTube video id, optional
           contributions: [
-            "Created and developed the game concept, shaping the core gameplay experience.",
-            "Used AI-generated visuals and content to communicate the vision and guide the team throughout development.",
-            "Took end-to-end ownership of the project, providing continuous feedback and steering its overall direction."
+            { icon: "bulb", title: "Game Concept", text: "Created and developed the game concept, shaping the core gameplay experience.", highlights: ["game concept", "core gameplay"] },
+            { icon: "layers", title: "AI-Assisted Vision", text: "Used AI-generated visuals and content to communicate the vision and guide the team throughout development.", highlights: ["AI-generated visuals"] },
+            { icon: "people", title: "End-to-End Ownership", text: "Took end-to-end ownership of the project, providing continuous feedback and steering its overall direction.", highlights: ["end-to-end ownership"] }
           ],
-          details: [],
-          video: "",
+          info: { platform: "Mobile", genre: "Puzzle", model: "Hybrid-casual", role: "Game Designer, Product Manager" },
           links: [
             { label: "Gameplay video", url: "" }
-          ]
+          ], // a link with an empty url is hidden automatically
+          tools: [] // the Technologies & Tools box is hidden when this is empty
         },
         {
           id: "ember-born",
@@ -305,17 +317,21 @@ window.SITE = {
             "assets/projects/ember-born/phone-3.webp"
           ],
           short: "An arcade idle survival game: keep the bonfire burning and defend the village at night.",
-          summary: "An arcade idle survival game where players gather resources to keep the village bonfire burning, develop their settlement, and defend against nightly enemy waves.",
+          // Project page
+          overview: "An arcade idle survival game where players gather resources to keep the village bonfire burning, develop their settlement, and defend against nightly enemy waves.",
+          highlights: ["arcade idle survival", "bonfire burning", "nightly enemy waves"], // words in the overview that are shown in cyan
+          gallery: [], // extra screenshots, e.g. "assets/projects/ember-born/shot-4.webp". The three phone images are used when this is empty.
+          video: "", // YouTube video id, optional
           contributions: [
-            "Created and developed the game concept, defining the core gameplay experience.",
-            "Used AI-generated visuals and content to guide the team and developed an AI-powered prototype to explore gameplay ideas.",
-            "Took end-to-end ownership of the project, providing continuous feedback and introducing new content throughout development."
+            { icon: "bulb", title: "Game Concept", text: "Created and developed the game concept, defining the core gameplay experience.", highlights: ["game concept", "core gameplay"] },
+            { icon: "code", title: "AI Prototype", text: "Used AI-generated visuals and content to guide the team and developed an AI-powered prototype to explore gameplay ideas.", highlights: ["AI-powered prototype"] },
+            { icon: "people", title: "End-to-End Ownership", text: "Took end-to-end ownership of the project, providing continuous feedback and introducing new content throughout development.", highlights: ["end-to-end ownership"] }
           ],
-          details: [],
-          video: "",
+          info: { platform: "Mobile", genre: "Arcade, Idle, Survival", model: "Hybrid-casual", role: "Game Designer, Product Manager" },
           links: [
             { label: "Gameplay video", url: "" }
-          ]
+          ], // a link with an empty url is hidden automatically
+          tools: [] // the Technologies & Tools box is hidden when this is empty
         }
       ]
     },
@@ -327,19 +343,29 @@ window.SITE = {
 
     ui: {
       close: "Close",
-      role: "What I did",
-      gallery: "Screenshots",
-      watch: "Gameplay video",
-      links: "Play or download",
       email: "Email",
       linkedin: "LinkedIn",
       github: "GitHub",
       skipToContent: "Skip to content",
-      expand: "See details",
       menu: "Menu",
       currentRole: "Current role",
-      collapse: "Hide details",
-      screens: "Screenshots"
+      viewProject: "View Project",
+      // project page
+      back: "Back to Projects",
+      overview: "Overview",
+      whatIDid: "What I did",
+      info: "Project info",
+      platform: "Platform",
+      genre: "Genre",
+      model: "Model",
+      role: "Role",
+      linksTitle: "Project links",
+      tools: "Technologies & tools",
+      prev: "Previous",
+      next: "Next",
+      playVideo: "Play video",
+      screenshot: "Screenshot",
+      notFound: "This project could not be found."
     }
   }
 };

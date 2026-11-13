@@ -11,7 +11,7 @@
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,500;12..96,700&family=Instrument+Sans:wght@400;500;600&display=swap" rel="stylesheet">
   <script>document.documentElement.classList.add("js");</script>
-  <link rel="stylesheet" href="style.css?v=3">
+  <link rel="stylesheet" href="style.css?v=4">
 </head>
 <body>
   <a class="skip" href="#about" id="skip-link">Skip to content</a>
@@ -49,14 +49,6 @@
       </div>
     </section>
 
-    <section class="wrap section featured" id="featured" aria-labelledby="featured-h">
-      <div class="section-head">
-        <h2 id="featured-h"></h2>
-        <a class="link-more" id="featured-all" href="#projects"></a>
-      </div>
-      <div class="fgrid" id="fgrid"></div>
-    </section>
-
     <section class="wrap section" id="about" aria-labelledby="about-h">
       <h2 id="about-h"></h2>
       <div class="about-grid">
@@ -83,10 +75,15 @@
 
     <section class="section projects" id="projects" aria-labelledby="proj-h">
       <div class="wrap">
-        <h2 id="proj-h"></h2>
-        <p class="section-intro" id="proj-intro"></p>
+        <header class="sec-head">
+          <p class="eyebrow" id="proj-eyebrow"></p>
+          <h2 id="proj-h"></h2>
+          <p class="sec-sub" id="proj-intro"></p>
+        </header>
       </div>
-      <div class="banners" id="banners"></div>
+      <div class="wrap">
+        <ul class="pbanners" id="banners"></ul>
+      </div>
     </section>
 
     <section class="wrap section" id="cv" aria-labelledby="cv-h">
@@ -119,12 +116,7 @@
     <div class="cv-pages" id="cv-pages"></div>
   </dialog>
 
-  <dialog id="lightbox" aria-label="Image preview">
-    <button type="button" class="dlg-close" id="lb-close"></button>
-    <img id="lb-img" alt="">
-  </dialog>
-
-  <script src="content.js?v=3"></script>
-  <script src="script.js?v=3"></script>
+  <script src="content.js?v=4"></script>
+  <script src="script.js?v=4"></script>
 </body>
 </html>

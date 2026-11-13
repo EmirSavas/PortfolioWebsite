@@ -1,0 +1,44 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Royal Words | Emir Savaş</title>
+  <meta name="description" content="A casual crossword game where you place matching object icons into the grid.">
+  <meta name="theme-color" content="#0a0e1f">
+  <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='14' fill='%230a0e1f'/%3E%3Ctext x='32' y='43' font-family='Arial' font-weight='700' font-size='30' text-anchor='middle' fill='%2333dbf0'%3ES%3C/text%3E%3C/svg%3E">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,500;12..96,700&family=Instrument+Sans:wght@400;500;600&display=swap" rel="stylesheet">
+  <script>document.documentElement.classList.add("js");</script>
+  <link rel="stylesheet" href="../../style.css?v=4">
+  <link rel="stylesheet" href="../../project.css?v=4">
+</head>
+<body class="project-page">
+  <a class="skip" href="#overview" id="skip-link">Skip to content</a>
+
+  <header class="topbar" id="topbar">
+    <a class="brand" href="../../#top" id="brand">
+      <svg class="brand-mark" viewBox="0 0 32 24" width="30" height="22" aria-hidden="true"><path d="M9 4h14a7 7 0 0 1 6.7 5l1.2 4.6A5 5 0 0 1 26 20c-1.6 0-2.7-.9-3.8-2.2L21 16.5H11l-1.2 1.3C8.700 19.100 7.600 20 6 20a5 5 0 0 1-4.900-6.400L2.300 9A7 7 0 0 1 9 4Z" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linejoin="round"/><path d="M9 9v5M6.500 11.500h5" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/><circle cx="21.500" cy="9.800" r="1.200" fill="currentColor"/><circle cx="24.500" cy="12.800" r="1.200" fill="currentColor"/></svg>
+      <span id="brand-name">Emir Savaş</span>
+    </a>
+    <button type="button" class="nav-toggle" id="nav-toggle" aria-expanded="false" aria-controls="nav">
+      <span class="nav-toggle-bars" aria-hidden="true"></span>
+      <span class="sr-only" id="nav-toggle-label">Menu</span>
+    </button>
+    <nav id="nav" aria-label="Main"></nav>
+  </header>
+
+  <main id="app"><noscript><p class="wrap">This page needs JavaScript. <a href="../../#projects">Back to Projects</a></p></noscript></main>
+
+  <dialog id="lightbox" aria-label="Image preview">
+    <button type="button" class="dlg-close" id="lb-close">Close</button>
+    <button type="button" class="lb-nav lb-prev" id="lb-prev" aria-label="Previous"></button>
+    <img id="lb-img" alt="">
+    <button type="button" class="lb-nav lb-next" id="lb-next" aria-label="Next"></button>
+  </dialog>
+
+  <script src="../../content.js?v=4"></script>
+  <script src="../../project.js?v=4"></script>
+</body>
+</html>
