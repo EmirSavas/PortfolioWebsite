@@ -243,13 +243,77 @@
 
   $("proj-h").textContent = T.projects.heading;
   $("proj-intro").textContent = T.projects.intro;
-  $("contact-h").textContent = T.contact.heading;
-  $("contact-text").textContent = T.contact.text;
-  var P = T.person, cl = $("contact-links");
-  cl.appendChild(el("a", { class: "btn btn-primary", href: "mailto:" + P.email, text: T.ui.email }));
-  cl.appendChild(el("a", { class: "btn", href: P.linkedin, target: "_blank", rel: "noopener", text: T.ui.linkedin }));
-  if (P.github) { cl.appendChild(el("a", { class: "btn", href: P.github, target: "_blank", rel: "noopener", text: T.ui.github })); }
-  $("copyright").textContent = "© " + new Date().getFullYear() + " " + P.name;
+  /* ---------- Contact ---------- */
+  var K = T.contact, P = T.person;
+  $("contact-eyebrow").textContent = K.eyebrow;
+  (function () {
+    var h = $("contact-h");
+    K.heading.split("\n").forEach(function (line, i) {
+      var row = el("span", { class: "ct-line" });
+      var at = line.indexOf(K.headingAccent);
+      if (at < 0) { row.textContent = line; }
+      else {
+        row.appendChild(document.createTextNode(line.slice(0, at)));
+        var acc = el("span", { class: "accent" });
+        var words = K.headingAccent.split(" "), last = words.pop();
+        if (words.length) { acc.appendChild(document.createTextNode(words.join(" ") + " ")); }
+        var u = el("span", { class: "ct-ul", text: last });
+        u.appendChild(svg('<svg viewBox="0 0 200 12" preserveAspectRatio="none" aria-hidden="true"><path pathLength="1" d="M3 8c30-5 62-6 95-4 35 2 62 2 98-2"/></svg>'));
+        acc.appendChild(u);
+        acc.appendChild(document.createTextNode(line.slice(at + K.headingAccent.length)));
+        row.appendChild(acc);
+      }
+      h.appendChild(row);
+    });
+  })();
+  $("contact-text").textContent = K.text;
+  $("ct-mail-link").href = "mailto:" + P.email;
+  $("ct-mail-label").textContent = K.emailLabel;
+  $("ct-mail-addr").textContent = P.email;
+  $("ct-copy").setAttribute("aria-label", K.copyLabel);
+  $("ct-copy").title = K.copyLabel;
+  $("ct-in").href = P.linkedin;
+  (function () {
+    var t = $("ct-in-text"), i = K.linkedinLabel.indexOf(K.linkedinBold);
+    if (i < 0) { t.textContent = K.linkedinLabel; return; }
+    t.appendChild(document.createTextNode(K.linkedinLabel.slice(0, i)));
+    t.appendChild(el("strong", { text: K.linkedinBold }));
+    t.appendChild(document.createTextNode(K.linkedinLabel.slice(i + K.linkedinBold.length)));
+  })();
+  // copy to clipboard, with a fallback for browsers that refuse the Clipboard API
+  (function () {
+    var btn = $("ct-copy"), box = $("ct-mail"), toast = $("ct-toast"), timer;
+    function say(msg, ok) {
+      toast.textContent = msg;
+      box.classList.toggle("copied", !!ok);
+      box.classList.add("toasting");
+      clearTimeout(timer);
+      timer = setTimeout(function () { box.classList.remove("toasting", "copied"); toast.textContent = ""; }, 2000);
+    }
+    function legacy() {
+      var ta = el("textarea", { readonly: "", "aria-hidden": "true" });
+      ta.value = P.email; ta.style.cssText = "position:fixed;top:0;left:0;opacity:0";
+      document.body.appendChild(ta); ta.select();
+      var ok = false;
+      try { ok = document.execCommand("copy"); } catch (e) { ok = false; }
+      document.body.removeChild(ta);
+      return ok;
+    }
+    btn.addEventListener("click", function () {
+      if (navigator.clipboard && navigator.clipboard.writeText) {
+        navigator.clipboard.writeText(P.email).then(function () { say(K.copiedLabel, true); }, function () {
+          if (legacy()) { say(K.copiedLabel, true); } else { say(K.copyFailedLabel, false); }
+        });
+      } else if (legacy()) { say(K.copiedLabel, true); } else { say(K.copyFailedLabel, false); }
+    });
+  })();
+  $("copyright").textContent = "\u00a9 " + new Date().getFullYear() + " " + P.name;
+  highlight($("ct-tag"), K.footerRight, [K.footerHighlight]);
+  // entrance: label, headline, text, email card, LinkedIn, then the illustration from the right
+  [$("contact-eyebrow"), $("contact-h"), $("contact-text"), $("ct-mail"), $("ct-in")].forEach(function (n, i) { n.classList.add("reveal"); n.style.setProperty("--d", i * 100 + "ms"); });
+  $("ct-art").classList.add("reveal"); $("ct-art").style.setProperty("--d", "250ms");
+  $("ct-art").classList.add("reveal"); 
+  [document.querySelector(".ct-foot")].forEach(function (n) { n.classList.add("reveal"); n.style.setProperty("--d", "300ms"); });
 
   /* ---------- Projects: stacked banners that open each project's own page ---------- */
   var PJ = T.projects;
@@ -278,7 +342,7 @@
   });
 
   /* ---------- Scroll reveal ---------- */
-  var revealEls = Array.prototype.slice.call(document.querySelectorAll(".section > h2, .sec-head, .core, .contact > *, .reveal"));
+  var revealEls = Array.prototype.slice.call(document.querySelectorAll(".section > h2, .sec-head, .core, .reveal"));
   revealEls.forEach(function (n) { n.classList.add("reveal"); });
   // stagger siblings that share a parent
   [$("expertise"), $("journey")].forEach(function (parent) {

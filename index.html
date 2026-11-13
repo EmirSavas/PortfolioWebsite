@@ -11,7 +11,7 @@
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,500;12..96,700&family=Instrument+Sans:wght@400;500;600&display=swap" rel="stylesheet">
   <script>document.documentElement.classList.add("js");</script>
-  <link rel="stylesheet" href="style.css?v=6">
+  <link rel="stylesheet" href="style.css?v=7">
 </head>
 <body>
   <a class="skip" href="#about" id="skip-link">Skip to content</a>
@@ -198,14 +198,116 @@
   </main>
 
   <footer class="wrap section contact" id="contact" aria-labelledby="contact-h">
-    <h2 id="contact-h"></h2>
-    <p class="section-intro" id="contact-text"></p>
-    <p class="btn-row" id="contact-links"></p>
-    <p class="copyright" id="copyright"></p>
+    <div class="ct-grid">
+      <div class="ct-copy">
+        <p class="eyebrow" id="contact-eyebrow"></p>
+        <h2 id="contact-h"></h2>
+        <p class="ct-text" id="contact-text"></p>
+        <div class="ct-mail" id="ct-mail">
+          <a class="ct-mail-main" id="ct-mail-link">
+            <span class="ct-mail-ico" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="5" width="18" height="14" rx="3"/><path d="m4 8 8 6 8-6"/></svg></span>
+            <span class="ct-mail-txt"><span class="ct-mail-label" id="ct-mail-label"></span><span class="ct-mail-addr" id="ct-mail-addr"></span></span>
+          </a>
+          <button type="button" class="ct-copy-btn" id="ct-copy">
+            <svg class="i-copy" viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="9" y="9" width="11" height="11" rx="3"/><path d="M5 15V7a3 3 0 0 1 3-3h8"/></svg>
+            <svg class="i-check" viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="2.400" stroke-linecap="round" stroke-linejoin="round"><path d="m5 12.500 4.500 4.500L19 7.500"/></svg>
+          </button>
+          <span class="ct-toast" id="ct-toast" role="status" aria-live="polite"></span>
+        </div>
+        <a class="ct-in" id="ct-in" target="_blank" rel="noopener">
+          <svg class="ct-in-ico" viewBox="0 0 24 24" aria-hidden="true"><rect width="24" height="24" rx="5" fill="#fff"/><path fill="#0a0e1f" d="M6.940 9.500h2.500V18h-2.500V9.500Zm1.250-4a1.450 1.450 0 1 1 0 2.900 1.450 1.450 0 0 1 0-2.900ZM10.900 9.500h2.400v1.160h.04c.34-.64 1.160-1.320 2.380-1.320 2.540 0 3.010 1.670 3.010 3.840V18h-2.500v-4.300c0-1.030-.02-2.350-1.430-2.350-1.440 0-1.650 1.120-1.650 2.280V18h-2.500V9.500Z"/></svg>
+          <span id="ct-in-text"></span>
+          <svg class="ct-in-arrow" viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 12h15M13 6l6 6-6 6"/></svg>
+        </a>
+      </div>
+      <div class="ct-art" id="ct-art" aria-hidden="false">
+        <svg class="ct-svg" viewBox="0 0 640 540" role="img" aria-label="A floating island with a castle under a purple moon, a paper airplane carrying an envelope toward it" focusable="false">
+          <defs>
+            <radialGradient id="ct-moon" cx="45%" cy="40%" r="60%"><stop offset="0" stop-color="#b57cf0"/><stop offset=".7" stop-color="#7d4fd6"/><stop offset="1" stop-color="#5a3bb8"/></radialGradient>
+            <radialGradient id="ct-halo" cx="50%" cy="50%" r="50%"><stop offset="0" stop-color="#8f5cf0" stop-opacity=".55"/><stop offset="1" stop-color="#8f5cf0" stop-opacity="0"/></radialGradient>
+            <linearGradient id="ct-trail" x1="0" y1="1" x2="1" y2="0"><stop offset="0" stop-color="#33dbf0" stop-opacity="0"/><stop offset="1" stop-color="#7ef0ff"/></linearGradient>
+            <linearGradient id="ct-path" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#fff0b3"/><stop offset="1" stop-color="#ffb347"/></linearGradient>
+            <linearGradient id="ct-mtn" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#2a2468"/><stop offset="1" stop-color="#14153a" stop-opacity="0"/></linearGradient>
+            <linearGradient id="ct-mtn2" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#101233" stop-opacity=".9"/><stop offset="1" stop-color="#101233" stop-opacity="0"/></linearGradient>
+            <filter id="ct-glow" x="-50%" y="-50%" width="200%" height="200%"><feGaussianBlur stdDeviation="5"/></filter>
+            <filter id="ct-glow-s" x="-50%" y="-50%" width="200%" height="200%"><feGaussianBlur stdDeviation="2.5"/></filter>
+          </defs>
+          <circle cx="448" cy="190" r="190" fill="url(#ct-halo)"/>
+          <g class="ct-stars" fill="#dfe6ff">
+            <circle cx="60" cy="70" r="1.6"/><circle cx="170" cy="40" r="1.2"/><circle cx="300" cy="90" r="1.4"/><circle cx="590" cy="60" r="1.6"/>
+            <circle cx="620" cy="250" r="1.2"/><circle cx="250" cy="150" r="1.1"/><circle cx="120" cy="190" r="1.3"/><circle cx="560" cy="130" r="1.1"/><circle cx="40" cy="300" r="1.1"/>
+          </g>
+          <circle cx="448" cy="190" r="104" fill="url(#ct-moon)"/>
+          <g fill="#6a45c4" opacity=".55"><circle cx="408" cy="150" r="14"/><circle cx="488" cy="220" r="20"/><circle cx="423" cy="235" r="9"/></g>
+          <g class="ct-cloud ct-cloud-a" fill="#3b2f86" opacity=".85"><ellipse cx="330" cy="130" rx="46" ry="12"/><ellipse cx="350" cy="118" rx="26" ry="14"/><ellipse cx="318" cy="123" rx="18" ry="10"/></g>
+          <g class="ct-cloud ct-cloud-b" fill="#34297a" opacity=".8"><ellipse cx="590" cy="215" rx="40" ry="10"/><ellipse cx="606" cy="205" rx="22" ry="12"/></g>
+          <path d="M0 440 90 380 150 410 250 340 340 420 430 360 520 410 600 350 640 380V540H0Z" fill="url(#ct-mtn)"/>
+          <path d="M0 480 70 440 140 470 230 420 330 480 430 430 520 470 640 420V540H0Z" fill="url(#ct-mtn2)"/>
+          <g class="ct-island">
+            <g transform="translate(8 0)">
+              <ellipse cx="400" cy="505" rx="130" ry="16" fill="#8f5cf0" opacity=".18" filter="url(#ct-glow)"/>
+              <polygon points="190,330 260,380 330,470 215,400" fill="#3a2e8c"/>
+              <polygon points="260,380 430,395 400,505 330,470" fill="#4a3bb0"/>
+              <polygon points="430,395 600,345 500,455 400,505" fill="#33267a"/>
+              <polygon points="215,400 330,470 290,455" fill="#2b2170"/>
+              <polygon points="500,455 600,345 585,420" fill="#2a2068"/>
+              <polygon points="190,330 330,290 520,300 600,345 430,395 260,380" fill="#2d7a66"/>
+              <polygon points="260,380 430,395 380,372 300,352" fill="#3a9478" opacity=".7"/>
+              <polygon points="300,320 350,255 430,238 500,272 545,322 430,372" fill="#4d4c9c"/>
+              <polygon points="350,255 430,238 400,300 330,300" fill="#6361b8" opacity=".6"/>
+              <polygon points="430,238 500,272 470,320 410,300" fill="#3c3a85" opacity=".7"/>
+              <g fill="#1f5a63">
+                <polygon points="258,320 270,282 282,320"/><polygon points="252,332 270,298 288,332"/>
+                <polygon points="545,310 558,268 571,310"/><polygon points="538,324 558,284 578,324"/>
+                <polygon points="490,285 500,250 510,285"/><polygon points="484,296 500,262 516,296"/>
+                <polygon points="320,345 330,308 340,345"/><polygon points="313,357 330,322 347,357"/>
+                <polygon points="215,352 226,318 237,352"/><polygon points="570,352 580,322 590,352"/>
+              </g>
+              <g fill="#3a3a8a"><polygon points="360,350 385,340 395,360 370,368"/><polygon points="470,355 495,348 500,366 478,372"/></g>
+              <path d="M418 262c-14 22 34 30 4 52-26 18-78 14-96 42-12 18-26 18-38 20" fill="none" stroke="#ffb347" stroke-width="12" stroke-linecap="round" opacity=".45" filter="url(#ct-glow-s)"/>
+              <path d="M418 262c-14 22 34 30 4 52-26 18-78 14-96 42-12 18-26 18-38 20" fill="none" stroke="url(#ct-path)" stroke-width="5" stroke-linecap="round"/>
+              <g class="ct-castle">
+                <rect x="395" y="168" width="46" height="96" fill="#5d5bb2"/>
+                <rect x="372" y="196" width="26" height="68" fill="#4f4da4"/><rect x="438" y="196" width="26" height="68" fill="#4f4da4"/>
+                <polygon points="368,196 385,162 402,196" fill="#3a3787"/><polygon points="434,196 451,162 468,196" fill="#3a3787"/>
+                <g fill="#5d5bb2"><rect x="395" y="160" width="8" height="10"/><rect x="410" y="160" width="8" height="10"/><rect x="425" y="160" width="8" height="10"/><rect x="438" y="160" width="6" height="10"/></g>
+                <g class="ct-win" fill="#ffd36b"><rect x="411" y="188" width="10" height="16" rx="5"/><rect x="379" y="214" width="8" height="12" rx="4"/><rect x="445" y="214" width="8" height="12" rx="4"/><rect x="417" y="222" width="7" height="11" rx="3.500"/></g>
+                <path class="ct-door" d="M408 264v-16a10 10 0 0 1 20 0v16Z" fill="#ffc86b"/>
+                <line x1="418" y1="168" x2="418" y2="112" stroke="#c9c5ff" stroke-width="2.500"/>
+                <g class="ct-flag"><path d="M418 114 480 118 470 140 418 138Z" fill="#1fb6d0"/><path d="M418 114 480 118 470 140 418 138Z" fill="none" stroke="#7ef0ff" stroke-width="1.500"/>
+                <g transform="translate(436 120) scale(.9)" fill="none" stroke="#e9fbff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 5h14a4 4 0 0 1 4 3.600l.6 4a2.600 2.600 0 0 1-4.600 2L17 12H7l-2 2.600a2.600 2.600 0 0 1-4.600-2l.6-4A4 4 0 0 1 5 5Z"/><path d="M7 7.500v3M5.500 9h3"/></g></g>
+              </g>
+            </g>
+          </g>
+          <g class="ct-swoosh"><path d="M40 410C120 400 220 360 262 300" fill="none" stroke="url(#ct-trail)" stroke-width="5" stroke-linecap="round"/><path d="M262 300C340 262 372 228 356 205" fill="none" stroke="url(#ct-trail)" stroke-width="2" stroke-linecap="round" opacity=".7"/></g>
+          <g class="ct-plane">
+            <g transform="translate(180 262)">
+              <polygon points="0,38 128,-2 60,70" fill="#8af0ff"/>
+              <polygon points="60,70 128,-2 50,34" fill="#33dbf0"/>
+              <polygon points="0,38 50,34 60,70" fill="#1fa3c4"/>
+              <polygon points="0,38 128,-2" fill="none"/>
+            </g>
+          </g>
+          <g class="ct-env" transform="translate(268 168)">
+            <rect class="ct-env-glow" x="-4" y="-4" width="72" height="52" rx="10" fill="#33dbf0" opacity=".45" filter="url(#ct-glow)"/>
+            <g transform="rotate(-12 32 22)">
+              <rect x="0" y="0" width="64" height="44" rx="8" fill="#0e1b3c" fill-opacity=".85" stroke="#7ef0ff" stroke-width="3"/>
+              <path d="m4 6 28 22L60 6" fill="none" stroke="#7ef0ff" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/>
+            </g>
+          </g>
+          <g class="ct-spark" stroke="#33dbf0" stroke-width="3" stroke-linecap="round"><path d="M272 122l12 14M292 108l4 18M258 148l16 4"/></g>
+          <g class="ct-bits" fill="#a98bff"><polygon points="330,470 342,476 334,488 322,482" opacity=".8"/><polygon points="560,470 570,474 564,486 554,480" opacity=".7"/><polygon points="600,418 608,422 603,432 595,427" opacity=".6"/></g>
+        </svg>
+      </div>
+    </div>
+    <div class="ct-foot">
+      <p class="ct-copyright" id="copyright"></p>
+      <p class="ct-tag" id="ct-tag"></p>
+    </div>
   </footer>
 
-  <script src="content.js?v=6"></script>
-  <script src="script.js?v=6"></script>
-  <script type="module" src="cv.js?v=6"></script>
+  <script src="content.js?v=7"></script>
+  <script src="script.js?v=7"></script>
+  <script type="module" src="cv.js?v=7"></script>
 </body>
 </html>

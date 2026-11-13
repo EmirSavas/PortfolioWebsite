@@ -392,8 +392,18 @@ window.SITE = {
     },
 
     contact: {
-      heading: "Contact",
-      text: "I am open to product manager and game designer roles. The quickest way to reach me is email."
+      eyebrow: "Get in touch",
+      heading: "Let’s build\nsomething great.",
+      headingAccent: "something great",
+      text: "Have a game idea, a project in mind, or an opportunity to discuss? I’d love to hear from you.",
+      emailLabel: "Email me",
+      copyLabel: "Copy email address",
+      copiedLabel: "Copied!",
+      copyFailedLabel: "Copy failed. Select the address instead.",
+      linkedinLabel: "Connect on LinkedIn",
+      linkedinBold: "LinkedIn",
+      footerRight: "Designed with curiosity. Built for players.",
+      footerHighlight: "Built for players."
     },
 
     ui: {
