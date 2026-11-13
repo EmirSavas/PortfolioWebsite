@@ -61,17 +61,44 @@ window.SITE = {
     ],
 
     about: {
-      heading: "About me",
-      paragraphs: [
-        "I am a product manager and game designer with a game development background. I studied Digital Game Design at Bahçeşehir University and have worked on hyper-casual and hybrid-casual mobile games since 2022, first as a developer building levels, gameplay systems and VFX in Unity, then as a designer and product manager who owns a game from concept to live operations.",
-        "My work covers game ideation, gameplay and level design, economy and progression, production planning, KPI tracking, A/B testing and LiveOps. I use AI tools to build quick prototypes and visual references, so a team can see an idea before production starts.",
-        "I also founded an independent studio, Promander Games, and currently work as a product manager at Ziylan Medya (3Dinoz Games)."
+      eyebrow: "Get to know me",
+      heading: "Beyond the Games",
+      headingAccent: "Games",
+      steps: [
+        {
+          title: "The background",
+          text: "I am a product manager and game designer with a background in game development. I studied Digital Game Design at Bahçeşehir University and have worked in mobile hyper-casual and hybrid-casual games since 2022, first as a Unity developer and later growing into a game designer and product manager.",
+          highlights: ["Digital Game Design", "Bahçeşehir University", "since 2022"]
+        },
+        {
+          title: "What I do",
+          text: "My work covers game ideation, gameplay and level design, economy and progression, production planning, KPI tracking, A/B testing and LiveOps. I also use AI tools to build quick prototypes and visual references, helping teams explore ideas before production begins.",
+          highlights: ["game ideation", "level design", "KPI tracking", "A/B testing", "LiveOps", "AI tools"]
+        },
+        {
+          title: "Beyond work",
+          text: "I also founded an independent studio, Promander Games, where I explore and develop original game ideas. I enjoy taking projects from the initial concept to production and continuously finding better ways to create engaging games.",
+          highlights: ["Promander Games"]
+        }
       ],
-      facts: [
-        { label: "Education", value: "Digital Game Design, Bahçeşehir University, 2018 to 2023" },
-        { label: "Tools", value: "Unity, Jira, Tiled, Unreal Engine 4" },
-        { label: "Skills", value: "Game ideation, prototyping, GDD creation, level design, KPI tracking, A/B testing, LiveOps, AI-assisted prototyping" }
-      ]
+      glance: {
+        heading: "At a glance",
+        educationLabel: "Education",
+        education: { title: "Digital Game Design", school: "Bahçeşehir University", years: "2018 – 2023" },
+        toolkitLabel: "Toolkit",
+        toolkit: ["Unity", "Jira", "Tiled", "Unreal Engine 4"],
+        expertiseLabel: "Expertise",
+        expertise: ["Game Ideation", "Prototyping", "GDD Creation", "Level Design", "KPI Tracking", "A/B Testing", "LiveOps", "AI-Assisted Prototyping"]
+      },
+      currently: { label: "Currently", role: "Product Manager", company: "Ziylan Medya (3Dinoz Games)" },
+      how: {
+        label: "How I work",
+        items: [
+          { icon: "bolt", title: "Prototype Early", text: "Turn ideas into playable versions quickly." },
+          { icon: "layers", title: "Think in Systems", text: "Design features that fit the bigger picture." },
+          { icon: "people", title: "Build for Players", text: "Create engaging, satisfying and lasting experiences." }
+        ]
+      }
     },
 
     experience: {

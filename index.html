@@ -11,7 +11,7 @@
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,500;12..96,700&family=Instrument+Sans:wght@400;500;600&display=swap" rel="stylesheet">
   <script>document.documentElement.classList.add("js");</script>
-  <link rel="stylesheet" href="style.css?v=5">
+  <link rel="stylesheet" href="style.css?v=6">
 </head>
 <body>
   <a class="skip" href="#about" id="skip-link">Skip to content</a>
@@ -49,11 +49,49 @@
       </div>
     </section>
 
-    <section class="wrap section" id="about" aria-labelledby="about-h">
-      <h2 id="about-h"></h2>
-      <div class="about-grid">
-        <div class="prose" id="about-text"></div>
-        <dl class="facts" id="about-facts"></dl>
+    <section class="wrap section about-section" id="about" aria-labelledby="about-h">
+      <header class="sec-head ab-head">
+        <p class="eyebrow" id="about-eyebrow"></p>
+        <h2 id="about-h"></h2>
+        <svg class="ab-spark" viewBox="0 0 48 40" aria-hidden="true"><path d="M6 30 20 24M14 8l10 10M34 4l-4 16"/></svg>
+      </header>
+      <div class="ab-grid">
+        <ol class="ab-steps" id="about-steps"></ol>
+        <div class="ab-side">
+          <section class="ab-panel glance" aria-labelledby="gl-h">
+            <h3 class="ab-panel-h" id="gl-h"></h3>
+            <div class="glance-list" id="glance-list"></div>
+          </section>
+          <section class="ab-panel now" aria-labelledby="now-h">
+            <p class="now-label" id="now-h"><span class="now-dot" aria-hidden="true"></span><span id="now-label"></span></p>
+            <p class="now-role" id="now-role"></p>
+            <svg class="now-art" viewBox="0 0 200 150" aria-hidden="true" focusable="false">
+              <defs>
+                <linearGradient id="na-top" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#8f7bff"/><stop offset="1" stop-color="#5a46e8"/></linearGradient>
+                <linearGradient id="na-left" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#4a3bd0"/><stop offset="1" stop-color="#2a2290"/></linearGradient>
+                <linearGradient id="na-right" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#6c58f2"/><stop offset="1" stop-color="#3b2fb0"/></linearGradient>
+              </defs>
+              <g stroke="#33dbf0" stroke-opacity=".28" stroke-width="1" fill="none">
+                <path d="M10 128 90 150 200 118M40 118 120 140M70 108 150 130M100 98 180 118M0 140l60-20M30 150 100 124M70 150 140 128"/>
+              </g>
+              <polygon points="100,28 150,48 100,68 50,48" fill="url(#na-top)"/>
+              <polygon points="50,48 100,68 100,128 50,106" fill="url(#na-left)"/>
+              <polygon points="150,48 100,68 100,128 150,106" fill="url(#na-right)"/>
+              <path d="M100 28 150 48 100 68 50 48Z M50 48v58l50 22 50-22V48M100 68v60" fill="none" stroke="#a79bff" stroke-opacity=".6" stroke-width="1.5" stroke-linejoin="round"/>
+              <g transform="translate(112 74) skewY(-24) scale(1 1.02)" fill="none" stroke="#e9e4ff" stroke-width="3" stroke-linecap="round" stroke-linejoin="round">
+                <path d="M6 12h22a9 9 0 0 1 8.600 6.400l1.800 6.600a5 5 0 0 1-8.800 4.200L27 24H11l-3 5.200A5 5 0 0 1-0.800 25l1.800-6.600A9 9 0 0 1 6 12Z" transform="scale(.9)"/>
+                <path d="M11 17v6M8 20h6" transform="scale(.9)"/>
+              </g>
+              <polygon points="168,22 182,28 168,34 154,28" fill="#8f7bff"/><polygon points="154,28 168,34 168,48 154,42" fill="#4a3bd0"/><polygon points="182,28 168,34 168,48 182,42" fill="#6c58f2"/>
+              <polygon points="28,34 38,38 28,42 18,38" fill="#8f7bff"/><polygon points="18,38 28,42 28,52 18,48" fill="#4a3bd0"/><polygon points="38,38 28,42 28,52 38,48" fill="#6c58f2"/>
+              <polygon points="150,104 160,108 150,112 140,108" fill="#8f7bff"/><polygon points="140,108 150,112 150,122 140,118" fill="#4a3bd0"/><polygon points="160,108 150,112 150,122 160,118" fill="#6c58f2"/>
+            </svg>
+          </section>
+        </div>
+      </div>
+      <div class="ab-how" id="about-how" role="group" aria-labelledby="how-label">
+        <p class="how-label eyebrow" id="how-label"></p>
+        <ul class="how-list" id="how-list"></ul>
       </div>
     </section>
 
@@ -166,8 +204,8 @@
     <p class="copyright" id="copyright"></p>
   </footer>
 
-  <script src="content.js?v=5"></script>
-  <script src="script.js?v=5"></script>
-  <script type="module" src="cv.js?v=5"></script>
+  <script src="content.js?v=6"></script>
+  <script src="script.js?v=6"></script>
+  <script type="module" src="cv.js?v=6"></script>
 </body>
 </html>
