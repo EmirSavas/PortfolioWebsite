@@ -363,8 +363,8 @@
   var bar = $("topbar");
   var sectionMap = [
     { id: "top", nav: "#top" },
-    { id: "about", nav: "#about" }, { id: "experience", nav: "#experience" },
-    { id: "projects", nav: "#projects" }, { id: "cv", nav: "#cv" }, { id: "contact", nav: "#contact" }
+    { id: "about", nav: "#about" }, { id: "projects", nav: "#projects" },
+    { id: "experience", nav: "#experience" }, { id: "cv", nav: "#cv" }, { id: "contact", nav: "#contact" }
   ];
   function setCurrent(href) {
     navLinks.forEach(function (a) {
