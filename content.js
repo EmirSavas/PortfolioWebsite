@@ -84,49 +84,67 @@ window.SITE = {
     },
 
     experience: {
+      eyebrow: "Career journey",
       heading: "Experience",
+      text: "A path through game development, product design and building games.",
       items: [
         {
           role: "Product Manager",
           company: "Ziylan Medya (3Dinoz Games)",
-          dates: "February 2026 to present",
+          dates: "February 2026 – Present",
+          current: true,
+          tags: ["Game Design", "Product Planning", "Analytics", "LiveOps"],
           summary:
             "Manage casual and hybrid-casual mobile games across game design, product planning, analytics and team coordination. Present game concepts and GDDs, build AI-assisted prototypes, set up production pipelines, run sprints in Jira, track KPIs, run A/B tests and plan LiveOps."
         },
         {
           role: "Founder",
           company: "Promander Games",
-          dates: "March 2025 to February 2026",
+          dates: "March 2025 – February 2026",
+          tags: ["Studio Building", "Game Development"],
           summary: "Founded an independent studio making original PC and mobile games, and took projects from first concept to production."
         },
         {
           role: "Freelance Game Designer",
           company: "Self-employed",
-          dates: "November 2023 to February 2025",
+          dates: "November 2023 – February 2025",
+          tags: ["GDD", "Prototyping", "Core Loops"],
           summary:
             "Designed games for multiple clients: GDDs, mechanics and core loops, Unity prototypes, and original game and board game concepts."
         },
         {
           role: "Product Manager",
           company: "Perwella",
-          dates: "June 2023 to November 2023",
+          dates: "June 2023 – November 2023",
+          tags: ["Product Operations", "E-commerce"],
           summary: "Managed B2B and B2C product operations on e-commerce marketplaces, including launches, pricing, inventory and promotions."
         },
         {
           role: "Game Developer",
           company: "Midquest Games",
-          dates: "May 2022 to January 2023",
+          dates: "May 2022 – January 2023",
+          tags: ["Unity", "Gameplay Systems", "VFX"],
           summary:
             "Built levels and reusable gameplay systems in Unity for hyper-casual and hybrid-casual games, optimized mobile performance, and created shaders, VFX and animations."
         },
         {
           role: "Game Designer and Developer (internship)",
           company: "Fernvaille",
-          dates: "October 2021 to January 2022",
+          dates: "October 2021 – January 2022",
+          tags: ["Unreal Engine 4", "Game Design", "Enemy AI"],
           summary:
             "Designed content for a Battle Royale survival game and built a third-person action prototype in Unreal Engine 4, with character locomotion, animation and enemy AI using the Environment Query System."
         }
-      ]
+      ],
+      core: {
+        heading: "Core experience",
+        items: [
+          { icon: "bulb", title: "Game Design", text: "Mechanics, levels, systems and gameplay experience." },
+          { icon: "layers", title: "Product Management", text: "Roadmaps, prioritization, analytics and team coordination." },
+          { icon: "code", title: "Game Development", text: "Unity, C#, prototyping and feature development." },
+          { icon: "bars", title: "Production & LiveOps", text: "Release planning, LiveOps, A/B testing and growth." }
+        ]
+      }
     },
 
     cv: {
@@ -319,6 +337,7 @@ window.SITE = {
       skipToContent: "Skip to content",
       expand: "See details",
       menu: "Menu",
+      currentRole: "Current role",
       collapse: "Hide details",
       screens: "Screenshots"
     }

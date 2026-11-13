@@ -27,6 +27,7 @@
   }
 
   var ARROW = '<svg width="16" height="16" viewBox="0 0 16 16" aria-hidden="true"><path d="M3 8h10M9 4l4 4-4 4" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>';
+  var CALENDAR = '<svg width="16" height="16" viewBox="0 0 16 16" aria-hidden="true"><rect x="2" y="3" width="12" height="11" rx="2" fill="none" stroke="currentColor" stroke-width="1.5"/><path d="M2 6.500h12M5.500 1.500v3M10.500 1.500v3" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg>';
   var CHEVRON = '<svg width="16" height="16" viewBox="0 0 16 16" aria-hidden="true"><path d="M3 6l5 5 5-5" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>';
 
   /* Small animated icons for the expertise strip. Animations live in style.css. */
@@ -133,12 +134,30 @@
     $("about-facts").appendChild(el("div", {}, [el("dt", { text: f.label }), el("dd", { text: f.value })]));
   });
 
-  $("exp-h").textContent = T.experience.heading;
-  T.experience.items.forEach(function (it) {
-    $("timeline").appendChild(el("li", { class: "reveal" }, [
-      el("div", { class: "tl-head" }, [el("span", { class: "tl-role", text: it.role }), el("span", { class: "tl-dates", text: it.dates })]),
-      el("p", { class: "tl-company", text: it.company }),
-      el("p", { class: "tl-summary", text: it.summary })
+  /* ---------- Experience: career journey ---------- */
+  var X = T.experience;
+  $("exp-eyebrow").textContent = X.eyebrow;
+  $("exp-h").textContent = X.heading;
+  $("exp-sub").textContent = X.text;
+  X.items.forEach(function (it) {
+    var tags = el("ul", { class: "jc-tags" });
+    (it.tags || []).forEach(function (t) { tags.appendChild(el("li", { text: t })); });
+    var meta = el("div", { class: "jc-meta" });
+    if (it.current) { meta.appendChild(el("span", { class: "jc-pill", text: T.ui.currentRole })); }
+    meta.appendChild(el("span", { class: "jc-date" }, [svg(CALENDAR), document.createTextNode(it.dates)]));
+    var card = el("div", { class: "jcard" + (it.current ? " is-current" : "") }, [
+      el("div", { class: "jc-main" }, [el("h3", { class: "jc-role", text: it.role }), el("p", { class: "jc-company", text: it.company }), tags]),
+      el("div", { class: "jc-side" }, [meta, el("p", { class: "jc-text", text: it.summary })])
+    ]);
+    $("journey").appendChild(el("li", { class: "jitem reveal" + (it.current ? " is-current" : "") }, [card]));
+  });
+  $("core-h").textContent = X.core.heading;
+  X.core.items.forEach(function (x) {
+    var ico = el("span", { class: "exp-ico" });
+    ico.appendChild(svg(ICONS[x.icon] || ICONS.bulb));
+    $("core-list").appendChild(el("li", { class: "exp-item" }, [
+      ico,
+      el("div", {}, [el("div", { class: "exp-title", text: x.title }), el("p", { class: "exp-text", text: x.text })])
     ]));
   });
 
@@ -367,10 +386,10 @@
   }
 
   /* ---------- Scroll reveal ---------- */
-  var revealEls = Array.prototype.slice.call(document.querySelectorAll(".section > h2, .section-head, .about-grid, .cv-block, .contact > *, .reveal"));
+  var revealEls = Array.prototype.slice.call(document.querySelectorAll(".section > h2, .section-head, .sec-head, .core, .about-grid, .cv-block, .contact > *, .reveal"));
   revealEls.forEach(function (n) { n.classList.add("reveal"); });
   // stagger siblings that share a parent
-  [$("expertise"), $("fgrid"), $("timeline")].forEach(function (parent) {
+  [$("expertise"), $("fgrid"), $("journey")].forEach(function (parent) {
     Array.prototype.forEach.call(parent.children, function (c, i) { c.style.setProperty("--d", Math.min(i, 5) * 80 + "ms"); });
   });
   if ("IntersectionObserver" in window && !reduceMotion) {
@@ -405,6 +424,20 @@
     setCurrent(current);
   }
 
+  /* ---------- Career journey: the line fills in as you scroll, nodes light up ---------- */
+  var journey = $("journey");
+  var jitems = Array.prototype.slice.call(journey.children);
+  function updateJourney() {
+    if (jitems.length < 2) { return; }
+    var first = jitems[0], last = jitems[jitems.length - 1];
+    var lh = last.offsetTop - first.offsetTop;
+    var fill = reduceMotion ? lh : Math.max(0, Math.min(lh, window.innerHeight * 0.72 - journey.getBoundingClientRect().top - first.offsetTop));
+    journey.style.setProperty("--lh", lh + "px");
+    journey.style.setProperty("--p", lh ? (fill / lh).toFixed(4) : "1");
+    jitems.forEach(function (li) { li.classList.toggle("reached", li.offsetTop - first.offsetTop <= fill + 1); });
+  }
+  window.addEventListener("load", updateJourney);
+
   /* ---------- Parallax (transform only, one frame per scroll or pointer event) ---------- */
   var hero = $("top");
   var ticking = false, px = 0, py = 0;
@@ -413,6 +446,7 @@
     var y = window.scrollY;
     bar.classList.toggle("scrolled", y > 8);
     updateCurrent();
+    updateJourney();
     if (!reduceMotion && y < 1400) {
       hero.style.setProperty("--sy", y.toFixed(1));
       hero.style.setProperty("--px", px.toFixed(1));

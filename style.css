@@ -290,17 +290,105 @@ p { margin: 0 0 1rem; }
 .facts dt { font-family: var(--font-head); font-weight: 700; font-size: var(--step--1); color: var(--accent); margin-bottom: 0.15rem; }
 .facts dd { margin: 0; color: var(--muted); font-size: var(--step--1); line-height: 1.55; }
 
-/* ---------- Experience (a real sequence) ---------- */
-.timeline { list-style: none; position: relative; }
-.timeline::before { content: ""; position: absolute; left: 0.31rem; top: 0.6rem; bottom: 0.6rem; width: 2px; background: var(--line); }
-.timeline li { position: relative; padding: 0 0 2.25rem 2rem; }
-.timeline li:last-child { padding-bottom: 0; }
-.timeline li::before { content: ""; position: absolute; left: 0; top: 0.55rem; width: 0.7rem; height: 0.7rem; border-radius: 50%; background: var(--bg); border: 2px solid var(--accent); }
-.tl-head { display: flex; flex-wrap: wrap; gap: 0.15rem 1rem; align-items: baseline; justify-content: space-between; }
-.tl-role { font-family: var(--font-head); font-size: var(--step-1); font-weight: 700; }
-.tl-company { color: var(--muted); font-size: var(--step--1); margin: 0.1rem 0 0.5rem; }
-.tl-dates { color: var(--muted); font-size: var(--step--1); white-space: nowrap; }
-.tl-summary { max-width: 42rem; margin: 0; color: var(--text-soft); }
+/* ---------- Experience: career journey ---------- */
+.journey-section { position: relative; isolation: isolate; }
+.journey-section::before {
+  content: ""; position: absolute; z-index: -1; pointer-events: none;
+  right: 0; top: -8%; width: 70%; height: 70%;
+  background: radial-gradient(closest-side, rgba(109, 77, 255, 0.16), transparent);
+}
+.sec-head { position: relative; margin-bottom: clamp(2rem, 4vw, 3rem); }
+.sec-head h2 { margin-bottom: 0.6rem; font-size: clamp(2.1rem, 4.6vw, 3rem); }
+.eyebrow {
+  display: flex; align-items: center; gap: 0.8rem; margin: 0 0 0.9rem;
+  font-size: 0.8rem; font-weight: 600; letter-spacing: 0.22em; text-transform: uppercase; color: var(--accent);
+}
+.eyebrow::before { content: ""; width: 3px; height: 1.1rem; border-radius: 2px; background: var(--accent); }
+.sec-sub { margin: 0; max-width: 40rem; text-wrap: balance; color: var(--muted); font-size: 1.1rem; }
+.route { position: absolute; right: 0; top: -0.5rem; width: 15rem; display: none; opacity: 0.55; }
+.route path { fill: none; stroke: var(--accent); stroke-width: 1.6; stroke-dasharray: 3 6; stroke-linecap: round; }
+.route circle { fill: var(--bg); stroke: var(--accent); stroke-width: 1.8; }
+.route .flag { stroke-dasharray: none; stroke-width: 2; stroke-linejoin: round; }
+@media (min-width: 52rem) { .route { display: block; } }
+
+.exp-layout { display: grid; gap: 2.5rem; align-items: start; }
+@media (min-width: 48rem) { .exp-layout { grid-template-columns: minmax(0, 1fr) 16rem; gap: 1.75rem; } }
+@media (min-width: 64rem) { .exp-layout { grid-template-columns: minmax(0, 1fr) 20.5rem; gap: 2.5rem; } }
+
+/* Timeline: a track, a fill that grows with scroll, and one node per card */
+.journey { --p: 1; --lh: 100%; list-style: none; position: relative; display: grid; gap: 1.1rem; }
+.journey::before, .journey::after {
+  content: ""; position: absolute; left: 0.7rem; top: 1.4rem; width: 2px; height: var(--lh); margin-left: -1px; border-radius: 2px;
+}
+.journey::before { background: var(--line); }
+.journey::after {
+  background: linear-gradient(var(--accent), rgba(51, 219, 240, 0.45));
+  box-shadow: 0 0 10px rgba(51, 219, 240, 0.55);
+  transform: scaleY(var(--p)); transform-origin: top;
+}
+.jitem { position: relative; padding-left: 2.6rem; }
+.jitem::before {
+  content: ""; position: absolute; left: 0.7rem; top: 1.4rem; width: 0.9rem; height: 0.9rem; margin: -0.45rem 0 0 -0.45rem;
+  border-radius: 50%; background: var(--bg); border: 2px solid var(--line); z-index: 1;
+  transition: border-color 0.4s, box-shadow 0.4s, background 0.4s;
+}
+.jitem.reached::before { border-color: var(--accent); box-shadow: 0 0 0 4px rgba(51, 219, 240, 0.12), 0 0 14px rgba(51, 219, 240, 0.7); }
+.jitem.is-current::before { width: 1.15rem; height: 1.15rem; margin: -0.575rem 0 0 -0.575rem; background: var(--accent); border-color: var(--accent); box-shadow: 0 0 0 5px rgba(51, 219, 240, 0.18), 0 0 20px rgba(51, 219, 240, 0.8); }
+
+.jcard {
+  container-type: inline-size;
+  display: grid; gap: 1rem 2rem; padding: 1.25rem 1.4rem;
+  background: color-mix(in srgb, var(--surface) 62%, transparent); border: 1px solid var(--line); border-radius: 18px;
+  transition: transform 0.3s var(--ease), border-color 0.3s, background 0.3s, box-shadow 0.3s;
+}
+.jcard:hover { transform: translateY(-3px); border-color: #34417a; background: color-mix(in srgb, var(--surface) 85%, transparent); }
+.jcard.is-current {
+  background: linear-gradient(135deg, rgba(51, 219, 240, 0.11), rgba(109, 77, 255, 0.07) 70%), var(--surface);
+  border-color: rgba(51, 219, 240, 0.7);
+  box-shadow: 0 0 0 1px rgba(51, 219, 240, 0.12), 0 14px 36px -18px rgba(51, 219, 240, 0.6);
+}
+.jcard.is-current:hover { border-color: var(--accent); box-shadow: 0 0 0 1px rgba(51, 219, 240, 0.2), 0 18px 40px -16px rgba(51, 219, 240, 0.7); }
+.jc-role { font-size: 1.35rem; font-weight: 700; }
+.jc-company { margin: 0.3rem 0 0.9rem; color: var(--text-soft); font-size: var(--step--1); }
+.jc-tags { list-style: none; display: flex; flex-wrap: wrap; gap: 0.4rem; margin: 0; padding: 0; }
+.jc-tags li {
+  padding: 0.22rem 0.7rem; border-radius: 999px; font-size: 0.78rem; font-weight: 500; color: #bdeffa;
+  background: rgba(51, 219, 240, 0.06); border: 1px solid rgba(51, 219, 240, 0.32);
+  transition: background 0.2s, border-color 0.2s, transform 0.2s var(--ease);
+}
+.jc-tags li:hover { background: rgba(51, 219, 240, 0.15); border-color: rgba(51, 219, 240, 0.7); transform: translateY(-2px); }
+.jc-meta { display: flex; flex-wrap: wrap; align-items: center; justify-content: flex-end; gap: 0.5rem 0.9rem; margin-bottom: 0.7rem; }
+.jc-pill { padding: 0.25rem 0.7rem; border-radius: 999px; background: var(--accent); color: var(--accent-ink); font-size: 0.7rem; font-weight: 700; letter-spacing: 0.08em; text-transform: uppercase; }
+.jc-date { display: inline-flex; align-items: center; gap: 0.45rem; color: var(--muted); font-size: var(--step--1); white-space: nowrap; }
+.jc-date svg { flex: none; }
+.jc-text { margin: 0; color: var(--text-soft); line-height: 1.6; }
+@container (min-width: 36rem) {
+  .jcard { grid-template-columns: minmax(0, 0.85fr) minmax(0, 1.15fr); }
+  .jc-side { padding-left: 2rem; border-left: 1px solid var(--line-soft); }
+}
+@container (max-width: 35.99rem) { .jc-meta { justify-content: flex-start; } }
+
+/* Core experience panel */
+.core {
+  padding: 1.5rem 1.5rem 0.5rem; border: 1px solid var(--line); border-radius: 20px;
+  background: linear-gradient(160deg, rgba(109, 77, 255, 0.1), transparent 55%), color-mix(in srgb, var(--surface) 70%, transparent);
+}
+@media (min-width: 48rem) { .core { position: sticky; top: calc(var(--bar) + 1.25rem); } }
+.core h3 { position: relative; margin-bottom: 1.4rem; padding-bottom: 0.9rem; font-size: 0.9rem; letter-spacing: 0.2em; text-transform: uppercase; }
+.core h3::after { content: ""; position: absolute; left: 0; bottom: 0; width: 2.5rem; height: 3px; border-radius: 2px; background: var(--accent); }
+.core-list { list-style: none; }
+.core-list .exp-item { padding: 1.1rem 0; border-top: 1px solid var(--line-soft); }
+.core-list .exp-item:first-child { border-top: 0; padding-top: 0; }
+.core-list .exp-title { font-size: 1.05rem; }
+.core-list .exp-text { line-height: 1.5; }
+
+@media (prefers-reduced-motion: no-preference) {
+  html.js .jitem.reveal:not(.in) { transform: translateX(-22px); }
+}
+@media (max-width: 40rem) {
+  .jitem { padding-left: 2.1rem; }
+  .jcard { padding: 1.1rem 1.1rem; }
+}
 
 /* ---------- CV ---------- */
 .cv-block { display: grid; gap: 2.5rem; align-items: start; }
