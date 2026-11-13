@@ -4,6 +4,9 @@
   Edit the text on your site here. You do not need to touch index.html, style.css or script.js.
   Keep the quotes ("...") and commas exactly as they are, and change only the words inside the quotes.
 
+  Home page: change the hero text under "hero", the four skill boxes under "expertise",
+  and which three projects appear on the home page under "featured" > "ids".
+
   To add a new project: copy a whole project block { ... } inside "projects", paste it after the last one
   (put a comma between blocks) and change the text and image paths.
   To add a store or video link: fill the "url" fields. A link with an empty url ("") is hidden automatically.
@@ -18,14 +21,52 @@ window.SITE = {
         "Portfolio of Emir Savaş, a product manager and game designer working on casual and hybrid-casual mobile games."
     },
 
+    nav: [
+      { label: "Home", href: "#top" },
+      { label: "About", href: "#about" },
+      { label: "Experience", href: "#experience" },
+      { label: "Projects", href: "#projects" },
+      { label: "CV", href: "#cv" },
+      { label: "Contact", href: "#contact" }
+    ],
+
     person: {
       name: "Emir Savaş",
       role: "Product Manager and Game Designer",
-      intro:
-        "I turn game ideas into shipped mobile games: concept, prototype, levels, economy, data and live operations.",
       email: "emirsavass01@gmail.com",
       linkedin: "https://www.linkedin.com/in/emirsavas/",
       github: "" // add your GitHub profile link here, e.g. "https://github.com/yourname"
+    },
+
+    hero: {
+      label: "Product Manager / Game Designer",
+      headline: "I design, build and ship",
+      headlineAccent: "games.",
+      text:
+        "Game designer and product manager with experience in mobile games. I turn ideas into playable, engaging and data-informed experiences, from initial concept to live operations.",
+      primary: { label: "View Projects", href: "#featured" },
+      secondary: { label: "View CV", href: "#cv" },
+      // Screenshots from your own games: left, center, right
+      art: [
+        { src: "assets/projects/ember-born/phone-1.webp", alt: "Ember Born gameplay" },
+        { src: "assets/projects/blast-defence/phone-2.webp", alt: "Blast Defence gameplay" },
+        { src: "assets/projects/lift-rush/phone-2.webp", alt: "Lift Rush gameplay" }
+      ]
+    },
+
+    expertise: [
+      { icon: "bulb", title: "Game Design", text: "Mechanics, levels, systems" },
+      { icon: "layers", title: "Product Management", text: "Roadmaps, production, LiveOps" },
+      { icon: "code", title: "Prototyping", text: "Unity, C#, rapid iteration" },
+      { icon: "bars", title: "Data & Optimization", text: "KPI tracking, A/B testing, growth" }
+    ],
+
+    featured: {
+      heading: "Selected Projects",
+      viewAll: { label: "View All Projects", href: "#projects" },
+      cardLink: "See details",
+      // ids of the projects below, in the order they should appear on the home page
+      ids: ["blast-defence", "lift-rush", "ember-born"]
     },
 
     about: {
@@ -277,6 +318,7 @@ window.SITE = {
       github: "GitHub",
       skipToContent: "Skip to content",
       expand: "See details",
+      menu: "Menu",
       collapse: "Hide details",
       screens: "Screenshots"
     }

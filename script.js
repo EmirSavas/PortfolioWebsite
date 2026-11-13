@@ -18,33 +18,115 @@
     (children || []).forEach(function (c) { if (c) { node.appendChild(c); } });
     return node;
   }
+  function svg(markup, cls) {
+    var s = document.createElement("span");
+    s.innerHTML = markup;
+    var node = s.firstChild;
+    if (cls) { node.setAttribute("class", cls); }
+    return node;
+  }
 
-  /* ---------- Page text ---------- */
+  var ARROW = '<svg width="16" height="16" viewBox="0 0 16 16" aria-hidden="true"><path d="M3 8h10M9 4l4 4-4 4" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>';
+  var CHEVRON = '<svg width="16" height="16" viewBox="0 0 16 16" aria-hidden="true"><path d="M3 6l5 5 5-5" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>';
+
+  /* Small animated icons for the expertise strip. Animations live in style.css. */
+  var ICONS = {
+    bulb: '<svg viewBox="0 0 24 24" class="ico-bulb" aria-hidden="true"><path d="M9 18h6M10 21h4"/><path d="M12 3a6 6 0 0 0-3.5 10.900c.6.5 1 1.200 1 2V16h5v-.1c0-.8.4-1.500 1-2A6 6 0 0 0 12 3Z"/><path class="ray" d="M3 9H1.500"/><path class="ray" d="M21 9h1.500"/><path class="ray" d="M5 3.500 4 2.500"/></svg>',
+    layers: '<svg viewBox="0 0 24 24" class="ico-layers" aria-hidden="true"><path class="top" d="M12 3 2.500 8 12 13l9.500-5L12 3Z"/><path class="mid" d="m2.500 12 9.500 5 9.500-5"/><path d="m2.500 16 9.500 5 9.500-5"/></svg>',
+    code: '<svg viewBox="0 0 24 24" class="ico-code" aria-hidden="true"><path class="l" d="m8 7-5 5 5 5"/><path class="r" d="m16 7 5 5-5 5"/><path d="m14 5-4 14"/></svg>',
+    bars: '<svg viewBox="0 0 24 24" class="ico-bars" aria-hidden="true"><path class="b" d="M5 21v-7"/><path class="b" d="M12 21V4"/><path class="b" d="M19 21v-11"/></svg>'
+  };
+
+  /* ---------- Static text ---------- */
   document.documentElement.lang = LANG;
   document.title = T.meta.title;
   var desc = document.querySelector('meta[name="description"]');
   if (desc) { desc.setAttribute("content", T.meta.description); }
 
   $("skip-link").textContent = T.ui.skipToContent;
-  $("brand").textContent = T.person.name;
-  $("hero-name").textContent = T.person.name;
-  $("hero-role").textContent = T.person.role;
-  $("hero-intro").textContent = T.person.intro;
+  $("brand-name").textContent = T.person.name;
+  $("nav-toggle-label").textContent = T.ui.menu;
 
-  function linkRow(container, includeCv) {
-    var p = T.person;
-    if (includeCv) {
-      container.appendChild(el("a", { class: "btn btn-primary", href: "#projects", text: T.projects.heading }));
-    }
-    container.appendChild(el("a", { class: "btn", href: "mailto:" + p.email, text: T.ui.email }));
-    container.appendChild(el("a", { class: "btn", href: p.linkedin, target: "_blank", rel: "noopener", text: T.ui.linkedin }));
-    if (p.github) {
-      container.appendChild(el("a", { class: "btn", href: p.github, target: "_blank", rel: "noopener", text: T.ui.github }));
-    }
+  /* ---------- Navigation ---------- */
+  var nav = $("nav");
+  T.nav.forEach(function (n) { nav.appendChild(el("a", { href: n.href, text: n.label })); });
+  var navLinks = Array.prototype.slice.call(nav.querySelectorAll("a"));
+
+  var toggle = $("nav-toggle");
+  function setMenu(open) {
+    nav.classList.toggle("open", open);
+    toggle.setAttribute("aria-expanded", open ? "true" : "false");
   }
-  linkRow($("hero-links"), true);
-  linkRow($("contact-links"), false);
+  toggle.addEventListener("click", function () { setMenu(!nav.classList.contains("open")); });
+  nav.addEventListener("click", function (e) { if (e.target.closest("a")) { setMenu(false); } });
+  document.addEventListener("keydown", function (e) {
+    if (e.key === "Escape" && nav.classList.contains("open")) { setMenu(false); toggle.focus(); }
+  });
+  window.matchMedia("(min-width: 48.01rem)").addEventListener("change", function () { setMenu(false); });
 
+  /* ---------- Hero ---------- */
+  var H = T.hero;
+  $("hero-label").textContent = H.label;
+  var title = $("hero-title");
+  title.appendChild(document.createTextNode(H.headline + " "));
+  var accent = el("span", { class: "accent", text: H.headlineAccent });
+  accent.appendChild(svg('<svg viewBox="0 0 200 12" preserveAspectRatio="none" aria-hidden="true"><path pathLength="1" d="M3 8c30-5 62-6 95-4 35 2 62 2 98-2"/></svg>'));
+  title.appendChild(accent);
+  $("hero-text").textContent = H.text;
+
+  var primary = el("a", { class: "btn btn-primary", href: H.primary.href }, [document.createTextNode(H.primary.label)]);
+  primary.appendChild(svg(ARROW));
+  $("hero-actions").appendChild(primary);
+  $("hero-actions").appendChild(el("a", { class: "btn", href: H.secondary.href, text: H.secondary.label }));
+
+  var art = $("hero-art");
+  art.appendChild(svg('<svg class="art-spark" viewBox="0 0 40 40" aria-hidden="true"><path d="M4 20 15 17M9 6l8 8M26 4l-3 11"/></svg>'));
+  art.appendChild(el("span", { class: "art-dot art-dot-a" }));
+  art.appendChild(el("span", { class: "art-dot art-dot-b" }));
+  H.art.forEach(function (a, i) {
+    art.appendChild(el("div", { class: "art-card art-" + (i + 1) }, [el("img", { src: a.src, alt: "", width: "676", height: "1200", decoding: "async" })]));
+  });
+
+  /* Expertise strip */
+  T.expertise.forEach(function (x) {
+    var ico = el("span", { class: "exp-ico" });
+    ico.appendChild(svg(ICONS[x.icon] || ICONS.bulb));
+    $("expertise").appendChild(el("li", { class: "exp-item reveal" }, [
+      ico,
+      el("div", {}, [el("div", { class: "exp-title", text: x.title }), el("p", { class: "exp-text", text: x.text })])
+    ]));
+  });
+
+  /* ---------- Selected projects (home page cards) ---------- */
+  $("featured-h").textContent = T.featured.heading;
+  var all = $("featured-all");
+  all.setAttribute("href", T.featured.viewAll.href);
+  all.appendChild(document.createTextNode(T.featured.viewAll.label));
+  all.appendChild(svg(ARROW));
+
+  function projectById(id) { return T.projects.items.filter(function (p) { return p.id === id; })[0]; }
+
+  T.featured.ids.forEach(function (id) {
+    var p = projectById(id);
+    if (!p) { return; }
+    var media = el("div", { class: "fcard-media" }, [
+      el("img", { class: "fcard-bg", src: p.bg, alt: "", loading: "lazy" }),
+      el("img", { class: "fcard-phone", src: (p.phones || [])[1] || (p.phones || [])[0], alt: "", loading: "lazy" }),
+      el("img", { class: "fcard-logo", src: p.logo, alt: "", loading: "lazy" })
+    ]);
+    var tags = el("ul", { class: "tags" });
+    p.tags.forEach(function (t) { tags.appendChild(el("li", { text: t })); });
+    var link = el("span", { class: "fcard-link" }, [document.createTextNode(T.featured.cardLink)]);
+    link.appendChild(svg(ARROW));
+    var card = el("a", { class: "fcard reveal", href: "#" + p.id, "data-project": p.id }, [
+      media,
+      el("div", { class: "fcard-body" }, [el("h3", { text: p.title }), el("p", { text: p.short }), tags, link])
+    ]);
+    card.style.setProperty("--accent", p.accent || "#33dbf0");
+    $("fgrid").appendChild(card);
+  });
+
+  /* ---------- About, experience, CV, contact ---------- */
   $("about-h").textContent = T.about.heading;
   T.about.paragraphs.forEach(function (t) { $("about-text").appendChild(el("p", { text: t })); });
   T.about.facts.forEach(function (f) {
@@ -53,12 +135,11 @@
 
   $("exp-h").textContent = T.experience.heading;
   T.experience.items.forEach(function (it) {
-    var li = el("li", {}, [
+    $("timeline").appendChild(el("li", { class: "reveal" }, [
       el("div", { class: "tl-head" }, [el("span", { class: "tl-role", text: it.role }), el("span", { class: "tl-dates", text: it.dates })]),
       el("p", { class: "tl-company", text: it.company }),
       el("p", { class: "tl-summary", text: it.summary })
-    ]);
-    $("timeline").appendChild(li);
+    ]));
   });
 
   $("cv-h").textContent = T.cv.heading;
@@ -77,7 +158,11 @@
   $("proj-intro").textContent = T.projects.intro;
   $("contact-h").textContent = T.contact.heading;
   $("contact-text").textContent = T.contact.text;
-  $("copyright").textContent = "© " + new Date().getFullYear() + " " + T.person.name;
+  var P = T.person, cl = $("contact-links");
+  cl.appendChild(el("a", { class: "btn btn-primary", href: "mailto:" + P.email, text: T.ui.email }));
+  cl.appendChild(el("a", { class: "btn", href: P.linkedin, target: "_blank", rel: "noopener", text: T.ui.linkedin }));
+  if (P.github) { cl.appendChild(el("a", { class: "btn", href: P.github, target: "_blank", rel: "noopener", text: T.ui.github })); }
+  $("copyright").textContent = "© " + new Date().getFullYear() + " " + P.name;
 
   /* ---------- Dialog helpers ---------- */
   function lockScroll(on) { document.body.classList.toggle("lock", on); }
@@ -125,7 +210,6 @@
     });
   }
 
-  /* ---------- Lightbox ---------- */
   var lb = $("lightbox");
   var lbReturn = null;
   $("lb-close").textContent = T.ui.close;
@@ -138,7 +222,6 @@
     lockScroll(true);
   }
 
-  /* ---------- CV dialog ---------- */
   var cvd = $("cv-dialog");
   var cvReturn = null;
   $("cvd-close").textContent = T.ui.close;
@@ -148,7 +231,6 @@
   $("cv-preview").addEventListener("click", function () { openCv($("cv-preview")); });
 
   /* ---------- Project banners ---------- */
-  var CHEVRON = '<svg width="16" height="16" viewBox="0 0 16 16" aria-hidden="true"><path d="M3 6l5 5 5-5" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>';
   var banners = [];
 
   function buildPanel(p, panelId) {
@@ -207,16 +289,28 @@
     b.cta.firstChild.textContent = open ? T.ui.collapse : T.ui.expand;
   }
 
-  function toggle(b, scroll) {
+  function scrollToBanner(b) {
+    window.setTimeout(function () {
+      b.art.scrollIntoView({ behavior: reduceMotion ? "auto" : "smooth", block: "start" });
+    }, reduceMotion ? 0 : 560);
+  }
+
+  function toggleBanner(b) {
     var willOpen = !b.art.classList.contains("is-open");
     banners.forEach(function (o) { if (o !== b) { setOpen(o, false); } });
     setOpen(b, willOpen);
     history.replaceState(null, "", willOpen ? "#" + b.id : "#projects");
-    if (willOpen && scroll !== false) {
-      window.setTimeout(function () {
-        b.art.scrollIntoView({ behavior: reduceMotion ? "auto" : "smooth", block: "start" });
-      }, reduceMotion ? 0 : 560);
-    }
+    if (willOpen) { scrollToBanner(b); }
+  }
+
+  function openById(id) {
+    var b = banners.filter(function (x) { return x.id === id; })[0];
+    if (!b) { return false; }
+    banners.forEach(function (o) { if (o !== b) { setOpen(o, false); } });
+    setOpen(b, true);
+    history.replaceState(null, "", "#" + id);
+    scrollToBanner(b);
+    return true;
   }
 
   T.projects.items.forEach(function (p) {
@@ -229,7 +323,7 @@
     var tags = el("span", { class: "banner-tags" });
     p.tags.forEach(function (t) { tags.appendChild(el("span", { text: t })); });
     var cta = el("span", { class: "banner-cta" }, [document.createTextNode(T.ui.expand)]);
-    cta.insertAdjacentHTML("beforeend", CHEVRON);
+    cta.appendChild(svg(CHEVRON));
 
     var copy = el("span", { class: "banner-copy" }, [
       el("img", { class: "banner-logo", src: p.logo, alt: p.title }),
@@ -251,16 +345,90 @@
 
     var b = { id: p.id, art: art, btn: btn, panel: panel, cta: cta };
     banners.push(b);
-    btn.addEventListener("click", function () { toggle(b); });
+    btn.addEventListener("click", function () { toggleBanner(b); });
+  });
+
+  // A card on the home page opens the matching banner below.
+  $("fgrid").addEventListener("click", function (e) {
+    var card = e.target.closest("[data-project]");
+    if (!card) { return; }
+    e.preventDefault();
+    openById(card.getAttribute("data-project"));
   });
 
   // Open a project directly from a link such as emirsavas.dev/#blast-defence
   var wanted = location.hash.replace("#", "");
-  var deep = banners.filter(function (b) { return b.id === wanted; })[0];
-  if (deep) {
+  if (wanted && banners.some(function (b) { return b.id === wanted; })) {
     window.addEventListener("load", function () {
-      setOpen(deep, true);
-      deep.art.scrollIntoView({ block: "start" });
+      var b = banners.filter(function (x) { return x.id === wanted; })[0];
+      setOpen(b, true);
+      b.art.scrollIntoView({ block: "start" });
     });
   }
+
+  /* ---------- Scroll reveal ---------- */
+  var revealEls = Array.prototype.slice.call(document.querySelectorAll(".section > h2, .section-head, .about-grid, .cv-block, .contact > *, .reveal"));
+  revealEls.forEach(function (n) { n.classList.add("reveal"); });
+  // stagger siblings that share a parent
+  [$("expertise"), $("fgrid"), $("timeline")].forEach(function (parent) {
+    Array.prototype.forEach.call(parent.children, function (c, i) { c.style.setProperty("--d", Math.min(i, 5) * 80 + "ms"); });
+  });
+  if ("IntersectionObserver" in window && !reduceMotion) {
+    var io = new IntersectionObserver(function (entries) {
+      entries.forEach(function (en) {
+        if (en.isIntersecting) { en.target.classList.add("in"); io.unobserve(en.target); }
+      });
+    }, { threshold: 0.12, rootMargin: "0px 0px -6% 0px" });
+    revealEls.forEach(function (n) { io.observe(n); });
+  } else {
+    revealEls.forEach(function (n) { n.classList.add("in"); });
+  }
+
+  /* ---------- Nav state: solid bar after scrolling, current section highlighted ---------- */
+  var bar = $("topbar");
+  var sectionMap = [
+    { id: "top", nav: "#top" }, { id: "featured", nav: "#top" },
+    { id: "about", nav: "#about" }, { id: "experience", nav: "#experience" },
+    { id: "projects", nav: "#projects" }, { id: "cv", nav: "#cv" }, { id: "contact", nav: "#contact" }
+  ];
+  function setCurrent(href) {
+    navLinks.forEach(function (a) {
+      if (a.getAttribute("href") === href) { a.setAttribute("aria-current", "true"); } else { a.removeAttribute("aria-current"); }
+    });
+  }
+  function updateCurrent() {
+    var line = window.innerHeight * 0.4, current = "#top";
+    sectionMap.forEach(function (s) {
+      var n = $(s.id);
+      if (n && n.getBoundingClientRect().top <= line) { current = s.nav; }
+    });
+    setCurrent(current);
+  }
+
+  /* ---------- Parallax (transform only, one frame per scroll or pointer event) ---------- */
+  var hero = $("top");
+  var ticking = false, px = 0, py = 0;
+  function frame() {
+    ticking = false;
+    var y = window.scrollY;
+    bar.classList.toggle("scrolled", y > 8);
+    updateCurrent();
+    if (!reduceMotion && y < 1400) {
+      hero.style.setProperty("--sy", y.toFixed(1));
+      hero.style.setProperty("--px", px.toFixed(1));
+      hero.style.setProperty("--py", py.toFixed(1));
+    }
+  }
+  function request() { if (!ticking) { ticking = true; window.requestAnimationFrame(frame); } }
+  window.addEventListener("scroll", request, { passive: true });
+  window.addEventListener("resize", request);
+  if (!reduceMotion && window.matchMedia("(hover: hover) and (pointer: fine)").matches) {
+    hero.addEventListener("pointermove", function (e) {
+      var r = hero.getBoundingClientRect();
+      px = ((e.clientX - r.left) / r.width - 0.5) * 22;
+      py = ((e.clientY - r.top) / r.height - 0.5) * 14;
+      request();
+    });
+  }
+  frame();
 })();
