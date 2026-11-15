@@ -36,6 +36,7 @@
     layers: '<svg viewBox="0 0 24 24" class="ico-layers" aria-hidden="true"><path class="top" d="M12 3 2.500 8 12 13l9.500-5L12 3Z"/><path class="mid" d="m2.500 12 9.500 5 9.500-5"/><path d="m2.500 16 9.500 5 9.500-5"/></svg>',
     code: '<svg viewBox="0 0 24 24" class="ico-code" aria-hidden="true"><path class="l" d="m8 7-5 5 5 5"/><path class="r" d="m16 7 5 5-5 5"/><path d="m14 5-4 14"/></svg>',
     gamepad: '<svg viewBox="0 0 24 24" class="ico-pad" aria-hidden="true"><path d="M6 8h12a4 4 0 0 1 3.900 3.100l.8 4.200a2.800 2.800 0 0 1-4.900 2.300L16 16H8l-1.800 1.600a2.800 2.800 0 0 1-4.900-2.300l.8-4.200A4 4 0 0 1 6 8Z"/><path class="dpad" d="M8 10.500v3M6.500 12h3"/><circle class="btn-a" cx="15.500" cy="11" r=".6"/><circle class="btn-b" cx="17.500" cy="13" r=".6"/></svg>',
+    cycle: '<svg viewBox="0 0 24 24" class="ico-cycle" aria-hidden="true"><g class="spin"><path d="M20 11a8 8 0 0 0-14.500-4M4 13a8 8 0 0 0 14.500 4"/><path d="M5.500 3v4h4M18.500 21v-4h-4"/></g></svg>',
     bars: '<svg viewBox="0 0 24 24" class="ico-bars" aria-hidden="true"><path class="b" d="M5 21v-7"/><path class="b" d="M12 21V4"/><path class="b" d="M19 21v-11"/></svg>'
   };
 
@@ -73,10 +74,17 @@
   highlight($("hero-title"), H.headline, [H.headlineHighlight]);
   $("hero-text").textContent = H.text;
 
-  var primary = el("a", { class: "btn btn-primary", href: H.primary.href }, [document.createTextNode(H.primary.label)]);
+  var PAD = '<svg class="btn-ico" width="20" height="20" viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M6 8h12a4 4 0 0 1 3.900 3.100l.8 4.200a2.800 2.800 0 0 1-4.900 2.300L16 16H8l-1.800 1.600a2.800 2.800 0 0 1-4.900-2.300l.8-4.200A4 4 0 0 1 6 8Z"/><path d="M8 10.500v3M6.500 12h3M15.500 11h.01M17.500 13h.01"/></svg>';
+  var DOC = '<svg class="btn-ico" width="20" height="20" viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M14 3H7a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2V8Z"/><path d="M14 3v5h5M9 13h6M9 17h6"/></svg>';
+  var primary = el("a", { class: "btn btn-primary", href: H.primary.href });
+  primary.appendChild(svg(PAD));
+  primary.appendChild(document.createTextNode(H.primary.label));
   primary.appendChild(svg(ARROW));
   $("hero-actions").appendChild(primary);
-  $("hero-actions").appendChild(el("a", { class: "btn", href: H.secondary.href, text: H.secondary.label }));
+  var secondary = el("a", { class: "btn", href: H.secondary.href });
+  secondary.appendChild(svg(DOC));
+  secondary.appendChild(document.createTextNode(H.secondary.label));
+  $("hero-actions").appendChild(secondary);
 
   var art = $("hero-art");
   art.appendChild(svg('<svg class="art-spark" viewBox="0 0 40 40" aria-hidden="true"><path d="M4 20 15 17M9 6l8 8M26 4l-3 11"/></svg>'));
@@ -93,6 +101,11 @@
       var d = el("i", {});
       d.style.cssText = "left:" + p[0] + "%;top:" + p[1] + "%;--s:" + (2 + (i % 3)) + "px;--t:" + (14 + (i * 3) % 11) + "s;--w:" + (-i * 2.3).toFixed(1) + "s";
       box.appendChild(d);
+    });
+    [[58, 34, 0], [88, 62, 5], [47, 78, 9]].forEach(function (p) {
+      var r = el("b", {});
+      r.style.cssText = "left:" + p[0] + "%;top:" + p[1] + "%;--w:" + p[2] + "s";
+      box.appendChild(r);
     });
   })();
 

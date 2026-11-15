@@ -39,25 +39,25 @@ window.SITE = {
 
     hero: {
       label: "Product Manager · Game Designer",
-      headline: "Game design with a product mindset.",
-      headlineHighlight: "product mindset",
+      headline: "I build and grow engaging game products.",
+      headlineHighlight: "engaging game products",
       text:
-        "I bring hands-on game development experience to product and design work — shaping concepts, gameplay systems and levels, then guiding production through prototyping, analytics and LiveOps.",
+        "Product Manager focused on mobile games, combining product strategy, game design, analytics and LiveOps to create engaging player experiences and drive sustainable growth.",
       primary: { label: "View Projects", href: "#projects" },
       secondary: { label: "View CV", href: "#cv" },
       // Screenshots from your own games: left, center, right
       art: [
-        { src: "assets/projects/ember-born/phone-1.webp", alt: "Ember Born gameplay" },
-        { src: "assets/projects/blast-defence/phone-2.webp", alt: "Blast Defence gameplay" },
-        { src: "assets/projects/lift-rush/phone-2.webp", alt: "Lift Rush gameplay" }
+        { src: "assets/projects/lift-rush/phone-2.webp", alt: "Lift Rush gameplay" },
+        { src: "assets/projects/blast-defence/phone-1.webp", alt: "Blast Defence gameplay" },
+        { src: "assets/projects/subway-flow/phone-1.webp", alt: "Subway Flow gameplay" }
       ]
     },
 
     expertise: [
-      { icon: "gamepad", title: "Game Design", text: "Mechanics, core loops, level design, economy & progression" },
-      { icon: "bars", title: "Product Management", text: "Product roadmaps, prioritization, KPI tracking & analytics" },
-      { icon: "code", title: "Prototyping & Development", text: "Unity, C#, rapid prototyping & gameplay systems" },
-      { icon: "layers", title: "Production & LiveOps", text: "Production planning, Jira, A/B testing & LiveOps" }
+      { icon: "bars", title: "Product Strategy", text: "Roadmaps, prioritization, product vision" },
+      { icon: "gamepad", title: "Game Design", text: "Core loops, mechanics, progression" },
+      { icon: "layers", title: "Data & Optimization", text: "KPIs, analytics, A/B testing" },
+      { icon: "cycle", title: "Live Operations", text: "Events, updates, player engagement" }
     ],
 
     about: {
