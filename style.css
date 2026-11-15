@@ -153,6 +153,13 @@ p { margin: 0 0 1rem; }
 .particles b { position: absolute; width: 6px; height: 6px; border-radius: 50%; background: var(--accent); opacity: 0; }
 .particles i { position: absolute; width: var(--s, 2px); height: var(--s, 2px); border-radius: 50%; background: var(--accent); opacity: 0; }
 @media (prefers-reduced-motion: reduce) { .particles { display: none; } }
+.arc { position: absolute; border-radius: 50%; aspect-ratio: 1; pointer-events: none;
+  background: linear-gradient(135deg, rgba(109, 77, 255, 0.9), rgba(51, 219, 240, 0.55) 55%, rgba(109, 77, 255, 0.1));
+  -webkit-mask: radial-gradient(closest-side, transparent calc(100% - 3px), #000 calc(100% - 2px), #000 calc(100% - 0.5px), transparent); mask: radial-gradient(closest-side, transparent calc(100% - 3px), #000 calc(100% - 2px), #000 calc(100% - 0.5px), transparent);
+  opacity: 0.55; }
+.arc-a { width: 78rem; left: 58%; top: -6rem; }
+.arc-b { display: none; }
+@media (max-width: 40rem) { .arc-a { width: 34rem; left: 30%; top: 2rem; opacity: 0.5; } .arc-b { display: block; width: 40rem; left: -24rem; bottom: -30rem; opacity: 0.4; } }
 .dots {
   position: absolute; inset: 0;
   background-image: radial-gradient(rgba(255, 255, 255, 0.9) 1px, transparent 1.4px); background-size: 44px 44px; opacity: 0.09;
@@ -169,7 +176,13 @@ p { margin: 0 0 1rem; }
   font-size: clamp(0.82rem, 1.6vw, 1rem); font-weight: 600; letter-spacing: 0.2em; text-transform: uppercase; color: var(--accent);
 }
 .hero-label::before { content: ""; flex: none; width: 3px; height: 1.15rem; border-radius: 2px; background: var(--accent); }
-.hero-headline { margin: 0; max-width: 38rem; font-size: clamp(1.9rem, 4.2vw, 2.9rem); font-weight: 700; letter-spacing: -0.035em; line-height: 1.08; text-wrap: balance; color: var(--text); }
+.hero-headline { margin: 0; max-width: 38rem; font-size: clamp(2rem, 4.2vw, 2.8rem); font-weight: 700; letter-spacing: -0.035em; line-height: 1.08; color: var(--text); }
+@media (min-width: 60rem) { .hero-headline .hl-main, .hero-headline .hl-lead { white-space: nowrap; } }
+.hero-headline .hl-lead { display: block; }
+.hero-headline .hl-main { display: block; }
+.hero-headline .hl-ul { position: relative; display: inline-block; }
+.hero-headline .hl-ul svg { position: absolute; left: 0; bottom: -0.12em; width: 100%; height: 0.24em; overflow: visible; }
+.hero-headline .hl-ul path { fill: none; stroke: var(--accent); stroke-width: 4; stroke-linecap: round; }
 .hero-headline .hl { color: var(--accent); }
 .hero-text { max-width: 34rem; margin: 1.4rem 0 2rem; font-size: clamp(1.05rem, 1.7vw, 1.15rem); line-height: 1.65; color: var(--text-soft); }
 
@@ -215,16 +228,17 @@ p { margin: 0 0 1rem; }
 @keyframes drift { 0%, 100% { translate: 0 0; opacity: 0; } 20%, 80% { opacity: 0.55; } 50% { translate: 8px -26px; opacity: 0.4; } }
 
 @media (max-width: 40rem) {
-  .hero-art { height: 21rem; }
-  .art-3, .art-dot-a { display: none; }
-  .art-1 { height: 66%; left: 2%; top: 24%; }
-  .art-2 { left: auto; right: 12%; margin-inline: 0; height: 92%; }
-  .art-spark { left: 36%; width: 2.6rem; }
+  .hero-art { height: 18.5rem; max-width: 22rem; }
+  .art-spark { left: 24%; width: 2.4rem; }
+  .hero-label { position: relative; margin-bottom: 2.4rem; }
+  .hero-label::after { content: ""; position: absolute; left: 0; bottom: -1rem; width: 3.4rem; height: 2px; border-radius: 2px; background: var(--accent); }
+}
 }
 
 @media (prefers-reduced-motion: no-preference) {
   .topbar { animation: nav-in 0.6s var(--ease) backwards; }
   .hero-headline .hl { animation: fade-in 0.9s ease 0.62s backwards; }
+  .hero-headline .hl-ul path { stroke-dasharray: 1; stroke-dashoffset: 1; animation: draw 0.9s var(--ease) 1.1s forwards; }
 }
 @keyframes nav-in { from { opacity: 0; transform: translateY(-12px); } }
 
@@ -893,3 +907,14 @@ dialog::backdrop { background: rgba(5, 8, 20, 0.78); backdrop-filter: blur(3px);
 }
 
 @media (max-width: 26rem) { .hero-label { font-size: 0.74rem; letter-spacing: 0.13em; } }
+
+/* Mobile: the four areas become stacked rows instead of one framed box */
+@media (max-width: 35.99rem) {
+  .expertise { background: none; border: 0; padding: 0; backdrop-filter: none; gap: 0.7rem; }
+  .expertise .exp-item { padding: 0.95rem 1rem; align-items: center; border: 1px solid var(--line); background: color-mix(in srgb, var(--surface) 55%, transparent); border-radius: 16px; }
+  .expertise .exp-title { text-transform: none; letter-spacing: 0; font-size: 1.05rem; }
+  .expertise .exp-text { margin-top: 0.15rem; font-size: 0.9rem; }
+  .expertise .exp-ico { width: 2.6rem; height: 2.6rem; background: none; border-color: transparent; }
+  .expertise .exp-ico svg { width: 1.7rem; height: 1.7rem; }
+  .hero-text { margin-top: 1.2rem; }
+}

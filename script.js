@@ -71,7 +71,20 @@
   var H = T.hero;
   $("hero-name").textContent = T.person.name;
   $("hero-label").textContent = H.label;
-  highlight($("hero-title"), H.headline, [H.headlineHighlight]);
+  (function () {
+    // two lines: the lead-in, then the highlighted phrase with a hand-drawn underline under its last word
+    var t = $("hero-title"), at = H.headline.indexOf(H.headlineHighlight);
+    if (at < 0) { t.textContent = H.headline; return; }
+    var lead = H.headline.slice(0, at).trim(), tail = H.headline.slice(at + H.headlineHighlight.length);
+    if (lead) { t.appendChild(el("span", { class: "hl-lead", text: lead })); }
+    var words = H.headlineHighlight.split(" "), last = words.pop() + tail;
+    var hl = el("span", { class: "hl hl-main" });
+    if (words.length) { hl.appendChild(document.createTextNode(words.join(" ") + " ")); }
+    var u = el("span", { class: "hl-ul", text: last });
+    u.appendChild(svg('<svg viewBox="0 0 200 12" preserveAspectRatio="none" aria-hidden="true"><path pathLength="1" d="M3 8c30-5 62-6 95-4 35 2 62 2 98-2"/></svg>'));
+    hl.appendChild(u);
+    t.appendChild(hl);
+  })();
   $("hero-text").textContent = H.text;
 
   var PAD = '<svg class="btn-ico" width="20" height="20" viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M6 8h12a4 4 0 0 1 3.900 3.100l.8 4.200a2.800 2.800 0 0 1-4.900 2.300L16 16H8l-1.800 1.600a2.800 2.800 0 0 1-4.900-2.300l.8-4.200A4 4 0 0 1 6 8Z"/><path d="M8 10.500v3M6.500 12h3M15.500 11h.01M17.500 13h.01"/></svg>';
