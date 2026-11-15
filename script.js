@@ -95,23 +95,6 @@
   });
 
 
-  /* ---------- Hero environment: a real illustrated background plus a few animated light layers ---------- */
-  (function () {
-    var box = $("hero-env");
-    if (H.environment === false) { box.remove(); return; }
-    var art = $("env-art");
-    // soft glows that sit on the crystals of the illustration (positions are % of the artwork, so they stay aligned at any size)
-    var glows = [
-      ["d", 82.8, 76.5, 6, "cyan"], ["d", 93.2, 54.5, 4.5, "violet"], ["d", 62.2, 87, 3.6, "violet"], ["d", 50, 60.4, 3.4, "cyan"], ["d", 97, 32, 3.6, "cyan"], ["d", 4, 84, 4.2, "violet"],
-      ["m", 13.2, 82.2, 9, "cyan"], ["m", 90.6, 82.6, 9, "cyan"], ["m", 84, 76, 7, "cyan"]
-    ];
-    glows.forEach(function (g, i) {
-      var d = el("span", { class: "env-glow g-" + g[0] + " " + g[4] });
-      d.style.cssText = "left:" + g[1] + "%;top:" + g[2] + "%;width:" + g[3] + "%;--w:" + (-i * 1.9).toFixed(1) + "s;--t:" + (4.5 + (i % 3) * 1.2) + "s";
-      art.appendChild(d);
-    });
-  })();
-
   /* Very few, very slow particles in the hero background (CSS-animated, transform + opacity only) */
   (function () {
     var box = $("particles"), spots = [[8, 22], [18, 70], [31, 40], [44, 84], [57, 18], [66, 62], [74, 30], [83, 76], [91, 14], [95, 52]];

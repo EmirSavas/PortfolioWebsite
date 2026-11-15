@@ -222,37 +222,10 @@ p { margin: 0 0 1rem; }
   .art-spark { left: 36%; width: 2.6rem; }
 }
 
-/* ---------- Hero environment: illustrated background + animated light layers ---------- */
-.hero-env { position: absolute; inset: 0; z-index: -1; pointer-events: none; overflow: clip; container-type: size;
-  -webkit-mask-image: linear-gradient(#000 84%, transparent); mask-image: linear-gradient(#000 84%, transparent); }
-/* the artwork keeps its proportions, covers the hero and stays anchored to the right and bottom, where its islands are */
-.env-art { position: absolute; right: 0; bottom: 0; width: max(100%, calc(100cqh * 1.7769)); aspect-ratio: 1672 / 941; }
-.env-art img { display: block; width: 100%; height: 100%; }
-/* keeps the left side dark and quiet for the text, and eases the artwork into the page colour */
-.hero-env::after { content: ""; position: absolute; inset: 0;
-  background: linear-gradient(90deg, var(--bg) 0%, color-mix(in srgb, var(--bg) 92%, transparent) 26%, transparent 58%), linear-gradient(var(--bg), transparent 14%); }
-.env-glow { position: absolute; aspect-ratio: 1; border-radius: 50%; translate: -50% -50%; opacity: 0.5; }
-.env-glow.cyan { background: radial-gradient(closest-side, rgba(51, 219, 240, 0.7), transparent); }
-.env-glow.violet { background: radial-gradient(closest-side, rgba(169, 139, 255, 0.7), transparent); }
-.g-m { display: none; }
-@media (min-width: 40.01rem) and (max-width: 60rem) {
-  .env-art { width: max(100%, 1150px); -webkit-mask-image: linear-gradient(transparent, #000 30%); mask-image: linear-gradient(transparent, #000 30%); }
-}
-@media (max-width: 40rem) {
-  .env-art { width: 100%; aspect-ratio: 941 / 1672; -webkit-mask-image: linear-gradient(transparent, #000 28%); mask-image: linear-gradient(transparent, #000 28%); }
-  .g-d { display: none; }
-  .g-m { display: block; }
-  .hero-env::after { background: linear-gradient(90deg, color-mix(in srgb, var(--bg) 70%, transparent), transparent 80%), linear-gradient(var(--bg), transparent 10%); }
-}
 @media (prefers-reduced-motion: no-preference) {
-  .hero-env { animation: fade-in 1.6s ease 0.1s backwards; }
-  .env-art { scale: 1.03; transform-origin: 100% 100%; translate: calc(var(--px, 0) * -0.35px) calc(var(--sy, 0) * 0.05px); transition: translate 0.6s var(--ease); animation: env-drift 26s ease-in-out infinite alternate; }
-  .env-glow { animation: crystal-glow var(--t, 5s) ease-in-out var(--w, 0s) infinite; }
   .topbar { animation: nav-in 0.6s var(--ease) backwards; }
   .hero-headline .hl { animation: fade-in 0.9s ease 0.62s backwards; }
 }
-@keyframes env-drift { from { scale: 1.03; } to { scale: 1.06; } }
-@keyframes crystal-glow { 0%, 100% { opacity: 0.2; scale: 0.9; } 50% { opacity: 0.75; scale: 1.15; } }
 @keyframes nav-in { from { opacity: 0; transform: translateY(-12px); } }
 
 /* ---------- Expertise strip ---------- */
