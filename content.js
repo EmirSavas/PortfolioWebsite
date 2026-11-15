@@ -43,6 +43,8 @@ window.SITE = {
       headlineHighlight: "engaging game products",
       text:
         "Product Manager focused on mobile games, combining product strategy, game design, analytics and LiveOps to create engaging player experiences and drive sustainable growth.",
+      // Set to false to remove the floating-island background and return to the plain navy hero.
+      environment: true,
       primary: { label: "View Projects", href: "#projects" },
       secondary: { label: "View CV", href: "#cv" },
       // Screenshots from your own games: left, center, right

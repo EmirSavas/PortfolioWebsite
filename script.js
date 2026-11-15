@@ -94,6 +94,51 @@
     art.appendChild(el("div", { class: "art-card art-" + (i + 1) }, [el("img", { src: a.src, alt: "", width: "676", height: "1200", decoding: "async" })]));
   });
 
+
+  /* ---------- Hero environment: small floating islands, crystals, clouds, stars (all CSS-animated) ---------- */
+  (function () {
+    var box = $("hero-env");
+    if (H.environment === false) { box.remove(); return; }
+    var ROCK = '<polygon points="20,60 50,82 92,158 34,104" fill="#3a2f8f"/><polygon points="50,82 120,84 92,158" fill="#4a3bb0"/><polygon points="120,84 185,66 150,112 92,158" fill="#33267a"/><polygon points="34,104 92,158 62,126" fill="#2b2170"/>';
+    var TOP = '<polygon points="20,60 70,40 140,44 185,66 120,84 50,82" fill="#2a6f66"/><polygon points="70,40 140,44 120,60 60,58" fill="#378a78" opacity=".7"/><polygon points="120,84 185,66 150,62" fill="#235c5c" opacity=".7"/>';
+    function crystals(x, y, k) {
+      k = k || 1;
+      return '<g class="cr" transform="translate(' + x + " " + y + ") scale(" + k + ')"><polygon points="-6,0 0,-34 8,0" fill="#5fe9ff"/><polygon points="0,-34 8,0 2,0" fill="#b8f7ff"/>' +
+        '<polygon points="-20,2 -15,-18 -8,2" fill="#a98bff"/><polygon points="-15,-18 -8,2 -13,2" fill="#d3c4ff"/>' +
+        '<polygon points="12,3 17,-12 24,3" fill="#3fc6dc"/></g>';
+    }
+    var ISL = '<svg viewBox="0 0 200 170" focusable="false"><g>' + ROCK + TOP + "</g>@C</svg>";
+    var EDGE = '<svg viewBox="0 0 320 170" preserveAspectRatio="xMidYMax slice" focusable="false"><polygon points="0,72 40,50 90,58 140,38 200,54 260,42 320,62 320,170 0,170" fill="#241d68"/><polygon points="0,72 40,50 90,58 140,38 200,54 260,42 320,62 320,76 260,58 200,70 140,54 90,74 40,66 0,86" fill="#2a6f66"/><polygon points="90,74 140,54 150,110 100,130" fill="#2f2680"/><polygon points="200,70 260,58 250,120 205,128" fill="#2f2680"/><polygon points="40,66 90,74 70,130 20,120" fill="#1d1758"/>@C</svg>';
+    var MOUNT = '<svg viewBox="0 0 1200 200" preserveAspectRatio="none" focusable="false"><defs><linearGradient id="hm" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#2a2a78" stop-opacity=".55"/><stop offset="1" stop-color="#2a2a78" stop-opacity="0"/></linearGradient></defs><polygon points="0,200 0,140 90,90 170,130 280,60 380,125 470,95 560,140 680,70 790,130 880,100 990,55 1090,115 1200,80 1200,200" fill="url(#hm)"/></svg>';
+    var layers = [
+      ['moon', ''],
+      ['cloud cloud-1', ''], ['cloud cloud-2', ''], ['cloud cloud-3', ''],
+      ['mount', MOUNT],
+      ['isl isl-a', EDGE.replace("@C", crystals(70, 62, 1.7) + crystals(236, 54, 1.4))],
+      ['isl isl-b', ISL.replace("@C", crystals(110, 46, 1.6))],
+      ['isl isl-c', EDGE.replace("@C", crystals(110, 46, 1.9) + crystals(250, 58, 1.3))],
+      ['isl isl-d', ISL.replace("@C", crystals(96, 48, 1.1))],
+      ['isl isl-e', ISL.replace("@C", crystals(118, 46, 1.4))]
+    ];
+    layers.forEach(function (l) {
+      var d = el("div", { class: "env " + l[0] });
+      if (l[1]) { d.appendChild(svg(l[1])); }
+      box.appendChild(d);
+    });
+    // a few stars, mostly on the right where the light is stronger
+    var stars = [[52, 8], [60, 20], [66, 6], [74, 14], [81, 30], [88, 8], [93, 24], [97, 44], [70, 36], [58, 46], [84, 52], [46, 28], [12, 12], [30, 7]];
+    stars.forEach(function (p, i) {
+      var s2 = el("i", { class: "env star" });
+      s2.style.cssText = "left:" + p[0] + "%;top:" + p[1] + "%;--w:" + (-i * 1.3).toFixed(1) + "s;--t:" + (3.5 + (i % 4)) + "s";
+      box.appendChild(s2);
+    });
+    // each crystal gets its own phase so they never glow in sync; a few emit a pulse ring
+    Array.prototype.forEach.call(box.querySelectorAll(".cr"), function (c, i) {
+      c.style.setProperty("--w", (-i * 1.7).toFixed(1) + "s");
+      c.style.setProperty("--t", (4 + (i % 3)) + "s");
+    });
+  })();
+
   /* Very few, very slow particles in the hero background (CSS-animated, transform + opacity only) */
   (function () {
     var box = $("particles"), spots = [[8, 22], [18, 70], [31, 40], [44, 84], [57, 18], [66, 62], [74, 30], [83, 76], [91, 14], [95, 52]];
@@ -367,7 +412,9 @@
   revealEls.forEach(function (n) { n.classList.add("reveal"); });
   // stagger siblings that share a parent
   [$("expertise"), $("journey")].forEach(function (parent) {
-    Array.prototype.forEach.call(parent.children, function (c, i) { c.style.setProperty("--d", Math.min(i, 5) * 80 + "ms"); });
+    // on first load the hero strip comes in last, after the copy and the screenshots
+    var base = (parent === $("expertise") && window.scrollY < 80) ? 1050 : 0;
+    Array.prototype.forEach.call(parent.children, function (c, i) { c.style.setProperty("--d", base + Math.min(i, 5) * 90 + "ms"); });
   });
   if ("IntersectionObserver" in window && !reduceMotion) {
     var io = new IntersectionObserver(function (entries) {
