@@ -35,6 +35,7 @@
     bulb: '<svg viewBox="0 0 24 24" class="ico-bulb" aria-hidden="true"><path d="M9 18h6M10 21h4"/><path d="M12 3a6 6 0 0 0-3.5 10.900c.6.5 1 1.200 1 2V16h5v-.1c0-.8.4-1.500 1-2A6 6 0 0 0 12 3Z"/><path class="ray" d="M3 9H1.500"/><path class="ray" d="M21 9h1.500"/><path class="ray" d="M5 3.500 4 2.500"/></svg>',
     layers: '<svg viewBox="0 0 24 24" class="ico-layers" aria-hidden="true"><path class="top" d="M12 3 2.500 8 12 13l9.500-5L12 3Z"/><path class="mid" d="m2.500 12 9.500 5 9.500-5"/><path d="m2.500 16 9.500 5 9.500-5"/></svg>',
     code: '<svg viewBox="0 0 24 24" class="ico-code" aria-hidden="true"><path class="l" d="m8 7-5 5 5 5"/><path class="r" d="m16 7 5 5-5 5"/><path d="m14 5-4 14"/></svg>',
+    gamepad: '<svg viewBox="0 0 24 24" class="ico-pad" aria-hidden="true"><path d="M6 8h12a4 4 0 0 1 3.900 3.100l.8 4.200a2.800 2.800 0 0 1-4.900 2.300L16 16H8l-1.800 1.600a2.800 2.800 0 0 1-4.900-2.300l.8-4.200A4 4 0 0 1 6 8Z"/><path class="dpad" d="M8 10.500v3M6.500 12h3"/><circle class="btn-a" cx="15.500" cy="11" r=".6"/><circle class="btn-b" cx="17.500" cy="13" r=".6"/></svg>',
     bars: '<svg viewBox="0 0 24 24" class="ico-bars" aria-hidden="true"><path class="b" d="M5 21v-7"/><path class="b" d="M12 21V4"/><path class="b" d="M19 21v-11"/></svg>'
   };
 
@@ -67,12 +68,9 @@
 
   /* ---------- Hero ---------- */
   var H = T.hero;
+  $("hero-name").textContent = T.person.name;
   $("hero-label").textContent = H.label;
-  var title = $("hero-title");
-  title.appendChild(document.createTextNode(H.headline + " "));
-  var accent = el("span", { class: "accent", text: H.headlineAccent });
-  accent.appendChild(svg('<svg viewBox="0 0 200 12" preserveAspectRatio="none" aria-hidden="true"><path pathLength="1" d="M3 8c30-5 62-6 95-4 35 2 62 2 98-2"/></svg>'));
-  title.appendChild(accent);
+  highlight($("hero-title"), H.headline, [H.headlineHighlight]);
   $("hero-text").textContent = H.text;
 
   var primary = el("a", { class: "btn btn-primary", href: H.primary.href }, [document.createTextNode(H.primary.label)]);
@@ -87,6 +85,16 @@
   H.art.forEach(function (a, i) {
     art.appendChild(el("div", { class: "art-card art-" + (i + 1) }, [el("img", { src: a.src, alt: "", width: "676", height: "1200", decoding: "async" })]));
   });
+
+  /* Very few, very slow particles in the hero background (CSS-animated, transform + opacity only) */
+  (function () {
+    var box = $("particles"), spots = [[8, 22], [18, 70], [31, 40], [44, 84], [57, 18], [66, 62], [74, 30], [83, 76], [91, 14], [95, 52]];
+    spots.forEach(function (p, i) {
+      var d = el("i", {});
+      d.style.cssText = "left:" + p[0] + "%;top:" + p[1] + "%;--s:" + (2 + (i % 3)) + "px;--t:" + (14 + (i * 3) % 11) + "s;--w:" + (-i * 2.3).toFixed(1) + "s";
+      box.appendChild(d);
+    });
+  })();
 
   /* Expertise strip */
   T.expertise.forEach(function (x) {

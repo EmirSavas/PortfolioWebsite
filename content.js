@@ -38,11 +38,11 @@ window.SITE = {
     },
 
     hero: {
-      label: "Product Manager / Game Designer",
-      headline: "I design, build and ship",
-      headlineAccent: "games.",
+      label: "Product Manager · Game Designer",
+      headline: "Game design with a product mindset.",
+      headlineHighlight: "product mindset",
       text:
-        "Game designer and product manager with experience in mobile games. I turn ideas into playable, engaging and data-informed experiences, from initial concept to live operations.",
+        "I bring hands-on game development experience to product and design work — shaping concepts, gameplay systems and levels, then guiding production through prototyping, analytics and LiveOps.",
       primary: { label: "View Projects", href: "#projects" },
       secondary: { label: "View CV", href: "#cv" },
       // Screenshots from your own games: left, center, right
@@ -54,10 +54,10 @@ window.SITE = {
     },
 
     expertise: [
-      { icon: "bulb", title: "Game Design", text: "Mechanics, levels, systems" },
-      { icon: "layers", title: "Product Management", text: "Roadmaps, production, LiveOps" },
-      { icon: "code", title: "Prototyping", text: "Unity, C#, rapid iteration" },
-      { icon: "bars", title: "Data & Optimization", text: "KPI tracking, A/B testing, growth" }
+      { icon: "gamepad", title: "Game Design", text: "Mechanics, core loops, level design, economy & progression" },
+      { icon: "bars", title: "Product Management", text: "Product roadmaps, prioritization, KPI tracking & analytics" },
+      { icon: "code", title: "Prototyping & Development", text: "Unity, C#, rapid prototyping & gameplay systems" },
+      { icon: "layers", title: "Production & LiveOps", text: "Production planning, Jira, A/B testing & LiveOps" }
     ],
 
     about: {

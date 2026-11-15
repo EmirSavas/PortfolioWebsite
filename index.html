@@ -11,7 +11,7 @@
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,500;12..96,700&family=Instrument+Sans:wght@400;500;600&display=swap" rel="stylesheet">
   <script>document.documentElement.classList.add("js");</script>
-  <link rel="stylesheet" href="style.css?v=8">
+  <link rel="stylesheet" href="style.css?v=9">
 </head>
 <body>
   <a class="skip" href="#about" id="skip-link">Skip to content</a>
@@ -29,16 +29,18 @@
   </header>
 
   <main>
-    <section class="hero" id="top" aria-labelledby="hero-title">
+    <section class="hero" id="top" aria-labelledby="hero-name">
       <div class="hero-bg" aria-hidden="true">
         <span class="glow glow-purple"></span>
         <span class="glow glow-cyan"></span>
         <span class="dots"></span>
+        <span class="particles" id="particles"></span>
       </div>
       <div class="wrap hero-grid">
         <div class="hero-copy">
+          <h1 class="hero-name" id="hero-name"></h1>
           <p class="hero-label" id="hero-label"></p>
-          <h1 id="hero-title"></h1>
+          <h2 class="hero-headline" id="hero-title"></h2>
           <p class="hero-text" id="hero-text"></p>
           <div class="btn-row" id="hero-actions"></div>
         </div>
@@ -306,8 +308,8 @@
     </div>
   </footer>
 
-  <script src="content.js?v=8"></script>
-  <script src="script.js?v=8"></script>
-  <script type="module" src="cv.js?v=8"></script>
+  <script src="content.js?v=9"></script>
+  <script src="script.js?v=9"></script>
+  <script type="module" src="cv.js?v=9"></script>
 </body>
 </html>
