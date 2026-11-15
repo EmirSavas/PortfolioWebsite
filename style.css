@@ -137,29 +137,38 @@ p { margin: 0 0 1rem; }
 
 /* ---------- Hero ---------- */
 .hero { position: relative; isolation: isolate; overflow: clip; margin-top: calc(-1 * var(--bar)); padding-top: calc(var(--bar) + clamp(2.5rem, 7vw, 5rem)); padding-bottom: clamp(2rem, 5vw, 3.5rem); }
-.hero-bg { position: absolute; inset: 0; z-index: -1; pointer-events: none; -webkit-mask-image: linear-gradient(#000 70%, transparent); mask-image: linear-gradient(#000 70%, transparent); }
+.hero-bg { position: absolute; inset: 0; z-index: -1; pointer-events: none;
+  background:
+    radial-gradient(48% 62% at 80% 42%, rgba(124, 77, 255, 0.5), transparent 72%),
+    radial-gradient(34% 44% at 58% 78%, rgba(36, 104, 255, 0.28), transparent 72%),
+    radial-gradient(30% 40% at 0% 100%, rgba(109, 77, 255, 0.34), transparent 70%),
+    radial-gradient(40% 50% at 96% 0%, rgba(168, 85, 247, 0.28), transparent 70%),
+    linear-gradient(165deg, #070b1d 0%, #0a1030 50%, #150f4a 100%); -webkit-mask-image: linear-gradient(#000 70%, transparent); mask-image: linear-gradient(#000 70%, transparent); }
 .glow { position: absolute; border-radius: 50%; will-change: translate; }
 .glow-purple {
   width: 62rem; height: 62rem; right: -16rem; top: -22rem;
-  background: radial-gradient(closest-side, rgba(109, 77, 255, 0.3), rgba(109, 77, 255, 0.1) 55%, transparent);
+  background: radial-gradient(closest-side, rgba(124, 77, 255, 0.5), rgba(109, 77, 255, 0.16) 55%, transparent);
   translate: calc(var(--px, 0) * -0.5px) calc(var(--sy, 0) * 0.14px);
 }
 .glow-cyan {
   width: 44rem; height: 44rem; left: -18rem; bottom: -14rem;
-  background: radial-gradient(closest-side, rgba(51, 219, 240, 0.1), transparent);
+  background: radial-gradient(closest-side, rgba(51, 219, 240, 0.16), transparent);
   translate: 0 calc(var(--sy, 0) * -0.06px);
 }
 .particles { position: absolute; inset: 0; pointer-events: none; }
 .particles b { position: absolute; width: 6px; height: 6px; border-radius: 50%; background: var(--accent); opacity: 0; }
 .particles i { position: absolute; width: var(--s, 2px); height: var(--s, 2px); border-radius: 50%; background: var(--accent); opacity: 0; }
 @media (prefers-reduced-motion: reduce) { .particles { display: none; } }
-.arc { position: absolute; border-radius: 50%; aspect-ratio: 1; pointer-events: none;
-  background: linear-gradient(135deg, rgba(109, 77, 255, 0.9), rgba(51, 219, 240, 0.55) 55%, rgba(109, 77, 255, 0.1));
-  -webkit-mask: radial-gradient(closest-side, transparent calc(100% - 3px), #000 calc(100% - 2px), #000 calc(100% - 0.5px), transparent); mask: radial-gradient(closest-side, transparent calc(100% - 3px), #000 calc(100% - 2px), #000 calc(100% - 0.5px), transparent);
-  opacity: 0.55; }
-.arc-a { width: 78rem; left: 58%; top: -6rem; }
+.arc { --t: 3px; position: absolute; border-radius: 50%; aspect-ratio: 1; pointer-events: none;
+  background: linear-gradient(145deg, rgba(168, 85, 247, 1), rgba(70, 110, 255, 0.9) 45%, rgba(51, 219, 240, 0.8) 75%, rgba(109, 77, 255, 0.2));
+  -webkit-mask: radial-gradient(closest-side, transparent calc(100% - var(--t) - 1px), #000 calc(100% - var(--t)), #000 calc(100% - 0.5px), transparent); mask: radial-gradient(closest-side, transparent calc(100% - var(--t) - 1px), #000 calc(100% - var(--t)), #000 calc(100% - 0.5px), transparent);
+  opacity: 0.8; }
+.arc.glow { --t: 70px; opacity: 0.16; }
+.arc-a { width: 78rem; left: 55%; top: -6rem; }
 .arc-b { display: none; }
-@media (max-width: 40rem) { .arc-a { width: 34rem; left: 30%; top: 2rem; opacity: 0.5; } .arc-b { display: block; width: 40rem; left: -24rem; bottom: -30rem; opacity: 0.4; } }
+@media (max-width: 40rem) { .arc-a { width: 34rem; left: 34%; top: 3rem; } .arc-b { display: block; width: 40rem; left: -26rem; bottom: -28rem; } .arc.glow { --t: 44px; opacity: 0.1; } .arc-b.glow { opacity: 0.14; } }
+.arc-b.glow { display: none; }
+@media (max-width: 40rem) { .arc-b.glow { display: block; } }
 .dots {
   position: absolute; inset: 0;
   background-image: radial-gradient(rgba(255, 255, 255, 0.9) 1px, transparent 1.4px); background-size: 44px 44px; opacity: 0.09;
