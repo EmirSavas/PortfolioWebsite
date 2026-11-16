@@ -49,7 +49,7 @@ ul, ol { margin: 0; padding: 0; }
 :focus-visible { outline: 2px solid var(--accent); outline-offset: 3px; border-radius: 6px; }
 
 .wrap { width: min(100% - 2 * var(--gutter), var(--max)); margin-inline: auto; }
-.section { padding-block: clamp(3.5rem, 8vw, 6rem); background: linear-gradient(90deg, transparent, var(--line-soft) 18%, var(--line-soft) 82%, transparent) top / 100% 1px no-repeat; }
+.section { padding-block: clamp(3.5rem, 8vw, 6rem); }
 h1, h2, h3, h4 { font-family: var(--font-head); line-height: 1.1; margin: 0; letter-spacing: -0.015em; }
 h2 { font-size: var(--step-2); font-weight: 700; margin-bottom: 1.75rem; text-wrap: balance; }
 p { margin: 0 0 1rem; }
@@ -307,7 +307,7 @@ p { margin: 0 0 1rem; }
 /* ---------- About ---------- */
 .about-section { position: relative; isolation: isolate; }
 .ab-bg { position: absolute; z-index: -1; inset: -3rem calc(50% - 50vw) -2rem; pointer-events: none; overflow: hidden;
-  -webkit-mask-image: linear-gradient(transparent, #000 12rem, #000 calc(100% - 10rem), transparent); mask-image: linear-gradient(transparent, #000 12rem, #000 calc(100% - 10rem), transparent);
+  -webkit-mask-image: linear-gradient(transparent, #000 12rem, #000 calc(100% - 18rem), transparent); mask-image: linear-gradient(transparent, #000 12rem, #000 calc(100% - 18rem), transparent);
   background:
     radial-gradient(60rem 34rem at 88% 8%, rgba(109, 77, 255, 0.16), transparent 66%),
     radial-gradient(48rem 30rem at 4% 62%, rgba(70, 60, 200, 0.12), transparent 68%),
@@ -688,7 +688,7 @@ p { margin: 0 0 1rem; }
   background: radial-gradient(closest-side, rgba(109, 77, 255, 0.14), transparent);
 }
 .projects > .wrap:first-child { padding-top: clamp(3.5rem, 8vw, 6rem); }
-.pj-bg { position: absolute; z-index: -1; inset: 0; pointer-events: none; overflow: hidden; }
+.pj-bg { position: absolute; z-index: -1; inset: -6rem 0 0; pointer-events: none; overflow: hidden; }
 .pj-bg > span:not(.pj-dots) { position: absolute; background-repeat: no-repeat; background-position: center; background-size: 100% 100%; mix-blend-mode: screen; opacity: 0.85;
   -webkit-mask-composite: source-in; mask-composite: intersect; }
 .pj-tr { top: 1rem; right: 0; width: min(58rem, 64vw); aspect-ratio: 836 / 376; background-image: url("assets/bg/pj-tr.webp");
