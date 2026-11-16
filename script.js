@@ -136,23 +136,16 @@
   /* ---------- About, experience, CV, contact ---------- */
   /* ---------- About ---------- */
   var A = T.about;
-  $("about-eyebrow").textContent = A.eyebrow;
-  (function () {
-    var h = $("about-h");
-    var parts = A.heading.split(A.headingAccent);
-    h.appendChild(document.createTextNode(parts[0]));
-    var acc = el("span", { class: "accent", text: A.headingAccent });
-    acc.appendChild(svg('<svg viewBox="0 0 200 12" preserveAspectRatio="none" aria-hidden="true"><path pathLength="1" d="M3 8c30-5 62-6 95-4 35 2 62 2 98-2"/></svg>'));
-    h.appendChild(acc);
-    if (parts[1]) { h.appendChild(document.createTextNode(parts[1])); }
-  })();
+  $("about-h").textContent = A.heading;
 
   A.steps.forEach(function (st, i) {
     var body = el("div", { class: "ab-body" }, [
       el("h3", { text: st.title }),
       highlight(el("p", { class: "ab-text" }), st.text, st.highlights)
     ]);
-    $("about-steps").appendChild(el("li", { class: "ab-step reveal" }, [el("span", { class: "ab-num", "aria-hidden": "true", text: String(i + 1).padStart(2, "0") }), body]));
+    var li = el("li", { class: "ab-step reveal" }, [el("span", { class: "ab-num", "aria-hidden": "true", text: String(i + 1).padStart(2, "0") }), body]);
+    li.style.setProperty("--d", i * 220 + "ms");
+    $("about-steps").appendChild(li);
   });
 
   var AB = {
@@ -160,43 +153,73 @@
     code: '<svg viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="m8 7-5 5 5 5M16 7l5 5-5 5M14 5l-4 14"/></svg>',
     layers: '<svg viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3 2.500 8 12 13l9.500-5L12 3Z"/><path d="m2.500 12 9.500 5 9.500-5"/><path d="m2.500 16 9.500 5 9.500-5"/></svg>',
     bolt: '<svg viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M13 2 4 14h7l-1 8 9-12h-7Z"/></svg>',
+    bulb: '<svg viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M9 18h6M10 21h4"/><path d="M12 3a6 6 0 0 0-3.500 10.900c.6.500 1 1.200 1 2V16h5v-.100c0-.800.400-1.500 1-2A6 6 0 0 0 12 3Z"/></svg>',
+    bars: '<svg viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M4 20h16"/><path d="M7 20v-6M12 20V6M17 20v-9"/></svg>',
     people: '<svg viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="9" cy="8" r="3.200"/><path d="M3 20c0-3.400 2.700-5.500 6-5.500s6 2.100 6 5.500"/><circle cx="17.500" cy="9" r="2.400"/><path d="M17 14.600c2.400.1 4 1.700 4 4.400"/></svg>'
   };
-  function pills(list) {
+  function icon(key) {
+    var ico = el("span", { class: "gl-ico" });
+    ico.appendChild(svg(AB[key] || AB.bolt));
+    return ico;
+  }
+  function chips(list) {
     var ul = el("ul", { class: "ab-pills" });
-    list.forEach(function (t) { ul.appendChild(el("li", { text: t })); });
+    list.forEach(function (t, i) {
+      var li = el("li", { text: t });
+      li.style.setProperty("--i", i);
+      ul.appendChild(li);
+    });
     return ul;
   }
-  function glanceRow(iconKey, label, content) {
-    var ico = el("span", { class: "gl-ico" });
-    ico.appendChild(svg(AB[iconKey]));
-    return el("div", { class: "gl-row" }, [ico, el("div", { class: "gl-main" }, [el("h4", { text: label }), content])]);
+  function glanceCard(iconKey, label, content, n) {
+    var card = el("section", { class: "gl-card reveal" }, [
+      el("div", { class: "gl-top" }, [icon(iconKey), el("h4", { text: label })]),
+      content
+    ]);
+    card.style.setProperty("--d", 120 + n * 140 + "ms");
+    return card;
   }
   var G = A.glance;
   $("gl-h").textContent = G.heading;
-  var edu = el("div", {}, [
-    el("p", { class: "gl-title", text: G.education.title }),
-    el("p", { class: "gl-sub", text: G.education.school }),
+  var edu = el("div", { class: "gl-edu" }, [
+    el("div", {}, [
+      el("p", { class: "gl-title", text: G.education.title }),
+      el("p", { class: "gl-sub", text: G.education.school })
+    ]),
     el("span", { class: "gl-years", text: G.education.years })
   ]);
-  $("glance-list").appendChild(glanceRow("cap", G.educationLabel, edu));
-  $("glance-list").appendChild(glanceRow("code", G.toolkitLabel, pills(G.toolkit)));
-  $("glance-list").appendChild(glanceRow("layers", G.expertiseLabel, pills(G.expertise)));
-
-  $("now-label").textContent = A.currently.label;
-  $("now-role").appendChild(el("strong", { text: A.currently.role }));
-  $("now-role").appendChild(document.createTextNode(" · " + A.currently.company));
+  $("glance-list").appendChild(glanceCard("cap", G.educationLabel, edu, 0));
+  $("glance-list").appendChild(glanceCard("code", G.toolkitLabel, chips(G.toolkit), 1));
+  $("glance-list").appendChild(glanceCard("layers", G.expertiseLabel, chips(G.expertise), 2));
 
   $("how-label").textContent = A.how.label;
-  A.how.items.forEach(function (it) {
-    var ico = el("span", { class: "gl-ico" });
-    ico.appendChild(svg(AB[it.icon] || AB.bolt));
-    $("how-list").appendChild(el("li", { class: "how-item" }, [ico, el("div", {}, [el("h4", { text: it.title }), el("p", { text: it.text })])]));
+  A.how.items.forEach(function (it, i) {
+    var li = el("li", { class: "how-item reveal" }, [
+      icon(it.icon),
+      el("div", { class: "how-copy" }, [
+        el("span", { class: "how-n", "aria-hidden": "true", text: String(i + 1).padStart(2, "0") }),
+        el("h4", { text: it.title }),
+        el("p", { text: it.text })
+      ])
+    ]);
+    li.style.setProperty("--d", i * 120 + "ms");
+    $("how-list").appendChild(li);
   });
-  // entrance: heading block, steps one by one, side panels, then the "how I work" strip
-  Array.prototype.forEach.call($("about-steps").children, function (n, i) { n.style.setProperty("--d", i * 140 + "ms"); });
-  Array.prototype.forEach.call(document.querySelectorAll(".ab-panel"), function (n, i) { n.classList.add("reveal"); n.style.setProperty("--d", 120 + i * 140 + "ms"); });
-  $("about-how").classList.add("reveal");
+
+  // a few very quiet particles in the About background
+  (function () {
+    var box = $("ab-dots");
+    if (!box) { return; }
+    for (var i = 0; i < 14; i++) {
+      var d = el("i", {});
+      d.style.left = (Math.random() * 100).toFixed(1) + "%";
+      d.style.top = (Math.random() * 100).toFixed(1) + "%";
+      d.style.setProperty("--s", (1 + Math.random() * 1.5).toFixed(1) + "px");
+      d.style.setProperty("--t", (9 + Math.random() * 9).toFixed(1) + "s");
+      d.style.setProperty("--w", (-Math.random() * 12).toFixed(1) + "s");
+      box.appendChild(d);
+    }
+  })();
 
   /* ---------- Experience: career journey ---------- */
   var X = T.experience;

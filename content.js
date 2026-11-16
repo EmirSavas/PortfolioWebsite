@@ -61,24 +61,22 @@ window.SITE = {
     ],
 
     about: {
-      eyebrow: "Get to know me",
-      heading: "Beyond the Games",
-      headingAccent: "Games",
+      heading: "About Me",
       steps: [
         {
-          title: "The background",
-          text: "I am a product manager and game designer with a background in game development. I studied Digital Game Design at Bahçeşehir University and have worked in mobile hyper-casual and hybrid-casual games since 2022, first as a Unity developer and later growing into a game designer and product manager.",
-          highlights: ["Digital Game Design", "Bahçeşehir University", "since 2022"]
+          title: "Who I Am",
+          text: "I’m a Product Manager in the mobile games industry with a background in Digital Game Design. I’ve been part of the industry for several years, working primarily across hyper-casual and hybrid-casual games. Along the way, I’ve also gained hands-on experience in Game Design and Level Design, which helps me bring a broader perspective to product decisions and player experience.",
+          highlights: ["Product Manager", "Digital Game Design", "hyper-casual", "hybrid-casual", "Game Design", "Level Design"]
         },
         {
-          title: "What I do",
-          text: "My work covers game ideation, gameplay and level design, economy and progression, production planning, KPI tracking, A/B testing and LiveOps. I also use AI tools to build quick prototypes and visual references, helping teams explore ideas before production begins.",
-          highlights: ["game ideation", "level design", "KPI tracking", "A/B testing", "LiveOps", "AI tools"]
+          title: "What I Bring",
+          text: "My experience spans casual and midcore mobile games, as well as PC projects. Starting my career as a Game Developer gave me a strong technical foundation, allowing me to collaborate effectively with development and art teams. Today, my work combines product planning, prototyping, LiveOps, KPI analysis and data-informed decision-making. I’m also comfortable using AI tools to explore ideas, create content and build prototypes quickly.",
+          highlights: ["casual and midcore", "PC projects", "Game Developer", "technical foundation", "product planning", "LiveOps", "KPI analysis", "AI tools"]
         },
         {
-          title: "Beyond work",
-          text: "I also founded an independent studio, Promander Games, where I explore and develop original game ideas. I enjoy taking projects from the initial concept to production and continuously finding better ways to create engaging games.",
-          highlights: ["Promander Games"]
+          title: "My Background",
+          text: "I’ve wanted to make games since I was young, which naturally led me to study Digital Game Design at Bahçeşehir University. Gaming has always been a big part of my life. I regularly play games on both mobile and PC platforms and have followed the industry closely for years. This passion continues to influence how I approach products, understand players and evaluate new ideas.",
+          highlights: ["Digital Game Design", "Bahçeşehir University", "mobile and PC", "players"]
         }
       ],
       glance: {
@@ -86,17 +84,17 @@ window.SITE = {
         educationLabel: "Education",
         education: { title: "Digital Game Design", school: "Bahçeşehir University", years: "2018 – 2023" },
         toolkitLabel: "Toolkit",
-        toolkit: ["Unity", "Jira", "Tiled", "Unreal Engine 4"],
-        expertiseLabel: "Expertise",
-        expertise: ["Game Ideation", "Prototyping", "GDD Creation", "Level Design", "KPI Tracking", "A/B Testing", "LiveOps", "AI-Assisted Prototyping"]
+        toolkit: ["Unity", "Jira", "Tiled", "Unreal Engine 4", "Google Sheets", "Google Docs", "Google Slides", "Firebase", "Google Analytics", "Machinations", "AI Tools"],
+        expertiseLabel: "Areas of expertise",
+        expertise: ["Product Strategy", "Game Design", "Level Design", "Prototyping", "Economy & Progression", "KPI Analysis", "A/B Testing", "LiveOps", "Production Planning", "Player Experience"]
       },
-      currently: { label: "Currently", role: "Product Manager", company: "Ziylan Medya (3Dinoz Games)" },
       how: {
         label: "How I work",
         items: [
-          { icon: "bolt", title: "Prototype Early", text: "Turn ideas into playable versions quickly." },
-          { icon: "layers", title: "Think in Systems", text: "Design features that fit the bigger picture." },
-          { icon: "people", title: "Build for Players", text: "Create engaging, satisfying and lasting experiences." }
+          { icon: "bulb", title: "Ideate", text: "Turn opportunities and creative ideas into clear game and product concepts." },
+          { icon: "bolt", title: "Prototype & Validate", text: "Make ideas tangible, build quick prototypes and test them early." },
+          { icon: "layers", title: "Own the Process", text: "Follow features from initial planning through production, iteration and release." },
+          { icon: "bars", title: "Measure & Improve", text: "Analyze player behavior and KPIs to identify opportunities and improve the experience." }
         ]
       }
     },
