@@ -211,6 +211,7 @@ window.SITE = {
           tags: ["Mobile", "Puzzle", "Hybrid-casual"],
           accent: "#35e0f2",
           bg: "assets/projects/blast-defence/bg.webp",
+          banner: "assets/projects/blast-defence/banner.webp",
           logo: "assets/projects/blast-defence/logo.webp",
           phones: [
             "assets/projects/blast-defence/phone-1.webp",
@@ -242,6 +243,7 @@ window.SITE = {
           tags: ["Mobile", "Puzzle", "Hybrid-casual"],
           accent: "#ffd23f",
           bg: "assets/projects/lift-rush/bg.webp",
+          banner: "assets/projects/lift-rush/banner.webp",
           logo: "assets/projects/lift-rush/logo.webp",
           phones: [
             "assets/projects/lift-rush/phone-1.webp",
@@ -273,6 +275,7 @@ window.SITE = {
           tags: ["Mobile", "Idle", "Hybrid-casual"],
           accent: "#5eeab5",
           bg: "assets/projects/subway-flow/bg.webp",
+          banner: "assets/projects/subway-flow/banner.webp",
           logo: "assets/projects/subway-flow/logo.webp",
           phones: [
             "assets/projects/subway-flow/phone-1.webp",
@@ -303,6 +306,7 @@ window.SITE = {
           tags: ["Mobile", "Puzzle", "Casual"],
           accent: "#ff9d7a",
           bg: "assets/projects/royal-words/bg.webp",
+          banner: "assets/projects/royal-words/banner.webp",
           logo: "assets/projects/royal-words/logo.webp",
           phones: [
             "assets/projects/royal-words/phone-1.webp",
@@ -334,6 +338,7 @@ window.SITE = {
           tags: ["Mobile", "Puzzle", "Hybrid-casual"],
           accent: "#ff6fae",
           bg: "assets/projects/move-it-all/bg.webp",
+          banner: "assets/projects/move-it-all/banner.webp",
           logo: "assets/projects/move-it-all/logo.webp",
           phones: [
             "assets/projects/move-it-all/phone-1.webp",
@@ -363,6 +368,7 @@ window.SITE = {
           tags: ["Mobile", "Arcade idle", "Hybrid-casual"],
           accent: "#ffa63d",
           bg: "assets/projects/ember-born/bg.webp",
+          banner: "assets/projects/ember-born/banner.webp",
           logo: "assets/projects/ember-born/logo.webp",
           phones: [
             "assets/projects/ember-born/phone-1.webp",

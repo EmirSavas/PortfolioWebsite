@@ -379,13 +379,29 @@
   $("proj-h").textContent = PJ.heading;
   $("proj-intro").textContent = PJ.intro;
 
+  var TI = function (d) { return '<svg viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">' + d + '</svg>'; };
+  var TAGICON = {
+    "mobile": TI('<rect x="7" y="2.500" width="10" height="19" rx="2.500"/><path d="M11 18.500h2"/>'),
+    "puzzle": TI('<path d="M10 3a2 2 0 0 1 4 0v2h4v4h-2a2 2 0 0 0 0 4h2v6h-6v-2a2 2 0 0 0-4 0v2H4v-6h2a2 2 0 0 0 0-4H4V5h6Z"/>'),
+    "hybrid-casual": TI('<path d="M12 3 3 8l9 5 9-5-9-5Z"/><path d="m3 12 9 5 9-5"/><path d="m3 16 9 5 9-5"/>'),
+    "idle": TI('<path d="M4 20h16"/><path d="M7 20v-6M12 20V6M17 20v-9"/>'),
+    "casual": TI('<path d="M6 8h12a4 4 0 0 1 3.900 3.100l.8 4.200a2.800 2.800 0 0 1-4.900 2.300L16 16H8l-1.800 1.600a2.800 2.800 0 0 1-4.900-2.300l.8-4.200A4 4 0 0 1 6 8Z"/><path d="M8 10.500v3M6.500 12h3"/>'),
+    "arcade idle": TI('<path d="M6 8h12a4 4 0 0 1 3.900 3.100l.8 4.200a2.800 2.800 0 0 1-4.900 2.300L16 16H8l-1.800 1.600a2.800 2.800 0 0 1-4.900-2.300l.8-4.200A4 4 0 0 1 6 8Z"/><path d="M8 10.500v3M6.500 12h3"/>')
+  };
+
   PJ.items.forEach(function (p) {
     var bg = el("span", { class: "pb-bg", "aria-hidden": "true" });
-    bg.style.backgroundImage = 'url("' + p.bg + '")';
+    bg.style.setProperty("--bgu", 'url("' + (p.banner || p.bg) + '")');
     var shape = el("span", { class: "pb-shape", "aria-hidden": "true" }, [bg]);
 
     var tags = el("ul", { class: "pb-tags" });
-    p.tags.forEach(function (t) { tags.appendChild(el("li", { text: t })); });
+    p.tags.forEach(function (t) {
+      var li = el("li", {});
+      var k = TAGICON[t.toLowerCase()];
+      if (k) { li.appendChild(svg(k)); }
+      li.appendChild(document.createTextNode(t));
+      tags.appendChild(li);
+    });
     var cta = el("span", { class: "pb-cta" }, [document.createTextNode(T.ui.viewProject)]);
     cta.appendChild(svg(ARROW));
     var copy = el("span", { class: "pb-copy" }, [el("span", { class: "pb-short", text: p.short }), tags, cta]);
