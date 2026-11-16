@@ -692,8 +692,7 @@ window.SITE = {
       copyFailedLabel: "Copy failed. Select the address instead.",
       linkedinLabel: "Connect on LinkedIn",
       linkedinBold: "LinkedIn",
-      footerRight: "Designed with curiosity. Built for players.",
-      footerHighlight: "Built for players."
+      footerRight: "Back to top"
     },
 
     ui: {

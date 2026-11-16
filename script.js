@@ -389,7 +389,8 @@
     });
   })();
   $("copyright").textContent = "\u00a9 " + new Date().getFullYear() + " " + P.name;
-  highlight($("ct-tag"), K.footerRight, [K.footerHighlight]);
+  $("ct-tag").appendChild(document.createTextNode(K.footerRight));
+  $("ct-tag").appendChild(svg('<svg viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 19V5M6 11l6-6 6 6"/></svg>'));
   // entrance: label, headline, text, email card, LinkedIn, then the illustration from the right
   [$("contact-eyebrow"), $("contact-h"), $("contact-text"), $("ct-mail"), $("ct-in")].forEach(function (n, i) { n.classList.add("reveal"); n.style.setProperty("--d", i * 100 + "ms"); });
   $("ct-art").classList.add("reveal"); $("ct-art").style.setProperty("--d", "250ms");
@@ -418,11 +419,11 @@
     var cum = [0], prev = pt(0);
     for (var j = 1; j <= 120; j++) { var q = pt(j / 120); cum.push(cum[j - 1] + Math.hypot(q[0] - prev[0], q[1] - prev[1])); prev = q; }
     function arc(u) { var f = u * 120, k = Math.min(119, Math.floor(f)); return (cum[k] + (cum[k + 1] - cum[k]) * (f - k)) / cum[120]; }
-    var tails = Array.prototype.slice.call(art.querySelectorAll(".ct-tail path")), tailKeys = tails.map(function () { return []; });
+    var trail = art.querySelector(".ct-trail"), trailKeys = [];
     for (var i = 0; i <= N; i++) {
       var t = i / N, u = 1 - Math.pow(1 - t, 2.3), p = pt(u), hd = arc(u);
       move.push({ translate: (p[0] - end[0]).toFixed(2) + "px " + (p[1] - end[1]).toFixed(2) + "px", rotate: ((ang(u) - endAng) * 0.4).toFixed(2) + "deg", offset: t });
-      tails.forEach(function (tp, k) { var L = parseFloat(tp.style.getPropertyValue("--l")); tailKeys[k].push({ strokeDashoffset: (L - hd).toFixed(4), offset: t }); });
+      trailKeys.push({ strokeDashoffset: (1 - hd).toFixed(4), offset: t });
     }
     var io = new IntersectionObserver(function (es) {
       if (!es[0].isIntersecting) { return; }
@@ -430,9 +431,7 @@
       window.setTimeout(function () {
         plane.animate(move, { duration: 1700, easing: "linear", composite: "add" });
         plane.animate([{ opacity: 0, offset: 0 }, { opacity: 1, offset: 0.16 }, { opacity: 1, offset: 1 }], { duration: 1700, easing: "linear" });
-        tails.forEach(function (tp, k) { tp.animate(tailKeys[k], { duration: 1700, easing: "linear" }); });
-        var lk = art.querySelector(".ct-link");
-        if (lk) { lk.animate([{ opacity: 0, offset: 0 }, { opacity: 0, offset: 0.7 }, { opacity: 0.7, offset: 1 }], { duration: 1700, easing: "linear" }); }
+        if (trail) { trail.animate(trailKeys, { duration: 1700, easing: "linear" }); }
         svgEl.classList.remove("ct-pending");
       }, 900);
     }, { threshold: 0.45 });
