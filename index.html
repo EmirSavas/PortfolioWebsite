@@ -11,7 +11,7 @@
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,500;12..96,700&family=Instrument+Sans:wght@400;500;600&display=swap" rel="stylesheet">
   <script>document.documentElement.classList.add("js");</script>
-  <link rel="stylesheet" href="style.css?v=44">
+  <link rel="stylesheet" href="style.css?v=46">
 </head>
 <body>
   <a class="skip" href="#about" id="skip-link">Skip to content</a>
@@ -269,7 +269,12 @@
               </g>
             </g>
           </g>
-          <g class="ct-swoosh"><path d="M40 410C120 400 220 360 262 300" fill="none" stroke="url(#ct-trail)" stroke-width="5" stroke-linecap="round"/><path d="M262 300C340 262 372 228 356 205" fill="none" stroke="url(#ct-trail)" stroke-width="2" stroke-linecap="round" opacity=".7"/></g>
+          <g class="ct-tail" fill="none" stroke="#7ef0ff" stroke-width="5" stroke-linecap="round">
+            <path pathLength="1" d="M40 410C120 400 220 360 262 300" style="--l:.4" opacity=".24"/>
+            <path pathLength="1" d="M40 410C120 400 220 360 262 300" style="--l:.27" opacity=".34"/>
+            <path pathLength="1" d="M40 410C120 400 220 360 262 300" style="--l:.15" opacity=".5"/>
+          </g>
+          <path class="ct-link" d="M262 300C340 262 372 228 356 205" fill="none" stroke="url(#ct-trail)" stroke-width="2" stroke-linecap="round" opacity=".7"/>
           <g class="ct-plane">
             <g transform="translate(180 262)">
               <polygon points="0,38 128,-2 60,70" fill="#8af0ff"/>
@@ -297,9 +302,9 @@
     </div>
   </footer>
 
-  <script src="content.js?v=44"></script>
-  <script src="script.js?v=44"></script>
-  <script src="analytics.js?v=44"></script>
-  <script type="module" src="cv.js?v=44"></script>
+  <script src="content.js?v=46"></script>
+  <script src="script.js?v=46"></script>
+  <script src="analytics.js?v=46"></script>
+  <script type="module" src="cv.js?v=46"></script>
 </body>
 </html>
