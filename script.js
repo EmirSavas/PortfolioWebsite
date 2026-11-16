@@ -208,6 +208,24 @@
 
   // a few very quiet particles in the About background
   (function () {
+    var xs = $("exp-stars");
+    if (xs) {
+      var n = Math.max(40, Math.round(xs.parentNode.offsetHeight / 24));
+      for (var k = 0; k < n; k++) {
+        var s = el("i", {});
+        var side = Math.random();
+        var x = side < 0.25 ? Math.random() * 14 : side < 0.7 ? 62 + Math.random() * 38 : Math.random() * 100;
+        s.style.left = x.toFixed(1) + "%";
+        s.style.top = (Math.random() * 100).toFixed(1) + "%";
+        var big = Math.random() < 0.16;
+        s.style.setProperty("--s", (big ? 2.4 + Math.random() * 1.4 : 1 + Math.random() * 1.4).toFixed(1) + "px");
+        s.style.setProperty("--t", (3 + Math.random() * 5).toFixed(1) + "s");
+        s.style.setProperty("--w", (-Math.random() * 8).toFixed(1) + "s");
+        if (big) { s.className = "big"; }
+        if (Math.random() < 0.3) { s.className += " dr"; s.style.setProperty("--dt", (11 + Math.random() * 10).toFixed(1) + "s"); }
+        xs.appendChild(s);
+      }
+    }
     ["ab-dots", "pj-dots"].forEach(function (id) {
     var box = $(id);
     if (!box) { return; }

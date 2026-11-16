@@ -147,7 +147,7 @@ p { margin: 0 0 1rem; }
 .glow { position: absolute; border-radius: 50%; will-change: translate; }
 .glow-purple {
   width: 62rem; height: 62rem; right: -16rem; top: -22rem;
-  background: radial-gradient(closest-side, rgba(124, 77, 255, 0.5), rgba(109, 77, 255, 0.16) 55%, transparent);
+  background: radial-gradient(closest-side, rgba(124, 77, 255, 0.5), rgba(109, 77, 255, 0.3) 55%, transparent);
   translate: calc(var(--px, 0) * -0.5px) calc(var(--sy, 0) * 0.14px);
 }
 .glow-cyan {
@@ -160,7 +160,7 @@ p { margin: 0 0 1rem; }
 .particles i { position: absolute; width: var(--s, 2px); height: var(--s, 2px); border-radius: 50%; background: var(--accent); opacity: 0; }
 @media (prefers-reduced-motion: reduce) { .particles { display: none; } }
 .arc { --t: 3px; position: absolute; border-radius: 50%; aspect-ratio: 1; pointer-events: none;
-  background: linear-gradient(145deg, rgba(168, 85, 247, 1), rgba(70, 110, 255, 0.9) 45%, rgba(51, 219, 240, 0.8) 75%, rgba(109, 77, 255, 0.2));
+  background: linear-gradient(145deg, rgba(168, 85, 247, 1), rgba(70, 110, 255, 0.9) 45%, rgba(51, 219, 240, 0.8) 75%, rgba(109, 77, 255, 0.34));
   -webkit-mask: radial-gradient(closest-side, transparent calc(100% - var(--t) - 1px), #000 calc(100% - var(--t)), #000 calc(100% - 0.5px), transparent); mask: radial-gradient(closest-side, transparent calc(100% - var(--t) - 1px), #000 calc(100% - var(--t)), #000 calc(100% - 0.5px), transparent);
   opacity: 0.8; }
 .arc.glow { --t: 70px; opacity: 0.16; }
@@ -309,7 +309,7 @@ p { margin: 0 0 1rem; }
 .ab-bg { position: absolute; z-index: -1; inset: -3rem calc(50% - 50vw) -2rem; pointer-events: none; overflow: hidden;
   -webkit-mask-image: linear-gradient(transparent, #000 12rem, #000 calc(100% - 18rem), transparent); mask-image: linear-gradient(transparent, #000 12rem, #000 calc(100% - 18rem), transparent);
   background:
-    radial-gradient(60rem 34rem at 88% 8%, rgba(109, 77, 255, 0.16), transparent 66%),
+    radial-gradient(60rem 34rem at 88% 8%, rgba(109, 77, 255, 0.3), transparent 66%),
     radial-gradient(48rem 30rem at 4% 62%, rgba(70, 60, 200, 0.12), transparent 68%),
     radial-gradient(40rem 22rem at 60% 100%, rgba(51, 219, 240, 0.06), transparent 70%); }
 .ab-arc { position: absolute; border-radius: 50%; border: 1px solid transparent; opacity: 0.55;
@@ -414,6 +414,13 @@ p { margin: 0 0 1rem; }
 .journey-section { position: relative; isolation: isolate; overflow-x: clip; }
 .exp-bg {
   position: absolute; z-index: -1; inset: -5rem 0 -4rem; pointer-events: none;
+  background:
+    radial-gradient(ellipse 36% 9% at 92% 24%, rgba(109, 77, 255, 0.34), transparent),
+    radial-gradient(ellipse 34% 9% at 6% 38%, rgba(51, 150, 240, 0.26), transparent),
+    radial-gradient(ellipse 38% 10% at 90% 52%, rgba(90, 70, 235, 0.32), transparent),
+    radial-gradient(ellipse 34% 9% at 8% 64%, rgba(109, 77, 255, 0.3), transparent),
+    radial-gradient(ellipse 38% 9% at 88% 80%, rgba(51, 200, 240, 0.22), transparent),
+    radial-gradient(ellipse 34% 8% at 10% 92%, rgba(90, 70, 235, 0.3), transparent);
   -webkit-mask-image: linear-gradient(transparent, #000 7rem, #000 calc(100% - 7rem), transparent);
   mask-image: linear-gradient(transparent, #000 7rem, #000 calc(100% - 7rem), transparent);
 }
@@ -425,6 +432,15 @@ p { margin: 0 0 1rem; }
 .exp-bg::before { top: 0; }
 .exp-bg i { top: 34%; background-position: right bottom; -webkit-mask-image: linear-gradient(to top, transparent, #000 16%, #000 36%, transparent 72%); mask-image: linear-gradient(to top, transparent, #000 16%, #000 36%, transparent 72%); }
 .exp-bg::after { top: 68%; }
+.exp-stars { position: absolute; inset: 0; }
+.exp-stars i { position: absolute; width: var(--s, 2px); height: var(--s, 2px); border-radius: 50%; background: #d6dcff; opacity: 0.55; }
+.exp-stars i.big { background: #bff5ff; box-shadow: 0 0 6px 1px rgba(112, 232, 247, 0.7), 0 0 14px 3px rgba(51, 219, 240, 0.25); opacity: 0.6; }
+@media (prefers-reduced-motion: no-preference) {
+  .exp-stars i { animation: twinkle var(--t, 5s) ease-in-out var(--w, 0s) infinite; }
+  .exp-stars i.dr { animation: twinkle var(--t, 5s) ease-in-out var(--w, 0s) infinite, star-drift var(--dt, 14s) ease-in-out var(--w, 0s) infinite; }
+}
+@keyframes twinkle { 0%, 100% { opacity: 0.25; } 50% { opacity: 1; } }
+@keyframes star-drift { 0%, 100% { translate: 0 0; } 50% { translate: 10px -22px; } }
 .sec-head { position: relative; margin-bottom: clamp(2rem, 4vw, 3rem); }
 .sec-head h2 { margin-bottom: 0.6rem; font-size: clamp(2.1rem, 4.6vw, 3rem); }
 .eyebrow {
@@ -529,7 +545,7 @@ p { margin: 0 0 1rem; }
 /* ---------- CV: introduction + interactive PDF viewer ---------- */
 .cv-section { position: relative; isolation: isolate; overflow-x: clip; }
 .cv-section::before, .cv-section::after { content: ""; position: absolute; z-index: -1; pointer-events: none; }
-.cv-section::before { left: -10%; bottom: -10%; width: 55%; height: 70%; background: radial-gradient(closest-side, rgba(109, 77, 255, 0.2), transparent); }
+.cv-section::before { left: -10%; bottom: -10%; width: 55%; height: 70%; background: radial-gradient(closest-side, rgba(109, 77, 255, 0.34), transparent); }
 .cv-section::after { right: 0; top: 0; width: 45%; height: 50%; background: radial-gradient(closest-side, rgba(51, 219, 240, 0.08), transparent); }
 .cv-wrap { width: min(100% - 2 * var(--gutter), 80rem); margin-inline: auto; display: grid; gap: 2.75rem; }
 @media (min-width: 56rem) { .cv-wrap { grid-template-columns: minmax(0, 19.5rem) minmax(0, 1fr); gap: 2.25rem; align-items: start; } }
