@@ -393,7 +393,7 @@
 
   PJ.items.forEach(function (p) {
     var bg = el("span", { class: "pb-bg", "aria-hidden": "true" });
-    bg.style.setProperty("--bgu", 'url("' + (p.banner || p.bg) + '")');
+
     var shape = el("span", { class: "pb-shape", "aria-hidden": "true" }, [bg]);
 
     var tags = el("ul", { class: "pb-tags" });
@@ -414,6 +414,7 @@
 
     var a = el("a", { class: "pbanner reveal", href: "projects/" + p.id + "/", "aria-label": p.title + ": " + T.ui.viewProject }, [shape, body, phones]);
     a.style.setProperty("--accent", p.accent || "#33dbf0");
+    a.style.setProperty("--bgu", 'url("' + (p.banner || p.bg) + '")');
     $("banners").appendChild(el("li", {}, [a]));
   });
 
