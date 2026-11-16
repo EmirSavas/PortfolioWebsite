@@ -414,11 +414,17 @@ p { margin: 0 0 1rem; }
 .journey-section { position: relative; isolation: isolate; overflow-x: clip; }
 .exp-bg {
   position: absolute; z-index: -1; inset: -5rem 0 -4rem; pointer-events: none;
-  background: url("assets/bg/exp-bg.webp") center top / max(100%, 52rem) auto repeat-y;
-  mix-blend-mode: screen; opacity: 0.95;
-  -webkit-mask-image: linear-gradient(transparent, #000 9rem, #000 calc(100% - 9rem), transparent);
-  mask-image: linear-gradient(transparent, #000 9rem, #000 calc(100% - 9rem), transparent);
+  -webkit-mask-image: linear-gradient(transparent, #000 7rem, #000 calc(100% - 7rem), transparent);
+  mask-image: linear-gradient(transparent, #000 7rem, #000 calc(100% - 7rem), transparent);
 }
+.exp-bg::before, .exp-bg::after, .exp-bg i {
+  content: ""; position: absolute; left: 0; right: 0; height: clamp(30rem, 66.7vw, 64rem);
+  background: url("assets/bg/exp-bg.webp") left top / cover no-repeat; mix-blend-mode: screen;
+  -webkit-mask-image: linear-gradient(transparent, #000 16%, #000 36%, transparent 72%); mask-image: linear-gradient(transparent, #000 16%, #000 36%, transparent 72%);
+}
+.exp-bg::before { top: 0; }
+.exp-bg i { top: 34%; background-position: right bottom; -webkit-mask-image: linear-gradient(to top, transparent, #000 16%, #000 36%, transparent 72%); mask-image: linear-gradient(to top, transparent, #000 16%, #000 36%, transparent 72%); }
+.exp-bg::after { top: 68%; }
 .sec-head { position: relative; margin-bottom: clamp(2rem, 4vw, 3rem); }
 .sec-head h2 { margin-bottom: 0.6rem; font-size: clamp(2.1rem, 4.6vw, 3rem); }
 .eyebrow {
