@@ -208,7 +208,8 @@
 
   // a few very quiet particles in the About background
   (function () {
-    var box = $("ab-dots");
+    ["ab-dots", "pj-dots"].forEach(function (id) {
+    var box = $(id);
     if (!box) { return; }
     for (var i = 0; i < 14; i++) {
       var d = el("i", {});
@@ -219,6 +220,7 @@
       d.style.setProperty("--w", (-Math.random() * 12).toFixed(1) + "s");
       box.appendChild(d);
     }
+    });
   })();
 
   /* ---------- Experience: career journey ---------- */
