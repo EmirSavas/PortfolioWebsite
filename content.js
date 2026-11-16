@@ -434,3 +434,10 @@ window.SITE = {
     }
   }
 };
+
+// Analytics (Umami Cloud). Paste your Website ID between the quotes to switch tracking on; while it is empty nothing is sent.
+window.SITE.analytics = {
+  umamiWebsiteId: "7a082db0-1ced-40a7-b9ba-bb8e0e1c98f0",
+  scriptUrl: "https://cloud.umami.is/script.js",
+  domains: "emirsavas.dev"
+};
