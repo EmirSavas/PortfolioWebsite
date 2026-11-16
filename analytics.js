@@ -18,6 +18,7 @@
   s.src = A.scriptUrl || "https://cloud.umami.is/script.js";
   s.setAttribute("data-website-id", ID);
   if (A.domains) { s.setAttribute("data-domains", A.domains); }   // ignores localhost, github.io previews, etc.
+  s.setAttribute("data-exclude-hash", "true");                     // "/#projects" and "/" are the same page, not two
   s.setAttribute("data-do-not-track", "true");                     // respects the browser's Do Not Track setting
   s.onload = function () { queue.splice(0).forEach(function (q) { send(q[0], q[1]); }); };
   document.head.appendChild(s);
@@ -84,19 +85,20 @@
   }
   window.addEventListener("scroll", onScroll, { passive: true });
 
-  var visible = 0, since = document.visibilityState === "visible" ? Date.now() : 0, reported = false;
+  var lastBucket = "", visible = 0, since = document.visibilityState === "visible" ? Date.now() : 0, reported = false;
   function report() {
     if (reported) { return; }
     if (since) { visible += Date.now() - since; since = 0; }
     var sec = Math.round(visible / 1000);
     if (sec < 3) { return; }
-    reported = true;
     var bucket = sec < 10 ? "3-10s" : sec < 30 ? "10-30s" : sec < 60 ? "30-60s" : sec < 180 ? "1-3min" : "3min+";
+    if (bucket === lastBucket) { return; }   // already reported this length of stay
+    lastBucket = bucket;
     send("time_on_page", { page: project || "home", time: bucket });
   }
   document.addEventListener("visibilitychange", function () {
     if (document.visibilityState === "hidden") { report(); }
-    else { since = Date.now(); reported = false; }
+    else { since = Date.now(); }
   });
   window.addEventListener("pagehide", report);
 })();
