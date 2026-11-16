@@ -11,7 +11,7 @@
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,500;12..96,700&family=Instrument+Sans:wght@400;500;600&display=swap" rel="stylesheet">
   <script>document.documentElement.classList.add("js");</script>
-  <link rel="stylesheet" href="style.css?v=39">
+  <link rel="stylesheet" href="style.css?v=43">
 </head>
 <body>
   <a class="skip" href="#about" id="skip-link">Skip to content</a>
@@ -186,7 +186,8 @@
     </section>
   </main>
 
-  <footer class="wrap section contact" id="contact" aria-labelledby="contact-h">
+  <footer class="section contact" id="contact" aria-labelledby="contact-h">
+    <div class="wrap">
     <div class="ct-grid">
       <div class="ct-copy">
         <p class="eyebrow" id="contact-eyebrow"></p>
@@ -210,7 +211,7 @@
         </a>
       </div>
       <div class="ct-art" id="ct-art" aria-hidden="false">
-        <svg class="ct-svg" viewBox="0 0 640 540" role="img" aria-label="A floating island with a castle under a purple moon, a paper airplane carrying an envelope toward it" focusable="false">
+        <svg class="ct-svg" viewBox="0 40 640 490" role="img" aria-label="A floating island with a castle under a purple moon, a paper airplane carrying an envelope toward it" focusable="false">
           <defs>
             <radialGradient id="ct-moon" cx="45%" cy="40%" r="60%"><stop offset="0" stop-color="#b57cf0"/><stop offset=".7" stop-color="#7d4fd6"/><stop offset="1" stop-color="#5a3bb8"/></radialGradient>
             <radialGradient id="ct-halo" cx="50%" cy="50%" r="50%"><stop offset="0" stop-color="#8f5cf0" stop-opacity=".55"/><stop offset="1" stop-color="#8f5cf0" stop-opacity="0"/></radialGradient>
@@ -255,6 +256,7 @@
               <g fill="#3a3a8a"><polygon points="360,350 385,340 395,360 370,368"/><polygon points="470,355 495,348 500,366 478,372"/></g>
               <path d="M418 262c-14 22 34 30 4 52-26 18-78 14-96 42-12 18-26 18-38 20" fill="none" stroke="#ffb347" stroke-width="12" stroke-linecap="round" opacity=".45" filter="url(#ct-glow-s)"/>
               <path d="M418 262c-14 22 34 30 4 52-26 18-78 14-96 42-12 18-26 18-38 20" fill="none" stroke="url(#ct-path)" stroke-width="5" stroke-linecap="round"/>
+              <ellipse class="ct-cpulse" cx="418" cy="205" rx="78" ry="100" fill="#33dbf0" opacity="0" filter="url(#ct-glow)"/>
               <g class="ct-castle">
                 <rect x="395" y="168" width="46" height="96" fill="#5d5bb2"/>
                 <rect x="372" y="196" width="26" height="68" fill="#4f4da4"/><rect x="438" y="196" width="26" height="68" fill="#4f4da4"/>
@@ -268,6 +270,7 @@
               </g>
             </g>
           </g>
+          <g class="ct-flyer" id="ct-flyer">
           <g class="ct-swoosh"><path d="M40 410C120 400 220 360 262 300" fill="none" stroke="url(#ct-trail)" stroke-width="5" stroke-linecap="round"/><path d="M262 300C340 262 372 228 356 205" fill="none" stroke="url(#ct-trail)" stroke-width="2" stroke-linecap="round" opacity=".7"/></g>
           <g class="ct-plane">
             <g transform="translate(180 262)">
@@ -285,6 +288,7 @@
             </g>
           </g>
           <g class="ct-spark" stroke="#33dbf0" stroke-width="3" stroke-linecap="round"><path d="M272 122l12 14M292 108l4 18M258 148l16 4"/></g>
+          </g>
           <g class="ct-bits" fill="#a98bff"><polygon points="330,470 342,476 334,488 322,482" opacity=".8"/><polygon points="560,470 570,474 564,486 554,480" opacity=".7"/><polygon points="600,418 608,422 603,432 595,427" opacity=".6"/></g>
         </svg>
       </div>
@@ -293,11 +297,12 @@
       <p class="ct-copyright" id="copyright"></p>
       <p class="ct-tag" id="ct-tag"></p>
     </div>
+    </div>
   </footer>
 
-  <script src="content.js?v=39"></script>
-  <script src="script.js?v=39"></script>
-  <script src="analytics.js?v=39"></script>
-  <script type="module" src="cv.js?v=39"></script>
+  <script src="content.js?v=43"></script>
+  <script src="script.js?v=43"></script>
+  <script src="analytics.js?v=43"></script>
+  <script type="module" src="cv.js?v=43"></script>
 </body>
 </html>

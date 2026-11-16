@@ -683,9 +683,9 @@ window.SITE = {
 
     contact: {
       eyebrow: "Get in touch",
-      heading: "Let’s build\nsomething great.",
-      headingAccent: "something great",
-      text: "Have a game idea, a project in mind, or an opportunity to discuss? I’d love to hear from you.",
+      heading: "Let’s build\ngreat games together.",
+      headingAccent: "great games together",
+      text: "I’m always open to new opportunities, collaborations and conversations about building engaging mobile game products. Feel free to get in touch.",
       emailLabel: "Email me",
       copyLabel: "Copy email address",
       copiedLabel: "Copied!",
