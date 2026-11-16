@@ -293,27 +293,17 @@
     });
     return node;
   }
-  $("cv-eyebrow").textContent = C.eyebrow;
   highlight($("cv-h"), C.heading, [C.headingHighlight]);
   highlight($("cv-text"), C.text, C.highlights);
 
   var DL = '<svg viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path class="dl-arrow" d="M12 4v11M7 11l5 5 5-5"/><path d="M4 20h16"/></svg>';
-  var EYE = '<svg viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M2 12s3.600-7 10-7 10 7 10 7-3.600 7-10 7S2 12 2 12Z"/><circle cx="12" cy="12" r="3"/></svg>';
   var fileName = decodeURIComponent(C.file.split("/").pop());
   var dl = el("a", { class: "cv-download", href: C.file, download: fileName }, [
     svg(DL),
     el("span", { class: "cv-dl-label", text: C.downloadLabel }),
     el("span", { class: "cv-size", hidden: "" })
   ]);
-  var read = el("button", { type: "button", class: "cv-read", id: "cv-read" }, [svg(EYE), document.createTextNode(C.readLabel)]);
   $("cv-actions").appendChild(dl);
-  $("cv-actions").appendChild(read);
-  read.addEventListener("click", function () {
-    var v = $("cv-viewer");
-    if (!v) { return; }
-    v.scrollIntoView({ behavior: reduceMotion ? "auto" : "smooth", block: "start" });
-    window.setTimeout(function () { var f = v.querySelector(".v-scroll"); if (f) { f.focus({ preventScroll: true }); } }, reduceMotion ? 0 : 500);
-  });
 
   var FEAT = {
     doc: '<svg viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M14 3H7a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2V8Z"/><path d="M14 3v5h5M9 13h6M9 17h6M9 9h2"/></svg>',
@@ -328,8 +318,8 @@
       el("div", {}, [el("h3", { text: f.title }), el("p", { text: f.text })])
     ]));
   });
-  // entrance order: label, heading, text, buttons, features one by one, then the viewer
-  var cvSteps = [$("cv-eyebrow"), $("cv-h"), $("cv-text"), $("cv-actions")].concat(Array.prototype.slice.call($("cv-feats").children));
+  // entrance order: heading, text, buttons, features one by one, then the viewer
+  var cvSteps = [$("cv-h"), $("cv-text"), $("cv-actions")].concat(Array.prototype.slice.call($("cv-feats").children));
   cvSteps.forEach(function (n, i) { n.classList.add("reveal"); n.style.setProperty("--d", i * 90 + "ms"); });
 
   $("proj-h").textContent = T.projects.heading;

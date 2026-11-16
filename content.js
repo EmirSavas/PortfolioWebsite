@@ -452,13 +452,11 @@ window.SITE = {
     },
 
     cv: {
-      eyebrow: "Curriculum vitae",
       heading: "My CV",
       headingHighlight: "CV",
       text: "A closer look at my experience, skills and background in game design and product management.",
       highlights: ["game design", "product management"],
       downloadLabel: "Download CV (PDF)",
-      readLabel: "View & Read Online",
       file: "assets/cv/Emir_Savas_CV.pdf", // replace this file to update the CV. Page count and size are read from it automatically.
       features: [
         { icon: "doc", title: "Always up to date", text: "The latest version of my CV, including my current experience and skills." },

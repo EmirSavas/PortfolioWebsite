@@ -11,7 +11,7 @@
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,500;12..96,700&family=Instrument+Sans:wght@400;500;600&display=swap" rel="stylesheet">
   <script>document.documentElement.classList.add("js");</script>
-  <link rel="stylesheet" href="style.css?v=37">
+  <link rel="stylesheet" href="style.css?v=39">
 </head>
 <body>
   <a class="skip" href="#about" id="skip-link">Skip to content</a>
@@ -107,7 +107,6 @@
     <section class="section cv-section" id="cv" aria-labelledby="cv-h">
       <div class="cv-wrap">
         <div class="cv-intro">
-          <p class="eyebrow" id="cv-eyebrow"></p>
           <h2 id="cv-h"></h2>
           <p class="cv-desc" id="cv-text"></p>
           <div class="cv-actions" id="cv-actions"></div>
@@ -170,6 +169,16 @@
             <polygon points="344,40 360,70 328,70" fill="#33dbf0" opacity=".55"/>
             <rect x="26" y="52" width="16" height="16" rx="3" fill="#8c7bff" opacity=".55" transform="rotate(20 34 60)"/>
             <circle cx="318" cy="150" r="6" fill="#ff6fae" opacity=".6"/>
+            <g class="cv-fx" fill="none" stroke-linecap="round" stroke-linejoin="round">
+              <path class="fx a" d="M18 112l7 12-14 0z" stroke="#33dbf0" stroke-width="2"/>
+              <rect class="fx b" x="48" y="214" width="9" height="9" rx="2" stroke="#8c7bff" stroke-width="2"/>
+              <circle class="fx c" cx="24" cy="176" r="3.500" fill="#33dbf0"/>
+              <path class="fx d" d="M338 214v10M333 219h10" stroke="#8c7bff" stroke-width="2"/>
+              <circle class="fx e" cx="352" cy="108" r="3" fill="#ff6fae"/>
+              <circle class="fx f" cx="300" cy="14" r="2.500" fill="#cfd6ff"/>
+              <circle class="fx g" cx="80" cy="20" r="2" fill="#cfd6ff"/>
+              <path class="fx h" d="M366 180l5 9-10 0z" stroke="#33dbf0" stroke-width="1.800"/>
+            </g>
           </svg>
         </div>
         <div class="cv-viewer-slot" id="cv-viewer-slot"></div>
@@ -286,9 +295,9 @@
     </div>
   </footer>
 
-  <script src="content.js?v=37"></script>
-  <script src="script.js?v=37"></script>
-  <script src="analytics.js?v=37"></script>
-  <script type="module" src="cv.js?v=37"></script>
+  <script src="content.js?v=39"></script>
+  <script src="script.js?v=39"></script>
+  <script src="analytics.js?v=39"></script>
+  <script type="module" src="cv.js?v=39"></script>
 </body>
 </html>
