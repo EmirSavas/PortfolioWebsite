@@ -394,32 +394,38 @@
   [$("contact-eyebrow"), $("contact-h"), $("contact-text"), $("ct-mail"), $("ct-in")].forEach(function (n, i) { n.classList.add("reveal"); n.style.setProperty("--d", i * 100 + "ms"); });
   $("ct-art").classList.add("reveal"); $("ct-art").style.setProperty("--d", "250ms");
   $("ct-art").classList.add("reveal"); 
-  // one-time paper airplane flight toward the castle when the art first scrolls into view
+  // one-time: the paper airplane glides in along its trail to where it rests, then stays put
   (function () {
-    var art = $("ct-art"), fl = $("ct-flyer"), svgEl = art && art.querySelector(".ct-svg");
-    if (!art || !fl || !svgEl || reduceMotion || !fl.animate || !("IntersectionObserver" in window)) { return; }
-    var bb = fl.getBBox();
-    fl.style.transformBox = "fill-box";
-    fl.style.transformOrigin = (244 - bb.x) + "px " + (300 - bb.y) + "px";
-    var P0 = [0, 0], P1 = [32, -96], P2 = [60, -36], N = 30, frames = [];
-    function ease(t) { return t < 0.5 ? 4 * t * t * t : 1 - Math.pow(-2 * t + 2, 3) / 2; }
+    var art = $("ct-art"), plane = art && art.querySelector(".ct-plane"), svgEl = art && art.querySelector(".ct-svg");
+    if (!plane || !svgEl || reduceMotion || !plane.animate || !("IntersectionObserver" in window)) { return; }
+    svgEl.classList.add("ct-pending");
+    // the trail's own curve: M40 410 C120 400 220 360 262 300; offsets are relative to where the plane rests
+    var B = [[40, 410], [120, 400], [220, 360], [262, 300]], N = 32, move = [], end = null;
+    function pt(u) {
+      var m = 1 - u;
+      return [m * m * m * B[0][0] + 3 * m * m * u * B[1][0] + 3 * m * u * u * B[2][0] + u * u * u * B[3][0],
+              m * m * m * B[0][1] + 3 * m * m * u * B[1][1] + 3 * m * u * u * B[2][1] + u * u * u * B[3][1]];
+    }
+    function ang(u) {
+      var m = 1 - u;
+      var dx = 3 * m * m * (B[1][0] - B[0][0]) + 6 * m * u * (B[2][0] - B[1][0]) + 3 * u * u * (B[3][0] - B[2][0]);
+      var dy = 3 * m * m * (B[1][1] - B[0][1]) + 6 * m * u * (B[2][1] - B[1][1]) + 3 * u * u * (B[3][1] - B[2][1]);
+      return Math.atan2(dy, dx) * 180 / Math.PI;
+    }
+    end = pt(1);
+    var endAng = ang(1);
     for (var i = 0; i <= N; i++) {
-      var t = i / N, u = ease(t), m = 1 - u;
-      var x = m * m * P0[0] + 2 * m * u * P1[0] + u * u * P2[0];
-      var y = m * m * P0[1] + 2 * m * u * P1[1] + u * u * P2[1];
-      var dx = 2 * m * (P1[0] - P0[0]) + 2 * u * (P2[0] - P1[0]);
-      var dy = 2 * m * (P1[1] - P0[1]) + 2 * u * (P2[1] - P1[1]);
-      var rot = (Math.atan2(dy, dx) * 180 / Math.PI + 17.4) * 0.34;
-      if (t > 0.82) { rot = rot * (1 - (t - 0.82) / 0.18) + 3 * ((t - 0.82) / 0.18); }
-      frames.push({ translate: x.toFixed(2) + "px " + y.toFixed(2) + "px", rotate: rot.toFixed(2) + "deg", offset: t });
+      var t = i / N, u = 1 - Math.pow(1 - t, 2.3), p = pt(u);
+      move.push({ translate: (p[0] - end[0]).toFixed(2) + "px " + (p[1] - end[1]).toFixed(2) + "px", rotate: ((ang(u) - endAng) * 0.4).toFixed(2) + "deg", offset: t });
     }
     var io = new IntersectionObserver(function (es) {
       if (!es[0].isIntersecting) { return; }
       io.disconnect();
       window.setTimeout(function () {
-        fl.animate(frames, { duration: 1900, easing: "linear", fill: "forwards" });
-        window.setTimeout(function () { svgEl.classList.add("arrived"); }, 1600);
-      }, 1000);
+        plane.animate(move, { duration: 1700, easing: "linear", composite: "add" });
+        plane.animate([{ opacity: 0, offset: 0 }, { opacity: 1, offset: 0.16 }, { opacity: 1, offset: 1 }], { duration: 1700, easing: "linear" });
+        svgEl.classList.remove("ct-pending");
+      }, 900);
     }, { threshold: 0.45 });
     io.observe(art);
   })();

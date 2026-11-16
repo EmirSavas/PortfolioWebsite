@@ -920,13 +920,8 @@ dialog::backdrop { background: rgba(5, 8, 20, 0.78); backdrop-filter: blur(3px);
 .ct-art { position: relative; min-width: 0; margin-inline: auto; width: 100%; max-width: 38rem; box-sizing: content-box; padding: 4rem 3.5rem 4rem 0; margin-block: -4rem; margin-right: -3.5rem;
   -webkit-mask-image: linear-gradient(to right, transparent 0, #000 22%, #000 calc(100% - 7.5rem), transparent calc(100% - 3.5rem)); mask-image: linear-gradient(to right, transparent 0, #000 22%, #000 calc(100% - 7.5rem), transparent calc(100% - 3.5rem)); }
 .ct-svg { display: block; width: 100%; height: auto; overflow: visible; }
-.ct-island, .ct-plane, .ct-env, .ct-cloud, .ct-flag, .ct-cpulse { transform-box: fill-box; transform-origin: center; }
-@media (prefers-reduced-motion: no-preference) {
-  .ct-svg.arrived .ct-cpulse { animation: ct-cpulse 1.5s ease-out 1 both; }
-  .ct-svg.arrived .ct-castle { animation: ct-castle-lit 1.5s ease-out 1; }
-}
-@keyframes ct-cpulse { 0% { opacity: 0; scale: 0.85; } 30% { opacity: 0.36; scale: 1; } 100% { opacity: 0; scale: 1.2; } }
-@keyframes ct-castle-lit { 0%, 100% { filter: brightness(1); } 30% { filter: brightness(1.18); } }
+.ct-island, .ct-plane, .ct-env, .ct-cloud, .ct-flag { transform-box: fill-box; transform-origin: center; }
+.ct-pending .ct-plane { opacity: 0; }
 
 .ct-foot { margin-top: clamp(1.5rem, 3vw, 2.25rem); padding-top: 1.5rem; border-top: 1px solid var(--line); display: flex; flex-wrap: wrap; gap: 0.6rem 2rem; justify-content: space-between; }
 .ct-copyright, .ct-tag { margin: 0; font-size: var(--step--1); color: var(--muted); }
