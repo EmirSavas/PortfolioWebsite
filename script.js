@@ -228,22 +228,35 @@
   $("exp-eyebrow").textContent = X.eyebrow;
   $("exp-h").textContent = X.heading;
   $("exp-sub").textContent = X.text;
-  X.items.forEach(function (it) {
+  var XI = function (d) { return '<svg viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">' + d + '</svg>'; };
+  var XICONS = {
+    roadmap: XI('<path d="M5 21V4"/><path d="M5 4h12l-2.500 4 2.500 4H5"/>'),
+    map: XI('<path d="m3 6 6-2 6 2 6-2v14l-6 2-6-2-6 2Z"/><path d="M9 4v14M15 6v14"/>')
+  };
+  X.items.forEach(function (it, i) {
     var tags = el("ul", { class: "jc-tags" });
     (it.tags || []).forEach(function (t) { tags.appendChild(el("li", { text: t })); });
-    var meta = el("div", { class: "jc-meta" });
-    if (it.current) { meta.appendChild(el("span", { class: "jc-pill", text: T.ui.currentRole })); }
-    meta.appendChild(el("span", { class: "jc-date" }, [svg(CALENDAR), document.createTextNode(it.dates)]));
-    var card = el("div", { class: "jcard" + (it.current ? " is-current" : "") }, [
-      el("div", { class: "jc-main" }, [el("h3", { class: "jc-role", text: it.role }), el("p", { class: "jc-company", text: it.company }), tags]),
-      el("div", { class: "jc-side" }, [meta, el("p", { class: "jc-text", text: it.summary })])
+    var head = el("div", { class: "jc-head" }, [
+      el("div", { class: "jc-id" }, [el("h3", { class: "jc-role", text: it.role }), el("p", { class: "jc-company", text: it.company })]),
+      el("span", { class: "jc-date" }, [svg(CALENDAR), document.createTextNode(it.dates)])
     ]);
-    $("journey").appendChild(el("li", { class: "jitem reveal" + (it.current ? " is-current" : "") }, [card]));
+    var list = el("ul", { class: "jc-points" });
+    (it.points || []).forEach(function (pt) {
+      list.appendChild(highlight(el("li", {}), pt.text, pt.hl));
+    });
+    var card = el("div", { class: "jcard jc-" + (it.level || "normal") }, [
+      head, tags,
+      highlight(el("p", { class: "jc-intro" }), it.intro, it.introHl),
+      el("p", { class: "jc-label", text: X.keyLabel || "Key responsibilities" }),
+      list
+    ]);
+    var node = el("span", { class: "jn", "aria-hidden": "true", text: String(i + 1).padStart(2, "0") });
+    $("journey").appendChild(el("li", { class: "jitem reveal" + (it.level === "primary" ? " is-primary" : "") }, [node, card]));
   });
   $("core-h").textContent = X.core.heading;
   X.core.items.forEach(function (x) {
     var ico = el("span", { class: "exp-ico" });
-    ico.appendChild(svg(ICONS[x.icon] || ICONS.bulb));
+    ico.appendChild(svg(XICONS[x.icon] || ICONS[x.icon] || ICONS.bulb));
     $("core-list").appendChild(el("li", { class: "exp-item" }, [
       ico,
       el("div", {}, [el("div", { class: "exp-title", text: x.title }), el("p", { class: "exp-text", text: x.text })])

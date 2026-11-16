@@ -100,65 +100,353 @@ window.SITE = {
     },
 
     experience: {
-      eyebrow: "Career journey",
-      heading: "Experience",
-      text: "A path through game development, product design and building games.",
-      items: [
+      "eyebrow": "Career journey",
+      "heading": "Experience",
+      "text": "A path through game development, product design and building games.",
+      "items": [
         {
-          role: "Product Manager",
-          company: "Ziylan Medya (3Dinoz Games)",
-          dates: "February 2026 – Present",
-          current: true,
-          tags: ["Game Design", "Product Planning", "Analytics", "LiveOps"],
-          summary:
-            "Manage casual and hybrid-casual mobile games across game design, product planning, analytics and team coordination. Present game concepts and GDDs, build AI-assisted prototypes, set up production pipelines, run sprints in Jira, track KPIs, run A/B tests and plan LiveOps."
+          "role": "Product Manager",
+          "company": "Ziylan Medya (3Dinoz Games)",
+          "dates": "February 2026 – November 2026",
+          "level": "primary",
+          "tags": [
+            "Product Management",
+            "Team Leadership",
+            "Game Design",
+            "Analytics",
+            "LiveOps"
+          ],
+          "intro": "Managed the development of casual and hybrid-casual mobile games, overseeing product strategy, game design, production planning, analytics and team coordination.",
+          "introHl": [
+            "product strategy",
+            "game design",
+            "production planning",
+            "analytics",
+            "team coordination"
+          ],
+          "points": [
+            {
+              "text": "Led team coordination and managed production workflows, ensuring alignment between different departments and development priorities.",
+              "hl": [
+                "team coordination",
+                "production workflows"
+              ]
+            },
+            {
+              "text": "Generated and presented game concepts, translating ideas into structured product proposals and Game Design Documents (GDDs).",
+              "hl": [
+                "product proposals",
+                "Game Design Documents (GDDs)"
+              ]
+            },
+            {
+              "text": "Managed product planning, task prioritization and sprint workflows using Jira.",
+              "hl": [
+                "product planning",
+                "Jira"
+              ]
+            },
+            {
+              "text": "Coordinated game design, gameplay systems, level production and the development of custom Unity Level Editors.",
+              "hl": [
+                "Unity Level Editors"
+              ]
+            },
+            {
+              "text": "Developed AI-assisted prototypes and visual references to rapidly validate gameplay ideas and communicate product concepts.",
+              "hl": [
+                "AI-assisted prototypes"
+              ]
+            },
+            {
+              "text": "Monitored KPIs and game analytics to support data-driven product decisions.",
+              "hl": [
+                "KPIs",
+                "data-driven product decisions"
+              ]
+            },
+            {
+              "text": "Planned and conducted A/B tests to evaluate gameplay and product improvements.",
+              "hl": [
+                "A/B tests"
+              ]
+            },
+            {
+              "text": "Planned and managed LiveOps activities to support player engagement and ongoing product development.",
+              "hl": [
+                "LiveOps"
+              ]
+            },
+            {
+              "text": "Established production pipelines to streamline content creation and improve team workflows.",
+              "hl": [
+                "production pipelines"
+              ]
+            }
+          ]
         },
         {
-          role: "Founder",
-          company: "Promander Games",
-          dates: "March 2025 – February 2026",
-          tags: ["Studio Building", "Game Development"],
-          summary: "Founded an independent studio making original PC and mobile games, and took projects from first concept to production."
+          "role": "Founder",
+          "company": "Promander Games",
+          "dates": "March 2025 – February 2026",
+          "level": "compact",
+          "tags": [
+            "Indie Game Development",
+            "PC & Mobile Games",
+            "Game Design"
+          ],
+          "intro": "Founded an independent game studio focused on developing original PC and mobile games.",
+          "introHl": [
+            "independent game studio"
+          ],
+          "points": [
+            {
+              "text": "Established and managed an independent game development initiative.",
+              "hl": []
+            },
+            {
+              "text": "Explored original game concepts and managed projects from initial ideation to production.",
+              "hl": []
+            },
+            {
+              "text": "Worked on game design, gameplay systems and product direction.",
+              "hl": []
+            },
+            {
+              "text": "Evaluated game concepts and planned development priorities.",
+              "hl": []
+            }
+          ]
         },
         {
-          role: "Freelance Game Designer",
-          company: "Self-employed",
-          dates: "November 2023 – February 2025",
-          tags: ["GDD", "Prototyping", "Core Loops"],
-          summary:
-            "Designed games for multiple clients: GDDs, mechanics and core loops, Unity prototypes, and original game and board game concepts."
+          "role": "Freelance Game Designer",
+          "company": "Self-employed",
+          "dates": "November 2023 – February 2025",
+          "level": "normal",
+          "tags": [
+            "Game Design",
+            "Prototyping",
+            "GDD",
+            "Game Concepts"
+          ],
+          "intro": "Provided freelance Game Design and Game Development services for clients across multiple projects, transforming ideas into structured and production-ready game concepts.",
+          "introHl": [
+            "Game Design",
+            "production-ready game concepts"
+          ],
+          "points": [
+            {
+              "text": "Created comprehensive Game Design Documents (GDDs), gameplay mechanics and core gameplay loops.",
+              "hl": [
+                "Game Design Documents (GDDs)",
+                "core gameplay loops"
+              ]
+            },
+            {
+              "text": "Designed original game concepts and board game experiences based on client requirements.",
+              "hl": []
+            },
+            {
+              "text": "Developed gameplay systems and prototypes using Unity.",
+              "hl": [
+                "Unity"
+              ]
+            },
+            {
+              "text": "Collaborated closely with clients to refine ideas and translate creative concepts into actionable designs.",
+              "hl": []
+            }
+          ]
         },
         {
-          role: "Product Manager",
-          company: "Perwella",
-          dates: "June 2023 – November 2023",
-          tags: ["Product Operations", "E-commerce"],
-          summary: "Managed B2B and B2C product operations on e-commerce marketplaces, including launches, pricing, inventory and promotions."
+          "role": "Product Manager",
+          "company": "Perwella",
+          "dates": "June 2023 – November 2023",
+          "level": "normal",
+          "tags": [
+            "Product Management",
+            "Product Optimization",
+            "Data Analysis"
+          ],
+          "intro": "Managed product operations across B2B and B2C online marketplaces, focusing on product planning, performance analysis and operational improvements.",
+          "introHl": [
+            "product planning",
+            "performance analysis"
+          ],
+          "points": [
+            {
+              "text": "Managed product launches and ongoing product operations across online marketplaces.",
+              "hl": [
+                "product launches"
+              ]
+            },
+            {
+              "text": "Analyzed product and sales performance to identify optimization opportunities.",
+              "hl": [
+                "optimization opportunities"
+              ]
+            },
+            {
+              "text": "Evaluated pricing strategies, product positioning and promotional performance.",
+              "hl": []
+            },
+            {
+              "text": "Improved product listings and marketplace performance through data-driven decisions.",
+              "hl": [
+                "data-driven decisions"
+              ]
+            },
+            {
+              "text": "Coordinated product operations and worked on process improvements.",
+              "hl": []
+            }
+          ]
         },
         {
-          role: "Game Developer",
-          company: "Midquest Games",
-          dates: "May 2022 – January 2023",
-          tags: ["Unity", "Gameplay Systems", "VFX"],
-          summary:
-            "Built levels and reusable gameplay systems in Unity for hyper-casual and hybrid-casual games, optimized mobile performance, and created shaders, VFX and animations."
+          "role": "Game Developer",
+          "company": "Midway Games",
+          "dates": "May 2022 – January 2023",
+          "level": "major",
+          "tags": [
+            "Unity",
+            "C#",
+            "Gameplay Systems",
+            "Level Design",
+            "VFX & Shaders"
+          ],
+          "intro": "Worked as a Game Developer on hyper-casual and hybrid-casual mobile games, contributing to gameplay development, level design and visual quality throughout the production process.",
+          "introHl": [
+            "hyper-casual and hybrid-casual",
+            "gameplay development",
+            "level design"
+          ],
+          "points": [
+            {
+              "text": "Designed and built game levels directly in Unity.",
+              "hl": [
+                "Unity"
+              ]
+            },
+            {
+              "text": "Developed reusable code and gameplay systems to streamline workflows and accelerate production.",
+              "hl": [
+                "reusable code and gameplay systems"
+              ]
+            },
+            {
+              "text": "Optimized game performance to ensure efficient gameplay across mobile devices.",
+              "hl": [
+                "Optimized game performance"
+              ]
+            },
+            {
+              "text": "Collaborated closely with game designers to implement and refine gameplay features.",
+              "hl": []
+            },
+            {
+              "text": "Created custom shaders and visual effects (VFX) in Unity to enhance visual quality.",
+              "hl": [
+                "custom shaders",
+                "visual effects (VFX)"
+              ]
+            },
+            {
+              "text": "Implemented animations and integrated assets into gameplay systems.",
+              "hl": []
+            },
+            {
+              "text": "Utilized various development tools and assets to accelerate production and improve integration workflows.",
+              "hl": []
+            }
+          ]
         },
         {
-          role: "Game Designer and Developer (internship)",
-          company: "Fernvaille",
-          dates: "October 2021 – January 2022",
-          tags: ["Unreal Engine 4", "Game Design", "Enemy AI"],
-          summary:
-            "Designed content for a Battle Royale survival game and built a third-person action prototype in Unreal Engine 4, with character locomotion, animation and enemy AI using the Environment Query System."
+          "role": "Game Developer (Internship)",
+          "company": "Fernvalle",
+          "dates": "November 2021 – January 2022",
+          "level": "compact",
+          "tags": [
+            "Unreal Engine",
+            "Blueprints",
+            "PC Games"
+          ],
+          "intro": "Worked on a third-person action game using Unreal Engine and Blueprints.",
+          "introHl": [
+            "Unreal Engine",
+            "Blueprints"
+          ],
+          "points": [
+            {
+              "text": "Developed character locomotion and animation systems.",
+              "hl": []
+            },
+            {
+              "text": "Implemented gameplay functionality using Unreal Engine Blueprints.",
+              "hl": [
+                "Blueprints"
+              ]
+            },
+            {
+              "text": "Worked with the Environment Query System (EQS), lighting and performance optimization.",
+              "hl": [
+                "Environment Query System (EQS)"
+              ]
+            },
+            {
+              "text": "Gained hands-on experience in third-person shooter development.",
+              "hl": []
+            }
+          ]
+        },
+        {
+          "role": "Game Designer (Internship)",
+          "company": "Fernvalle",
+          "dates": "October 2021 – November 2021",
+          "level": "compact",
+          "tags": [
+            "Game Design",
+            "Gameplay Design",
+            "Level Design"
+          ],
+          "intro": "Contributed to the game design of a Battle Royale survival game.",
+          "introHl": [
+            "Battle Royale survival game"
+          ],
+          "points": [
+            {
+              "text": "Developed creative gameplay ideas and in-game content to expand and enhance the player experience.",
+              "hl": []
+            },
+            {
+              "text": "Contributed to gameplay design and the overall game concept.",
+              "hl": []
+            }
+          ]
         }
       ],
-      core: {
-        heading: "Core experience",
-        items: [
-          { icon: "bulb", title: "Game Design", text: "Mechanics, levels, systems and gameplay experience." },
-          { icon: "layers", title: "Product Management", text: "Roadmaps, prioritization, analytics and team coordination." },
-          { icon: "code", title: "Game Development", text: "Unity, C#, prototyping and feature development." },
-          { icon: "bars", title: "Production & LiveOps", text: "Release planning, LiveOps, A/B testing and growth." }
+      "core": {
+        "heading": "Core Expertise",
+        "items": [
+          {
+            "icon": "roadmap",
+            "title": "Product Management",
+            "text": "Roadmaps, product strategy, prioritization, prototyping and team coordination."
+          },
+          {
+            "icon": "gamepad",
+            "title": "Game Design",
+            "text": "Gameplay mechanics, core loops, progression systems and player experience."
+          },
+          {
+            "icon": "map",
+            "title": "Level Design",
+            "text": "Level structure, pacing, difficulty balancing and level creation workflows."
+          },
+          {
+            "icon": "cycle",
+            "title": "Production & LiveOps",
+            "text": "Production planning, sprint management, A/B testing, updates and player engagement."
+          }
         ]
       }
     },
