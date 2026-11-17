@@ -48,6 +48,7 @@
     link: S('<path d="M10 14a4.500 4.500 0 0 0 6.400 0l3-3a4.500 4.500 0 0 0-6.400-6.400l-1 1"/><path d="M14 10a4.500 4.500 0 0 0-6.400 0l-3 3a4.500 4.500 0 0 0 6.400 6.400l1-1"/>'),
     tools: S('<path d="M12 2.500 3.500 7v10l8.500 4.500 8.500-4.500V7L12 2.500Z"/><path d="m3.500 7 8.500 4.500L20.500 7M12 11.500v10"/>'),
     external: S('<path d="M14 4h6v6M20 4l-9 9M18 14v5a1 1 0 0 1-1 1H5a1 1 0 0 1-1-1V7a1 1 0 0 1 1-1h5"/>'),
+    pause: '<svg viewBox="0 0 24 24" aria-hidden="true"><rect x="6" y="5" width="4" height="14" rx="1.200" fill="currentColor"/><rect x="14" y="5" width="4" height="14" rx="1.200" fill="currentColor"/></svg>',
     play: '<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M8 5.500v13a1 1 0 0 0 1.500.9l10.500-6.500a1 1 0 0 0 0-1.800L9.500 4.600A1 1 0 0 0 8 5.500Z" fill="currentColor"/></svg>',
     googleplay: '<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 3.200v17.600a1 1 0 0 0 1.500.9l1-.6L14 12 6.500 3.900l-1 .4A1 1 0 0 0 4 3.200Z" fill="#35e0f2"/><path d="m6.500 3.900 7.500 8.100 3-3L7.700 3.500a1 1 0 0 0-1.200.4Z" fill="#6ee37a"/><path d="m6.500 20.100 7.500-8.100 3 3-9.300 5.500a1 1 0 0 1-1.200-.4Z" fill="#f2495c"/><path d="m17 9-3 3 3 3 3.300-1.900a1.300 1.300 0 0 0 0-2.200L17 9Z" fill="#ffd23f"/></svg>',
     appstore: S('<rect x="3" y="3" width="18" height="18" rx="5"/><path d="m8.500 16.500 6.500-10M9.500 7.500l6 9M7.500 13h9"/>'),
@@ -136,8 +137,30 @@
     art.appendChild(el("div", { class: "hp " + cls }, [el("img", { src: asset(phones[idx]), alt: "", width: "676", height: "1200", decoding: "async" })]));
   });
 
+  // Optional atmosphere (soft clouds + floating orbs), chosen per project in content.js
+  var CLOUD = '<svg viewBox="0 0 200 90" aria-hidden="true"><defs><linearGradient id="cg" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#ffffff"/><stop offset="1" stop-color="#b9c8ff"/></linearGradient></defs><g fill="url(#cg)"><circle cx="58" cy="50" r="26"/><circle cx="100" cy="38" r="33"/><circle cx="142" cy="50" r="26"/><rect x="34" y="48" width="132" height="28" rx="14"/></g></svg>';
+  function buildFx(kind, compact) {
+    var box = el("div", { class: "fx fx-" + kind + (compact ? " fx-compact" : ""), "aria-hidden": "true" });
+    if (kind !== "sky") { return box; }
+    [[7, 9, 11, 95], [20, 62, 7, 120], [12, 34, 9, 140], [30, 4, 6, 105], [4, 78, 8, 130]].forEach(function (c, i) {
+      var cl = el("span", { class: "fx-cloud" });
+      cl.appendChild(svg(CLOUD));
+      cl.style.cssText = "top:" + c[0] + "%;left:" + c[1] + "%;width:" + c[2] + "rem;--dur:" + c[3] + "s;--delay:" + (-i * 23) + "s;--o:" + (0.2 + (i % 3) * 0.08).toFixed(2);
+      box.appendChild(cl);
+    });
+    var cols = ["#ff5d7a", "#6bb7ff", "#8bdc5b", "#b58bff", "#35e0f2"];
+    for (var i = 0; i < 14; i++) {
+      var o = el("span", { class: "fx-orb" });
+      var left = i % 2 ? 2 + Math.random() * 20 : 78 + Math.random() * 20;
+      o.style.cssText = "left:" + left.toFixed(1) + "%;top:" + (8 + Math.random() * 84).toFixed(1) + "%;--s:" + (0.45 + Math.random() * 0.9).toFixed(2) + "rem;--c:" + cols[i % cols.length] + ";--dur:" + (6 + Math.random() * 6).toFixed(1) + "s;--delay:" + (-Math.random() * 8).toFixed(1) + "s";
+      box.appendChild(o);
+    }
+    return box;
+  }
+
   var hero = el("section", { class: "phero", "aria-labelledby": "p-title" }, [
     heroBg,
+    p.fx ? buildFx(p.fx, false) : null,
     el("div", { class: "wrap phero-grid" }, [
       el("div", { class: "phero-copy" }, [
         back,
@@ -149,6 +172,7 @@
     ])
   ]);
   hero.style.setProperty("--accent", accent);
+  if (p.fx) { hero.setAttribute("data-fx", p.fx); }
   app.appendChild(hero);
 
   /* ---------- Overview ---------- */
@@ -160,97 +184,165 @@
     highlighted("p", "ptext", p.overview || p.short, p.highlights)
   ]));
 
-  /* ---------- Gallery ---------- */
-  var slides = [];
-  if (p.video) { slides.push({ type: "video", id: p.video, poster: p.bg }); }
-  (p.gallery && p.gallery.length ? p.gallery : p.phones || []).forEach(function (src) { slides.push({ type: "img", src: src }); });
+  /* ---------- Gameplay showcase ---------- */
+  var imgSlides = [];
+  var showSec = null;
+  (function () {
+    var shots = (p.gallery && p.gallery.length ? p.gallery : p.phones || []).slice();
+    var hasVideo = !!p.video;
+    if (!shots.length && !hasVideo) { return; }
+    var offset = hasVideo ? 1 : 0;
+    var n = shots.length;
+    shots.forEach(function (src) { imgSlides.push({ type: "img", src: src }); });
+    var total = n + offset;
+    var cur = 0, curShot = 0;
+    var playing = !reduceMotion && n > 1, inView = false, hover = false, timer = null;
+    var AUTO = 4800;
 
-  var imgSlides = slides.filter(function (s) { return s.type === "img"; });
-  var cur = 0;
-  var galEls = [];
-  var dots = [];
+    var root = el("div", { class: "show" });
+    var stage = el("div", { class: "show-stage", tabindex: "0", role: "group", "aria-roledescription": "carousel", "aria-label": p.title + " gameplay" });
+    stage.style.setProperty("--sky", 'url("' + asset(p.bg) + '")');
+    stage.appendChild(el("div", { class: "show-sky", "aria-hidden": "true" }));
+    if (p.fx) { stage.appendChild(buildFx(p.fx, true)); }
+    var amb = el("div", { class: "show-amb", "aria-hidden": "true" });
+    var ambEls = shots.map(function (src) { var i = el("i"); i.style.backgroundImage = 'url("' + asset(src) + '")'; amb.appendChild(i); return i; });
+    stage.appendChild(amb);
 
-  if (slides.length) {
-    var stage = el("div", { class: "gal-stage", tabindex: "0", role: "group", "aria-roledescription": "carousel", "aria-label": p.title + " " + T.ui.screenshot.toLowerCase() + "s" });
-    slides.forEach(function (s, i) {
+    // screenshots (coverflow, large)
+    var shotEls = shots.map(function (src, i) {
       var label = p.title + " " + T.ui.screenshot.toLowerCase() + " " + (i + 1);
-      var node;
-      if (s.type === "video") {
-        node = el("button", { type: "button", class: "gal-item is-video", "aria-label": T.ui.playVideo }, [
-          el("img", { src: asset(s.poster), alt: "", loading: "lazy" }),
-          el("span", { class: "gal-play" }, [icon("play")])
-        ]);
-      } else {
-        node = el("button", { type: "button", class: "gal-item", "aria-label": label }, [el("img", { src: asset(s.src), alt: label, loading: "lazy", width: "676", height: "1200" })]);
-      }
+      var node = el("button", { type: "button", class: "show-shot", "aria-label": label }, [el("img", { src: asset(src), alt: label, loading: i === 0 ? "eager" : "lazy", width: "676", height: "1200", draggable: "false" })]);
       node.addEventListener("click", function () {
-        if (i !== cur) { go(i); return; }
-        if (s.type === "video") { playVideo(node, s); } else { openLightbox(imgSlides.indexOf(s), node); }
+        if (i !== curShot || mode() !== "shots") { go(i + offset, true); return; }
+        openLightbox(i, node);
       });
-      galEls.push(node);
       stage.appendChild(node);
+      return node;
     });
 
-    var gal = el("div", { class: "gal" }, [stage]);
-    var multi = slides.length > 1;
-    if (multi) {
-      var prev = el("button", { type: "button", class: "gal-btn gal-prev", "aria-label": T.ui.prev }, [icon("chevL")]);
-      var next = el("button", { type: "button", class: "gal-btn gal-next", "aria-label": T.ui.next }, [icon("chevR")]);
-      prev.addEventListener("click", function () { go(cur - 1); });
-      next.addEventListener("click", function () { go(cur + 1); });
-      gal.appendChild(prev);
-      gal.appendChild(next);
+    // optional gameplay video (large 16:9 player)
+    var videoPane = null, thumbs = [];
+    var isFile = hasVideo && /\.(mp4|webm|mov)(\?.*)?$/i.test(p.video);
+    function videoPoster() { return asset(p.videoPoster || p.bg); }
+    function resetVideo() {
+      if (!videoPane) { return; }
+      videoPane.classList.remove("playing");
+      videoPane.replaceChildren(el("img", { src: videoPoster(), alt: "", loading: "lazy" }), el("span", { class: "show-bigplay" }, [icon("play")]));
     }
-    var dotRow = el("div", { class: "gal-dots" });
-    if (multi) {
-      slides.forEach(function (_, i) {
-        var d = el("button", { type: "button", class: "gal-dot", "aria-label": T.ui.screenshot + " " + (i + 1) });
-        d.addEventListener("click", function () { go(i); });
-        dots.push(d);
-        dotRow.appendChild(d);
+    if (hasVideo) {
+      videoPane = el("button", { type: "button", class: "show-video", "aria-label": T.ui.playVideo });
+      resetVideo();
+      videoPane.addEventListener("click", function () {
+        if (videoPane.classList.contains("playing")) { return; }
+        videoPane.classList.add("playing");
+        videoPane.removeAttribute("aria-label");
+        if (isFile) {
+          var v = el("video", { src: asset(p.video), controls: "", autoplay: "", playsinline: "", preload: "metadata" });
+          videoPane.replaceChildren(v);
+        } else {
+          videoPane.replaceChildren(el("iframe", {
+            src: "https://www.youtube-nocookie.com/embed/" + encodeURIComponent(p.video) + "?autoplay=1&rel=0&modestbranding=1",
+            title: p.title + " video", allowfullscreen: "", allow: "autoplay; encrypted-media; picture-in-picture"
+          }));
+        }
       });
+      stage.appendChild(videoPane);
     }
 
-    var n = slides.length;
-    var half = Math.floor(n / 2);
-    var go = function (i) {
-      cur = ((i % n) + n) % n;
-      galEls.forEach(function (node, k) {
-        var d = ((k - cur + n + half) % n) - half;
-        node.setAttribute("data-pos", Math.abs(d) > 1 ? (d < 0 ? "far-l" : "far-r") : String(d));
-        node.tabIndex = k === cur ? 0 : -1;
-        node.setAttribute("aria-hidden", Math.abs(d) > 1 ? "true" : "false");
-        if (k !== cur && node.querySelector("iframe")) { resetVideo(node, slides[k]); }
+    // controls
+    var multi = total > 1;
+    var prev = el("button", { type: "button", class: "show-btn show-prev", "aria-label": T.ui.prev }, [icon("chevL")]);
+    var next = el("button", { type: "button", class: "show-btn show-next", "aria-label": T.ui.next }, [icon("chevR")]);
+    var ppBtn = el("button", { type: "button", class: "show-pp" });
+    var count = el("span", { class: "show-count", "aria-hidden": "true" });
+    var fill = el("span", { class: "show-fill" });
+    var bar = el("div", { class: "show-bar" }, [ppBtn, count, el("span", { class: "show-track", "aria-hidden": "true" }, [fill])]);
+    if (multi) { stage.appendChild(prev); stage.appendChild(next); }
+    if (n > 1) { stage.appendChild(bar); }
+
+    var frame = el("div", { class: "show-frame" }, [stage]);
+    root.appendChild(frame);
+
+    // thumbnails
+    if (multi) {
+      var strip = el("div", { class: "show-thumbs", role: "group", "aria-label": T.ui.screenshot + "s" });
+      if (hasVideo) {
+        var vt = el("button", { type: "button", class: "show-th is-vid", "aria-label": T.ui.playVideo }, [el("img", { src: videoPoster(), alt: "", loading: "lazy" }), el("span", {}, [icon("play")])]);
+        vt.addEventListener("click", function () { go(0, true); });
+        thumbs.push(vt); strip.appendChild(vt);
+      }
+      shots.forEach(function (src, i) {
+        var t = el("button", { type: "button", class: "show-th", "aria-label": T.ui.screenshot + " " + (i + 1) }, [el("img", { src: asset(src), alt: "", loading: "lazy" })]);
+        t.addEventListener("click", function () { go(i + offset, true); });
+        thumbs.push(t); strip.appendChild(t);
       });
-      dots.forEach(function (d, k) { if (k === cur) { d.setAttribute("aria-current", "true"); } else { d.removeAttribute("aria-current"); } });
-    };
+      root.appendChild(strip);
+    }
+
+    function mode() { return hasVideo && cur === 0 ? "video" : "shots"; }
+    function setPlaying(v) {
+      playing = v;
+      root.classList.toggle("is-playing", v);
+      ppBtn.replaceChildren(icon(v ? "pause" : "play"));
+      ppBtn.setAttribute("aria-label", v ? T.ui.pauseShow : T.ui.playShow);
+      ppBtn.setAttribute("aria-pressed", v ? "true" : "false");
+    }
+    function restartFill() { fill.style.animation = "none"; void fill.offsetWidth; fill.style.animation = ""; }
+    function schedule() {
+      window.clearTimeout(timer);
+      var run = playing && inView && !hover && mode() === "shots" && n > 1 && !document.hidden;
+      root.classList.toggle("is-running", run);
+      if (!run) { return; }
+      restartFill();
+      timer = window.setTimeout(function () { go(cur + 1, false); }, AUTO);
+    }
+
+    var half = Math.floor(n / 2);
+    function go(i, byUser) {
+      cur = ((i % total) + total) % total;
+      var m = mode();
+      root.setAttribute("data-mode", m);
+      if (m === "shots") { curShot = cur - offset; }
+      shotEls.forEach(function (node, k) {
+        var d = ((k - curShot + n + half) % n) - half;
+        var visible = m === "shots";
+        node.setAttribute("data-pos", !visible ? "hide" : Math.abs(d) > 1 ? (d < 0 ? "far-l" : "far-r") : String(d));
+        node.tabIndex = visible && k === curShot ? 0 : -1;
+        node.setAttribute("aria-hidden", !visible || Math.abs(d) > 1 ? "true" : "false");
+        ambEls[k].classList.toggle("on", visible && k === curShot);
+      });
+      if (videoPane) { videoPane.setAttribute("aria-hidden", m === "video" ? "false" : "true"); videoPane.tabIndex = m === "video" ? 0 : -1; if (m !== "video") { resetVideo(); } }
+      thumbs.forEach(function (t, k) { if (k === cur) { t.setAttribute("aria-current", "true"); } else { t.removeAttribute("aria-current"); } });
+      count.textContent = (m === "video" ? "" : String(curShot + 1).padStart(2, "0") + " / " + String(n).padStart(2, "0"));
+      if (byUser && playing) { setPlaying(false); }
+      schedule();
+    }
+    prev.addEventListener("click", function () { go(cur - 1, true); });
+    next.addEventListener("click", function () { go(cur + 1, true); });
+    ppBtn.addEventListener("click", function () { setPlaying(!playing); schedule(); });
     stage.addEventListener("keydown", function (e) {
-      if (e.key === "ArrowLeft") { e.preventDefault(); go(cur - 1); }
-      if (e.key === "ArrowRight") { e.preventDefault(); go(cur + 1); }
+      if (e.key === "ArrowLeft") { e.preventDefault(); go(cur - 1, true); }
+      if (e.key === "ArrowRight") { e.preventDefault(); go(cur + 1, true); }
     });
     var sx = null;
     stage.addEventListener("pointerdown", function (e) { sx = e.clientX; });
     stage.addEventListener("pointerup", function (e) {
       if (sx === null) { return; }
       var dx = e.clientX - sx; sx = null;
-      if (Math.abs(dx) > 45) { go(cur + (dx < 0 ? 1 : -1)); }
+      if (Math.abs(dx) > 45) { go(cur + (dx < 0 ? 1 : -1), true); }
     });
+    stage.addEventListener("pointerenter", function (e) { if (e.pointerType === "mouse") { hover = true; schedule(); } });
+    stage.addEventListener("pointerleave", function () { hover = false; schedule(); });
+    document.addEventListener("visibilitychange", schedule);
+    if ("IntersectionObserver" in window) {
+      new IntersectionObserver(function (es) { inView = es[0].isIntersecting; schedule(); }, { threshold: 0.45 }).observe(stage);
+    }
 
-    var playVideo = function (node, s) {
-      node.classList.add("playing");
-      node.replaceChildren(el("iframe", {
-        src: "https://www.youtube-nocookie.com/embed/" + encodeURIComponent(s.id) + "?autoplay=1&rel=0",
-        title: p.title + " video", allowfullscreen: "", allow: "autoplay; encrypted-media; picture-in-picture"
-      }));
-    };
-    var resetVideo = function (node, s) {
-      node.classList.remove("playing");
-      node.replaceChildren(el("img", { src: asset(s.poster), alt: "", loading: "lazy" }), el("span", { class: "gal-play" }, [icon("play")]));
-    };
-
-    main.appendChild(el("section", { class: "psec reveal gal-sec", "aria-label": T.ui.screenshot + "s" }, [gal, dotRow]));
-    go(slides.length > 2 && !p.video ? 1 : 0);
-  }
+    setPlaying(playing);
+    go(0, false);
+    showSec = el("section", { class: "wrap pshow reveal", "aria-label": "Gameplay" }, [root]);
+    showSec.style.setProperty("--accent", accent);
+  })();
 
   /* ---------- What I did ---------- */
   if (p.contributions && p.contributions.length) {
@@ -312,6 +404,7 @@
   }
 
   var content = el("div", { class: "wrap pcontent" }, [main]);
+  if (showSec) { app.appendChild(showSec); }
   if (side.children.length) { content.appendChild(side); } else { content.classList.add("no-side"); }
   content.style.setProperty("--accent", accent);
   app.appendChild(content);

@@ -506,22 +506,24 @@ window.SITE = {
           ],
           short: "A puzzle strategy game where color-matching shooters defeat incoming enemies.",
           // Project page
-          overview: "A hybrid-casual puzzle strategy game where players use color-matching shooters to defeat incoming enemies while solving a puzzle through strategic decisions.",
-          highlights: ["puzzle strategy", "color-matching", "strategic decisions"], // words in the overview that are shown in cyan
+          overview: "A hybrid-casual puzzle strategy game where players use color-matching shooters to defeat incoming enemies while solving puzzles through strategic decisions.",
+          highlights: ["puzzle strategy", "color-matching shooters", "strategic decisions"], // words in the overview that are shown in cyan
+          fx: "sky", // optional hero atmosphere: soft clouds and floating orbs
           gallery: [], // extra screenshots, e.g. "assets/projects/blast-defence/shot-4.webp". The three phone images are used when this is empty.
-          video: "", // YouTube video id, optional
+          video: "", // optional gameplay video: a YouTube video id, or a file such as "assets/projects/blast-defence/gameplay.mp4" (shown as the large 16:9 player)
+          videoPoster: "", // optional cover image for the video; the project background is used when empty
           contributions: [
             { icon: "bulb", title: "Game Concept", text: "Created the game concept and initial prototype.", highlights: ["game concept", "initial prototype"] },
             { icon: "layers", title: "Level & Gameplay", text: "Designed all game levels and continuously developed new gameplay content.", highlights: ["all game levels", "new gameplay content"] },
             { icon: "bars", title: "LiveOps & Data", text: "Analyzed KPIs and guided QA improvements and LiveOps initiatives based on performance insights.", highlights: ["KPIs", "LiveOps"] },
             { icon: "people", title: "End-to-End Ownership", text: "Owned the project end to end, following the development process across all stages.", highlights: ["end to end"] }
           ],
-          info: { platform: "Mobile (iOS / Android)", genre: "Puzzle, Strategy", model: "Hybrid-casual", role: "Game Designer, Product Manager" },
+          info: { platform: "Mobile (iOS / Android)", genre: "Puzzle, Strategy", model: "Hybrid-casual", role: "Product Manager, Game Designer, Level Designer" },
           links: [
             { label: "App Store", url: "" },
             { label: "Google Play", url: "" }
           ], // a link with an empty url is hidden automatically
-          tools: ["Unity", "Jira", "Tiled", "LiveOps", "A/B Testing", "Analytics"] // the Technologies & Tools box is hidden when this is empty
+          tools: ["Unity", "Firebase", "Google Analytics", "Jira", "AI Tools", "LiveOps", "Google Workspace (Sheets, Docs, Slides)"] // the Technologies & Tools box is hidden when this is empty
         },
         {
           id: "lift-rush",
@@ -718,6 +720,8 @@ window.SITE = {
       prev: "Previous",
       next: "Next",
       playVideo: "Play video",
+      pauseShow: "Pause slideshow",
+      playShow: "Play slideshow",
       screenshot: "Screenshot",
       notFound: "This project could not be found."
     }
