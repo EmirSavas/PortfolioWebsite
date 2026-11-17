@@ -337,8 +337,21 @@
   var withUrl = (p.links || []).filter(function (l) { return l && l.url; });
   var linksPanel = null;
   if (withUrl.length) {
+    // Official store badges (App Store / Google Play) are shown as-is, other links as pills
+    var BADGES = {
+      appstore: { src: "assets/badges/app-store.svg", alt: "Download on the App Store" },
+      googleplay: { src: "assets/badges/google-play.png", alt: "Get it on Google Play" }
+    };
+    var badgeRow = el("div", { class: "store-badges" });
     var ul = el("ul", { class: "plinks" });
     withUrl.forEach(function (l) {
+      var b = BADGES[linkIcon(labelFor(l))];
+      if (b) {
+        badgeRow.appendChild(el("a", { class: "store-badge", href: l.url, target: "_blank", rel: "noopener", "aria-label": b.alt }, [
+          el("img", { src: asset(b.src), alt: b.alt, decoding: "async" })
+        ]));
+        return;
+      }
       var a = el("a", { href: l.url, target: "_blank", rel: "noopener" }, [
         el("span", { class: "plink-ico" }, [icon(linkIcon(labelFor(l)))]),
         el("span", { class: "plink-label", text: l.label }),
@@ -346,7 +359,10 @@
       ]);
       ul.appendChild(el("li", {}, [a]));
     });
-    linksPanel = panel("link", T.ui.linksTitle, ul);
+    var linksBody = el("div", { class: "plinks-body" });
+    if (badgeRow.children.length) { linksBody.appendChild(badgeRow); }
+    if (ul.children.length) { linksBody.appendChild(ul); }
+    linksPanel = panel("link", T.ui.linksTitle, linksBody);
     linksPanel.classList.add("panel-links");
     side.appendChild(linksPanel);
   }
