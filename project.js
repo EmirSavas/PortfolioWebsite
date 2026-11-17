@@ -178,29 +178,32 @@
   /* ---------- Overview ---------- */
   function heading(text) { return el("h2", { class: "slash", text: text }); }
 
-  var main = el("div", { class: "pmain" });
-  main.appendChild(el("section", { class: "psec reveal", id: "overview", "aria-labelledby": "ov-h" }, [
+  var ovSec = el("section", { class: "psec reveal", id: "overview", "aria-labelledby": "ov-h" }, [
     (function () { var h = heading(T.ui.overview); h.id = "ov-h"; return h; })(),
     highlighted("p", "ptext", p.overview || p.short, p.highlights)
-  ]));
+  ]);
 
-  /* ---------- Gameplay video (a living part of the page) ---------- */
   var imgSlides = [];
-  var vidHost = el("div", { class: "pvid-host" });
+  var shots = (p.gallery && p.gallery.length ? p.gallery : p.phones || []).slice();
+
+  /* ---------- Gameplay video: portrait, left column ---------- */
   var SPEAKER_ON = S('<path d="M4 9.500v5h3.500L12 18.500v-13L7.500 9.500H4Z"/><path d="M15.500 9a4 4 0 0 1 0 6M18 6.500a7.500 7.500 0 0 1 0 11"/>');
   var SPEAKER_OFF = S('<path d="M4 9.500v5h3.500L12 18.500v-13L7.500 9.500H4Z"/><path d="m16 9.500 5 5M21 9.500l-5 5"/>');
+  var posterSrc = p.videoPoster || (shots[1] || shots[0] || "");
+  var media = el("div", { class: "pfeat-media" }, [el("div", { class: "pvid-glow", "aria-hidden": "true" })]);
+  if (posterSrc) {
+    media.appendChild(el("img", { class: "pvid-poster", src: asset(posterSrc), alt: p.title + " gameplay", width: "676", height: "1200", draggable: "false" }));
+  }
 
   function buildVideo(src) {
     var video = el("video", { class: "pvid-el", muted: "", loop: "", playsinline: "", preload: "auto", "aria-label": p.title + " gameplay video" });
     video.muted = true; video.loop = true; video.playsInline = true; video.setAttribute("webkit-playsinline", "");
-    if (p.videoPoster) { video.poster = asset(p.videoPoster); }
     video.src = asset(src);
 
     var mute = el("button", { type: "button", class: "pvid-mute", "aria-label": T.ui.unmute, "aria-pressed": "true" }, [svg(SPEAKER_OFF)]);
     var play = el("button", { type: "button", class: "pvid-play", "aria-label": T.ui.playVideo, hidden: "" }, [icon("play")]);
     var frame = el("div", { class: "pvid-frame" }, [video, mute, play]);
-    var sec = el("section", { class: "wrap pvid", "aria-label": p.title + " gameplay" }, [el("div", { class: "pvid-glow", "aria-hidden": "true" }), frame]);
-    sec.style.setProperty("--accent", accent);
+    media.appendChild(frame);
 
     var wanted = false;
     function tryPlay() {
@@ -215,8 +218,11 @@
       mute.replaceChildren(svg(video.muted ? SPEAKER_OFF : SPEAKER_ON));
       if (video.paused && wanted) { tryPlay(); }
     });
-    video.addEventListener("playing", function () { frame.classList.add("is-live"); play.hidden = true; });
-    video.addEventListener("loadeddata", function () { frame.classList.add("is-ready"); });
+    video.addEventListener("playing", function () { play.hidden = true; });
+    video.addEventListener("loadedmetadata", function () {
+      if (video.videoWidth && video.videoHeight) { media.style.aspectRatio = video.videoWidth + " / " + video.videoHeight; }
+    });
+    video.addEventListener("loadeddata", function () { media.classList.add("is-ready"); });
     if ("IntersectionObserver" in window) {
       new IntersectionObserver(function (es) {
         if (es[0].isIntersecting) {
@@ -225,7 +231,6 @@
         } else if (!video.paused) { video.pause(); }
       }, { threshold: 0.35 }).observe(frame);
     } else { tryPlay(); }
-    vidHost.appendChild(sec);
   }
 
   // Use the video listed in content.js, or simply drop gameplay.mp4 / gameplay.webm into the project's asset folder
@@ -242,29 +247,48 @@
     probe(["gameplay.mp4", "gameplay.webm"]);
   })();
 
-  /* ---------- Screenshots gallery (a separate section) ---------- */
+  /* ---------- Screenshots carousel ---------- */
   var gallerySec = null;
   (function () {
-    var shots = (p.gallery && p.gallery.length ? p.gallery : p.phones || []).slice();
     if (!shots.length) { return; }
     shots.forEach(function (src) { imgSlides.push({ type: "img", src: src }); });
-    var list = el("ul", { class: "pgal-list", "data-count": String(shots.length) });
+    var list = el("ul", { class: "pgal-list" });
     shots.forEach(function (src, i) {
       var label = p.title + " " + T.ui.screenshot.toLowerCase() + " " + (i + 1);
       var btn = el("button", { type: "button", class: "pgal-card", "aria-label": label + " - " + T.ui.enlarge }, [
         el("img", { src: asset(src), alt: label, loading: "lazy", width: "676", height: "1200", draggable: "false" })
       ]);
       btn.addEventListener("click", function () { openLightbox(i, btn); });
-      var li = el("li", { class: "reveal" }, [btn]);
-      li.style.setProperty("--d", i * 110 + "ms");
-      list.appendChild(li);
+      list.appendChild(el("li", {}, [btn]));
     });
-    var h = heading(T.ui.screenshot + "s"); h.id = "gal-h"; h.classList.add("reveal");
-    gallerySec = el("section", { class: "wrap pgal", "aria-labelledby": "gal-h" }, [h, list]);
-    gallerySec.style.setProperty("--accent", accent);
+    var prev = el("button", { type: "button", class: "pgal-nav pgal-prev", "aria-label": T.ui.prev }, [icon("chevL")]);
+    var next = el("button", { type: "button", class: "pgal-nav pgal-next", "aria-label": T.ui.next }, [icon("chevR")]);
+    var dots = el("div", { class: "pgal-dots", "aria-hidden": "true" });
+    shots.forEach(function () { dots.appendChild(el("i")); });
+    var stage = el("div", { class: "pgal-stage" }, [prev, list, next]);
+    var h = heading(T.ui.gameScreenshots || (T.ui.screenshot + "s")); h.id = "gal-h"; h.classList.add("reveal");
+    gallerySec = el("section", { class: "wrap pgal reveal", "aria-labelledby": "gal-h" }, [h, stage, dots]);
+
+    function step() { var li = list.firstChild; return li ? li.getBoundingClientRect().width + parseFloat(getComputedStyle(list).columnGap || 0) : 200; }
+    function update() {
+      var max = list.scrollWidth - list.clientWidth;
+      var scrollable = max > 4;
+      gallerySec.classList.toggle("is-scrollable", scrollable);
+      prev.disabled = list.scrollLeft <= 2;
+      next.disabled = list.scrollLeft >= max - 2;
+      var idx = Math.round(list.scrollLeft / (step() || 1));
+      if (max > 4 && list.scrollLeft >= max - 2) { idx = shots.length - 1; }
+      Array.prototype.forEach.call(dots.children, function (d, i) { d.classList.toggle("on", i === idx); });
+    }
+    prev.addEventListener("click", function () { list.scrollBy({ left: -step(), behavior: reduceMotion ? "auto" : "smooth" }); });
+    next.addEventListener("click", function () { list.scrollBy({ left: step(), behavior: reduceMotion ? "auto" : "smooth" }); });
+    list.addEventListener("scroll", update, { passive: true });
+    window.addEventListener("resize", update);
+    setTimeout(update, 60); setTimeout(update, 700);
   })();
 
   /* ---------- What I did ---------- */
+  var didSec = null;
   if (p.contributions && p.contributions.length) {
     var grid = el("ul", { class: "did" });
     p.contributions.forEach(function (c, i) {
@@ -276,15 +300,15 @@
       li.style.setProperty("--d", i * 90 + "ms");
       grid.appendChild(li);
     });
-    main.appendChild(el("section", { class: "psec", "aria-labelledby": "did-h" }, [
+    didSec = el("section", { class: "wrap pdid", "aria-labelledby": "did-h" }, [
       (function () { var h = heading(T.ui.whatIDid); h.id = "did-h"; h.classList.add("reveal"); return h; })(),
       grid
-    ]));
+    ]);
     grid.setAttribute("data-count", String(p.contributions.length));
   }
 
-  /* ---------- Sidebar ---------- */
-  var side = el("aside", { class: "pside" });
+  /* ---------- Info cards (right column, under the overview) ---------- */
+  var side = el("div", { class: "pside" });
   function panel(titleIcon, title, body) {
     return el("section", { class: "panel reveal" }, [
       el("h2", { class: "panel-h" }, [icon(titleIcon), document.createTextNode(title)]),
@@ -303,7 +327,14 @@
     side.appendChild(panel("info", T.ui.info, dl));
   }
 
+  if (p.tools && p.tools.length) {
+    var tl = el("ul", { class: "tools" });
+    p.tools.forEach(function (t) { tl.appendChild(el("li", { text: t })); });
+    side.appendChild(panel("tools", T.ui.tools, tl));
+  }
+
   var withUrl = (p.links || []).filter(function (l) { return l && l.url; });
+  var linksPanel = null;
   if (withUrl.length) {
     var ul = el("ul", { class: "plinks" });
     withUrl.forEach(function (l) {
@@ -314,21 +345,18 @@
       ]);
       ul.appendChild(el("li", {}, [a]));
     });
-    side.appendChild(panel("link", T.ui.linksTitle, ul));
+    linksPanel = panel("link", T.ui.linksTitle, ul);
+    linksPanel.classList.add("panel-links");
+    side.appendChild(linksPanel);
   }
+  side.setAttribute("data-count", String(side.children.length));
 
-  if (p.tools && p.tools.length) {
-    var tl = el("ul", { class: "tools" });
-    p.tools.forEach(function (t) { tl.appendChild(el("li", { text: t })); });
-    side.appendChild(panel("tools", T.ui.tools, tl));
-  }
-
-  var content = el("div", { class: "wrap pcontent" }, [main]);
-  if (side.children.length) { content.appendChild(side); } else { content.classList.add("no-side"); }
-  content.style.setProperty("--accent", accent);
+  var feat = el("section", { class: "wrap pfeat", "aria-label": p.title }, [media, el("div", { class: "pfeat-copy" }, [ovSec, side])]);
 
   // Everything below the hero sits on one connected, softly lit background
-  var pbody = el("div", { class: "pbody" }, [el("div", { class: "pbody-bg", "aria-hidden": "true" }, [el("i", { class: "g1" }), el("i", { class: "g2" }), el("i", { class: "g3" }), el("i", { class: "g4" })]), vidHost, gallerySec, content]);
+  var pbody = el("div", { class: "pbody" }, [el("div", { class: "pbody-bg", "aria-hidden": "true" }, [el("i", { class: "g1" }), el("i", { class: "g2" }), el("i", { class: "g3" }), el("i", { class: "g4" })]), feat]);
+  if (gallerySec) { pbody.appendChild(gallerySec); }
+  if (didSec) { pbody.appendChild(didSec); }
   pbody.style.setProperty("--accent", accent);
   if (p.fx) { pbody.firstChild.appendChild(buildFx(p.fx, true)); pbody.firstChild.lastChild.classList.add("fx-body"); }
   app.appendChild(pbody);

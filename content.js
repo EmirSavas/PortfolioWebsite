@@ -724,6 +724,7 @@ window.SITE = {
       unmute: "Unmute",
       enlarge: "enlarge",
       screenshot: "Screenshot",
+      gameScreenshots: "Game Screenshots",
       notFound: "This project could not be found."
     }
   }
