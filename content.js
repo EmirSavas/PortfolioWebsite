@@ -510,8 +510,8 @@ window.SITE = {
           highlights: ["puzzle strategy", "color-matching shooters", "strategic decisions"], // words in the overview that are shown in cyan
           fx: "sky", // optional hero atmosphere: soft clouds and floating orbs
           gallery: [], // extra screenshots, e.g. "assets/projects/blast-defence/shot-4.webp". The three phone images are used when this is empty.
-          video: "", // optional gameplay video: a YouTube video id, or a file such as "assets/projects/blast-defence/gameplay.mp4" (shown as the large 16:9 player)
-          videoPoster: "", // optional cover image for the video; the project background is used when empty
+          video: "", // gameplay video file. Leave empty and just add "gameplay.mp4" (or .webm) to assets/projects/<id>/ and it appears automatically
+          videoPoster: "", // optional cover image shown before the video starts, e.g. "assets/projects/blast-defence/gameplay-poster.webp"
           contributions: [
             { icon: "bulb", title: "Game Concept", text: "Created the game concept and initial prototype.", highlights: ["game concept", "initial prototype"] },
             { icon: "layers", title: "Level & Gameplay", text: "Designed all game levels and continuously developed new gameplay content.", highlights: ["all game levels", "new gameplay content"] },
@@ -720,8 +720,9 @@ window.SITE = {
       prev: "Previous",
       next: "Next",
       playVideo: "Play video",
-      pauseShow: "Pause slideshow",
-      playShow: "Play slideshow",
+      mute: "Mute",
+      unmute: "Unmute",
+      enlarge: "enlarge",
       screenshot: "Screenshot",
       notFound: "This project could not be found."
     }

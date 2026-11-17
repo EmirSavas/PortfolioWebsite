@@ -184,164 +184,84 @@
     highlighted("p", "ptext", p.overview || p.short, p.highlights)
   ]));
 
-  /* ---------- Gameplay showcase ---------- */
+  /* ---------- Gameplay video (a living part of the page) ---------- */
   var imgSlides = [];
-  var showSec = null;
+  var vidHost = el("div", { class: "pvid-host" });
+  var SPEAKER_ON = S('<path d="M4 9.500v5h3.500L12 18.500v-13L7.500 9.500H4Z"/><path d="M15.500 9a4 4 0 0 1 0 6M18 6.500a7.500 7.500 0 0 1 0 11"/>');
+  var SPEAKER_OFF = S('<path d="M4 9.500v5h3.500L12 18.500v-13L7.500 9.500H4Z"/><path d="m16 9.500 5 5M21 9.500l-5 5"/>');
+
+  function buildVideo(src) {
+    var video = el("video", { class: "pvid-el", muted: "", loop: "", playsinline: "", preload: "auto", "aria-label": p.title + " gameplay video" });
+    video.muted = true; video.loop = true; video.playsInline = true; video.setAttribute("webkit-playsinline", "");
+    if (p.videoPoster) { video.poster = asset(p.videoPoster); }
+    video.src = asset(src);
+
+    var mute = el("button", { type: "button", class: "pvid-mute", "aria-label": T.ui.unmute, "aria-pressed": "true" }, [svg(SPEAKER_OFF)]);
+    var play = el("button", { type: "button", class: "pvid-play", "aria-label": T.ui.playVideo, hidden: "" }, [icon("play")]);
+    var frame = el("div", { class: "pvid-frame" }, [video, mute, play]);
+    var sec = el("section", { class: "wrap pvid", "aria-label": p.title + " gameplay" }, [el("div", { class: "pvid-glow", "aria-hidden": "true" }), frame]);
+    sec.style.setProperty("--accent", accent);
+
+    var wanted = false;
+    function tryPlay() {
+      var r = video.play();
+      if (r && r.catch) { r.catch(function () { play.hidden = false; }); }
+    }
+    play.addEventListener("click", function () { play.hidden = true; wanted = true; tryPlay(); });
+    mute.addEventListener("click", function () {
+      video.muted = !video.muted;
+      mute.setAttribute("aria-pressed", video.muted ? "true" : "false");
+      mute.setAttribute("aria-label", video.muted ? T.ui.unmute : T.ui.mute);
+      mute.replaceChildren(svg(video.muted ? SPEAKER_OFF : SPEAKER_ON));
+      if (video.paused && wanted) { tryPlay(); }
+    });
+    video.addEventListener("playing", function () { frame.classList.add("is-live"); play.hidden = true; });
+    video.addEventListener("loadeddata", function () { frame.classList.add("is-ready"); });
+    if ("IntersectionObserver" in window) {
+      new IntersectionObserver(function (es) {
+        if (es[0].isIntersecting) {
+          if (reduceMotion && !wanted) { play.hidden = false; return; }
+          wanted = true; tryPlay();
+        } else if (!video.paused) { video.pause(); }
+      }, { threshold: 0.35 }).observe(frame);
+    } else { tryPlay(); }
+    vidHost.appendChild(sec);
+  }
+
+  // Use the video listed in content.js, or simply drop gameplay.mp4 / gameplay.webm into the project's asset folder
+  (function () {
+    if (p.video) { buildVideo(p.video); return; }
+    var base = "assets/projects/" + p.id + "/";
+    function probe(list) {
+      if (!list.length || !window.fetch) { return; }
+      fetch(asset(base + list[0]), { method: "HEAD" }).then(function (r) {
+        var type = r.headers.get("content-type") || "";
+        if (r.ok && !/text\/html/i.test(type)) { buildVideo(base + list[0]); } else { probe(list.slice(1)); }
+      }).catch(function () { probe(list.slice(1)); });
+    }
+    probe(["gameplay.mp4", "gameplay.webm"]);
+  })();
+
+  /* ---------- Screenshots gallery (a separate section) ---------- */
+  var gallerySec = null;
   (function () {
     var shots = (p.gallery && p.gallery.length ? p.gallery : p.phones || []).slice();
-    var hasVideo = !!p.video;
-    if (!shots.length && !hasVideo) { return; }
-    var offset = hasVideo ? 1 : 0;
-    var n = shots.length;
+    if (!shots.length) { return; }
     shots.forEach(function (src) { imgSlides.push({ type: "img", src: src }); });
-    var total = n + offset;
-    var cur = 0, curShot = 0;
-    var playing = !reduceMotion && n > 1, inView = false, hover = false, timer = null;
-    var AUTO = 4800;
-
-    var root = el("div", { class: "show" });
-    var stage = el("div", { class: "show-stage", tabindex: "0", role: "group", "aria-roledescription": "carousel", "aria-label": p.title + " gameplay" });
-    stage.style.setProperty("--sky", 'url("' + asset(p.bg) + '")');
-    stage.appendChild(el("div", { class: "show-sky", "aria-hidden": "true" }));
-    if (p.fx) { stage.appendChild(buildFx(p.fx, true)); }
-    var amb = el("div", { class: "show-amb", "aria-hidden": "true" });
-    var ambEls = shots.map(function (src) { var i = el("i"); i.style.backgroundImage = 'url("' + asset(src) + '")'; amb.appendChild(i); return i; });
-    stage.appendChild(amb);
-
-    // screenshots (coverflow, large)
-    var shotEls = shots.map(function (src, i) {
+    var list = el("ul", { class: "pgal-list", "data-count": String(shots.length) });
+    shots.forEach(function (src, i) {
       var label = p.title + " " + T.ui.screenshot.toLowerCase() + " " + (i + 1);
-      var node = el("button", { type: "button", class: "show-shot", "aria-label": label }, [el("img", { src: asset(src), alt: label, loading: i === 0 ? "eager" : "lazy", width: "676", height: "1200", draggable: "false" })]);
-      node.addEventListener("click", function () {
-        if (i !== curShot || mode() !== "shots") { go(i + offset, true); return; }
-        openLightbox(i, node);
-      });
-      stage.appendChild(node);
-      return node;
+      var btn = el("button", { type: "button", class: "pgal-card", "aria-label": label + " - " + T.ui.enlarge }, [
+        el("img", { src: asset(src), alt: label, loading: "lazy", width: "676", height: "1200", draggable: "false" })
+      ]);
+      btn.addEventListener("click", function () { openLightbox(i, btn); });
+      var li = el("li", { class: "reveal" }, [btn]);
+      li.style.setProperty("--d", i * 110 + "ms");
+      list.appendChild(li);
     });
-
-    // optional gameplay video (large 16:9 player)
-    var videoPane = null, thumbs = [];
-    var isFile = hasVideo && /\.(mp4|webm|mov)(\?.*)?$/i.test(p.video);
-    function videoPoster() { return asset(p.videoPoster || p.bg); }
-    function resetVideo() {
-      if (!videoPane) { return; }
-      videoPane.classList.remove("playing");
-      videoPane.replaceChildren(el("img", { src: videoPoster(), alt: "", loading: "lazy" }), el("span", { class: "show-bigplay" }, [icon("play")]));
-    }
-    if (hasVideo) {
-      videoPane = el("button", { type: "button", class: "show-video", "aria-label": T.ui.playVideo });
-      resetVideo();
-      videoPane.addEventListener("click", function () {
-        if (videoPane.classList.contains("playing")) { return; }
-        videoPane.classList.add("playing");
-        videoPane.removeAttribute("aria-label");
-        if (isFile) {
-          var v = el("video", { src: asset(p.video), controls: "", autoplay: "", playsinline: "", preload: "metadata" });
-          videoPane.replaceChildren(v);
-        } else {
-          videoPane.replaceChildren(el("iframe", {
-            src: "https://www.youtube-nocookie.com/embed/" + encodeURIComponent(p.video) + "?autoplay=1&rel=0&modestbranding=1",
-            title: p.title + " video", allowfullscreen: "", allow: "autoplay; encrypted-media; picture-in-picture"
-          }));
-        }
-      });
-      stage.appendChild(videoPane);
-    }
-
-    // controls
-    var multi = total > 1;
-    var prev = el("button", { type: "button", class: "show-btn show-prev", "aria-label": T.ui.prev }, [icon("chevL")]);
-    var next = el("button", { type: "button", class: "show-btn show-next", "aria-label": T.ui.next }, [icon("chevR")]);
-    var ppBtn = el("button", { type: "button", class: "show-pp" });
-    var count = el("span", { class: "show-count", "aria-hidden": "true" });
-    var fill = el("span", { class: "show-fill" });
-    var bar = el("div", { class: "show-bar" }, [ppBtn, count, el("span", { class: "show-track", "aria-hidden": "true" }, [fill])]);
-    if (multi) { stage.appendChild(prev); stage.appendChild(next); }
-    if (n > 1) { stage.appendChild(bar); }
-
-    var frame = el("div", { class: "show-frame" }, [stage]);
-    root.appendChild(frame);
-
-    // thumbnails
-    if (multi) {
-      var strip = el("div", { class: "show-thumbs", role: "group", "aria-label": T.ui.screenshot + "s" });
-      if (hasVideo) {
-        var vt = el("button", { type: "button", class: "show-th is-vid", "aria-label": T.ui.playVideo }, [el("img", { src: videoPoster(), alt: "", loading: "lazy" }), el("span", {}, [icon("play")])]);
-        vt.addEventListener("click", function () { go(0, true); });
-        thumbs.push(vt); strip.appendChild(vt);
-      }
-      shots.forEach(function (src, i) {
-        var t = el("button", { type: "button", class: "show-th", "aria-label": T.ui.screenshot + " " + (i + 1) }, [el("img", { src: asset(src), alt: "", loading: "lazy" })]);
-        t.addEventListener("click", function () { go(i + offset, true); });
-        thumbs.push(t); strip.appendChild(t);
-      });
-      root.appendChild(strip);
-    }
-
-    function mode() { return hasVideo && cur === 0 ? "video" : "shots"; }
-    function setPlaying(v) {
-      playing = v;
-      root.classList.toggle("is-playing", v);
-      ppBtn.replaceChildren(icon(v ? "pause" : "play"));
-      ppBtn.setAttribute("aria-label", v ? T.ui.pauseShow : T.ui.playShow);
-      ppBtn.setAttribute("aria-pressed", v ? "true" : "false");
-    }
-    function restartFill() { fill.style.animation = "none"; void fill.offsetWidth; fill.style.animation = ""; }
-    function schedule() {
-      window.clearTimeout(timer);
-      var run = playing && inView && !hover && mode() === "shots" && n > 1 && !document.hidden;
-      root.classList.toggle("is-running", run);
-      if (!run) { return; }
-      restartFill();
-      timer = window.setTimeout(function () { go(cur + 1, false); }, AUTO);
-    }
-
-    var half = Math.floor(n / 2);
-    function go(i, byUser) {
-      cur = ((i % total) + total) % total;
-      var m = mode();
-      root.setAttribute("data-mode", m);
-      if (m === "shots") { curShot = cur - offset; }
-      shotEls.forEach(function (node, k) {
-        var d = ((k - curShot + n + half) % n) - half;
-        var visible = m === "shots";
-        node.setAttribute("data-pos", !visible ? "hide" : Math.abs(d) > 1 ? (d < 0 ? "far-l" : "far-r") : String(d));
-        node.tabIndex = visible && k === curShot ? 0 : -1;
-        node.setAttribute("aria-hidden", !visible || Math.abs(d) > 1 ? "true" : "false");
-        ambEls[k].classList.toggle("on", visible && k === curShot);
-      });
-      if (videoPane) { videoPane.setAttribute("aria-hidden", m === "video" ? "false" : "true"); videoPane.tabIndex = m === "video" ? 0 : -1; if (m !== "video") { resetVideo(); } }
-      thumbs.forEach(function (t, k) { if (k === cur) { t.setAttribute("aria-current", "true"); } else { t.removeAttribute("aria-current"); } });
-      count.textContent = (m === "video" ? "" : String(curShot + 1).padStart(2, "0") + " / " + String(n).padStart(2, "0"));
-      if (byUser && playing) { setPlaying(false); }
-      schedule();
-    }
-    prev.addEventListener("click", function () { go(cur - 1, true); });
-    next.addEventListener("click", function () { go(cur + 1, true); });
-    ppBtn.addEventListener("click", function () { setPlaying(!playing); schedule(); });
-    stage.addEventListener("keydown", function (e) {
-      if (e.key === "ArrowLeft") { e.preventDefault(); go(cur - 1, true); }
-      if (e.key === "ArrowRight") { e.preventDefault(); go(cur + 1, true); }
-    });
-    var sx = null;
-    stage.addEventListener("pointerdown", function (e) { sx = e.clientX; });
-    stage.addEventListener("pointerup", function (e) {
-      if (sx === null) { return; }
-      var dx = e.clientX - sx; sx = null;
-      if (Math.abs(dx) > 45) { go(cur + (dx < 0 ? 1 : -1), true); }
-    });
-    stage.addEventListener("pointerenter", function (e) { if (e.pointerType === "mouse") { hover = true; schedule(); } });
-    stage.addEventListener("pointerleave", function () { hover = false; schedule(); });
-    document.addEventListener("visibilitychange", schedule);
-    if ("IntersectionObserver" in window) {
-      new IntersectionObserver(function (es) { inView = es[0].isIntersecting; schedule(); }, { threshold: 0.45 }).observe(stage);
-    }
-
-    setPlaying(playing);
-    go(0, false);
-    showSec = el("section", { class: "wrap pshow reveal", "aria-label": "Gameplay" }, [root]);
-    showSec.style.setProperty("--accent", accent);
+    var h = heading(T.ui.screenshot + "s"); h.id = "gal-h"; h.classList.add("reveal");
+    gallerySec = el("section", { class: "wrap pgal", "aria-labelledby": "gal-h" }, [h, list]);
+    gallerySec.style.setProperty("--accent", accent);
   })();
 
   /* ---------- What I did ---------- */
@@ -404,10 +324,14 @@
   }
 
   var content = el("div", { class: "wrap pcontent" }, [main]);
-  if (showSec) { app.appendChild(showSec); }
   if (side.children.length) { content.appendChild(side); } else { content.classList.add("no-side"); }
   content.style.setProperty("--accent", accent);
-  app.appendChild(content);
+
+  // Everything below the hero sits on one connected, softly lit background
+  var pbody = el("div", { class: "pbody" }, [el("div", { class: "pbody-bg", "aria-hidden": "true" }, [el("i", { class: "g1" }), el("i", { class: "g2" }), el("i", { class: "g3" }), el("i", { class: "g4" })]), vidHost, gallerySec, content]);
+  pbody.style.setProperty("--accent", accent);
+  if (p.fx) { pbody.firstChild.appendChild(buildFx(p.fx, true)); pbody.firstChild.lastChild.classList.add("fx-body"); }
+  app.appendChild(pbody);
 
   /* ---------- Lightbox ---------- */
   var lb = $("lightbox");
