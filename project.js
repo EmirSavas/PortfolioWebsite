@@ -191,6 +191,7 @@
   var SPEAKER_OFF = S('<path d="M4 9.500v5h3.500L12 18.500v-13L7.500 9.500H4Z"/><path d="m16 9.500 5 5M21 9.500l-5 5"/>');
   var posterSrc = p.videoPoster || (shots[1] || shots[0] || "");
   var media = el("div", { class: "pfeat-media" }, [el("div", { class: "pvid-glow", "aria-hidden": "true" })]);
+  if (p.videoPoster) { media.classList.add("has-poster"); }
   if (posterSrc) {
     media.appendChild(el("img", { class: "pvid-poster", src: asset(posterSrc), alt: p.title + " gameplay", width: "676", height: "1200", draggable: "false" }));
   }
@@ -351,7 +352,7 @@
   }
   side.setAttribute("data-count", String(side.children.length));
 
-  var feat = el("section", { class: "wrap pfeat", "aria-label": p.title }, [media, el("div", { class: "pfeat-copy" }, [ovSec, side])]);
+  var feat = el("section", { class: "wrap pfeat", "aria-label": p.title }, [el("figure", { class: "pfeat-fig" }, [el("figcaption", { class: "pfeat-label", text: T.ui.gameplay || "Gameplay" }), media]), el("div", { class: "pfeat-copy" }, [ovSec, side])]);
 
   // Everything below the hero sits on one connected, softly lit background
   var pbody = el("div", { class: "pbody" }, [el("div", { class: "pbody-bg", "aria-hidden": "true" }, [el("i", { class: "g1" }), el("i", { class: "g2" }), el("i", { class: "g3" }), el("i", { class: "g4" })]), feat]);

@@ -509,9 +509,9 @@ window.SITE = {
           overview: "A hybrid-casual puzzle strategy game where players use color-matching shooters to defeat incoming enemies while solving puzzles through strategic decisions.",
           highlights: ["puzzle strategy", "color-matching shooters", "strategic decisions"], // words in the overview that are shown in cyan
           fx: "sky", // optional hero atmosphere: soft clouds and floating orbs
-          gallery: [], // extra screenshots, e.g. "assets/projects/blast-defence/shot-4.webp". The three phone images are used when this is empty.
+          gallery: [1, 2, 3, 4, 5, 6, 7].map(function (n) { return "assets/projects/blast-defence/shot-" + n + ".webp"; }), // store screenshots (carousel)
           video: "", // gameplay video file. Leave empty and just add "gameplay.mp4" (or .webm) to assets/projects/<id>/ and it appears automatically
-          videoPoster: "", // optional cover image shown before the video starts, e.g. "assets/projects/blast-defence/gameplay-poster.webp"
+          videoPoster: "assets/projects/blast-defence/gameplay-poster.webp", // cover image shown until the video starts
           contributions: [
             { icon: "bulb", title: "Game Concept", text: "Created the game concept and initial prototype.", highlights: ["game concept", "initial prototype"] },
             { icon: "layers", title: "Level & Gameplay", text: "Designed all game levels and continuously developed new gameplay content.", highlights: ["all game levels", "new gameplay content"] },
@@ -710,13 +710,14 @@ window.SITE = {
       back: "Back to Projects",
       overview: "Overview",
       whatIDid: "What I did",
-      info: "Project info",
+      info: "Project Details",
       platform: "Platform",
       genre: "Genre",
       model: "Model",
       role: "Role",
       linksTitle: "Project links",
-      tools: "Technologies & tools",
+      tools: "Tools & Workflow",
+      gameplay: "Gameplay",
       prev: "Previous",
       next: "Next",
       playVideo: "Play video",
