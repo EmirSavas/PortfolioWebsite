@@ -301,3 +301,7 @@
 .pgal-card:hover { box-shadow: 0 0 0 2px var(--accent), 0 18px 34px -16px rgba(2, 6, 28, 0.8), 0 0 26px -4px color-mix(in srgb, var(--accent) 60%, transparent); }
 @media (max-width: 61.99rem) { .pgal-list > li { flex-basis: calc((100% - 2 * clamp(0.8rem, 1.8vw, 1.25rem)) / 3); } }
 @media (max-width: 47.99rem) { .pgal-list > li { flex-basis: 56%; } }
+
+/* lighter hero -> content blend (keeps hero art and text untouched) */
+.pbody::before { top: -2.5rem; height: 8rem; background: linear-gradient(180deg, rgba(12, 22, 82, 0) 0, #0c1652 31%, #0c1652 34%, rgba(12, 22, 82, 0) 100%); }
+@media (min-width: 40rem) { .plinks { grid-template-columns: repeat(2, minmax(0, 1fr)); } }

@@ -520,8 +520,8 @@ window.SITE = {
           ],
           info: { platform: "Mobile (iOS / Android)", genre: "Puzzle, Strategy", model: "Hybrid-casual", role: "Product Manager, Game Designer, Level Designer" },
           links: [
-            { label: "App Store", url: "" },
-            { label: "Google Play", url: "" }
+            { label: "App Store", url: "https://apps.apple.com/tr/app/blast-defence/id6767702858?l=tr" },
+            { label: "Google Play", url: "https://play.google.com/store/apps/details?id=com.ThreeDinozGames.BlastDefence" }
           ], // a link with an empty url is hidden automatically
           tools: ["Unity", "Firebase", "Google Analytics", "Jira", "AI Tools", "LiveOps", "Google Workspace (Sheets, Docs, Slides)"] // the Technologies & Tools box is hidden when this is empty
         },
