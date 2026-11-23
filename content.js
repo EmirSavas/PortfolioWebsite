@@ -304,7 +304,7 @@ window.SITE = {
         },
         {
           "role": "Game Developer",
-          "company": "Midway Games",
+          "company": "Midquest Games",
           "dates": "May 2022 – January 2023",
           "level": "major",
           "tags": [
