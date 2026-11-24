@@ -358,6 +358,5 @@
   .pworld-img { background-position: 50% 0; }
   .pworld::after { background: linear-gradient(180deg, rgba(8, 14, 52, 0.15), rgba(8, 14, 52, 0.45) 60%, rgba(8, 14, 52, 0.2)); }
 }
-@media (max-width: 61.99rem) {
-  .has-world .phero { -webkit-mask-image: linear-gradient(180deg, #000 calc(100% - 5rem), transparent); mask-image: linear-gradient(180deg, #000 calc(100% - 5rem), transparent); }
-}
+/* hero phones fade out softly at the bottom instead of being cut by the hero edge */
+.phero { -webkit-mask-image: linear-gradient(180deg, #000 calc(100% - 9rem), rgba(0, 0, 0, 0.5) calc(100% - 4rem), transparent 100%); mask-image: linear-gradient(180deg, #000 calc(100% - 9rem), rgba(0, 0, 0, 0.5) calc(100% - 4rem), transparent 100%); }

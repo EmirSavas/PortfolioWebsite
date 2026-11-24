@@ -286,8 +286,8 @@
     });
     var prev = el("button", { type: "button", class: "pgal-nav pgal-prev", "aria-label": T.ui.prev }, [icon("chevL")]);
     var next = el("button", { type: "button", class: "pgal-nav pgal-next", "aria-label": T.ui.next }, [icon("chevR")]);
+    // One dot per scroll position (visible cards + 1 per hidden card), rebuilt on resize
     var dots = el("div", { class: "pgal-dots", "aria-hidden": "true" });
-    shots.forEach(function () { dots.appendChild(el("i")); });
     var stage = el("div", { class: "pgal-stage" }, [prev, list, next]);
     var h = heading(T.ui.gameScreenshots || (T.ui.screenshot + "s")); h.id = "gal-h"; h.classList.add("reveal");
     gallerySec = el("section", { class: "wrap pgal reveal", "aria-labelledby": "gal-h" }, [h, stage, dots]);
@@ -299,8 +299,12 @@
       gallerySec.classList.toggle("is-scrollable", scrollable);
       prev.disabled = list.scrollLeft <= 2;
       next.disabled = list.scrollLeft >= max - 2;
-      var idx = Math.round(list.scrollLeft / (step() || 1));
-      if (max > 4 && list.scrollLeft >= max - 2) { idx = shots.length - 1; }
+      var st = step() || 1;
+      var count = scrollable ? Math.round(max / st) + 1 : 0;
+      while (dots.children.length < count) { dots.appendChild(el("i")); }
+      while (dots.children.length > count) { dots.removeChild(dots.lastChild); }
+      var idx = Math.min(count - 1, Math.round(list.scrollLeft / st));
+      if (scrollable && list.scrollLeft >= max - 2) { idx = count - 1; }
       Array.prototype.forEach.call(dots.children, function (d, i) { d.classList.toggle("on", i === idx); });
     }
     prev.addEventListener("click", function () { list.scrollBy({ left: -step(), behavior: reduceMotion ? "auto" : "smooth" }); });
