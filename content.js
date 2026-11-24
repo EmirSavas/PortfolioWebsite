@@ -508,7 +508,7 @@ window.SITE = {
           // Project page
           overview: "A hybrid-casual puzzle strategy game where players use color-matching shooters to defeat incoming enemies while solving puzzles through strategic decisions.",
           highlights: ["puzzle strategy", "color-matching shooters", "strategic decisions"], // words in the overview that are shown in cyan
-          fx: "sky", // optional hero atmosphere: soft clouds and floating orbs
+          world: "assets/projects/blast-defence/world.webp", // optional full-page background artwork (replaces the hero bg and fx atmosphere)
           gallery: [1, 2, 3, 4, 5, 6, 7].map(function (n) { return "assets/projects/blast-defence/shot-" + n + ".webp"; }), // store screenshots (carousel)
           video: "", // gameplay video file. Leave empty and just add "gameplay.mp4" (or .webm) to assets/projects/<id>/ and it appears automatically
           videoPoster: "assets/projects/blast-defence/gameplay-poster.webp", // cover image shown until the video starts

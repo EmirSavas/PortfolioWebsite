@@ -39,7 +39,8 @@
   position: absolute; left: 50%; bottom: -16%; aspect-ratio: 676 / 1200; height: 112%;
   translate: -50% 0; transform-origin: 50% 100%;
 }
-.hp img { width: 100%; height: 100%; border-radius: 1.6rem; border: 2px solid rgba(255, 255, 255, 0.38); box-shadow: 0 26px 50px -12px rgba(0, 0, 0, 0.65), 0 0 0 4px rgba(255, 255, 255, 0.04); }
+/* The phone art already has its own white outline: no extra CSS frame, shadow follows the image shape */
+.hp img { width: 100%; height: 100%; filter: drop-shadow(0 22px 26px rgba(0, 0, 0, 0.55)); }
 .hp-c { z-index: 3; }
 .hp-l { z-index: 1; left: 24%; height: 98%; bottom: -26%; rotate: -9deg; }
 .hp-r { z-index: 2; left: 78%; height: 98%; bottom: -26%; rotate: 8deg; }
@@ -229,8 +230,7 @@
 .info dt { display: flex; align-items: center; gap: 0.6rem; font-size: 0.9rem; font-weight: 600; color: #fff; }
 .info dt svg { flex: none; width: 1.1rem; height: 1.1rem; color: var(--muted); align-self: center; }
 .info dd { margin: 0; font-size: 0.9rem; color: var(--text-soft); }
-.plinks-body { display: grid; gap: 0.9rem; }
-.store-badges { display: flex; flex-wrap: wrap; align-items: center; gap: 0.75rem; }
+.store-badges { display: flex; flex-wrap: wrap; align-items: center; gap: 0.9rem; padding-top: 0.35rem; }
 .store-badge { display: block; flex: none; border-radius: 0.55rem; transition: transform 0.25s var(--ease), filter 0.25s; }
 .store-badge img { display: block; height: 3rem; width: auto; }
 @media (max-width: 30rem) { .store-badges { gap: 0.6rem; } .store-badge img { height: 2.6rem; } }
@@ -312,3 +312,52 @@
 /* lighter hero -> content blend (keeps hero art and text untouched) */
 .pbody::before { top: -2.5rem; height: 8rem; background: linear-gradient(180deg, rgba(12, 22, 82, 0) 0, #0c1652 31%, #0c1652 34%, rgba(12, 22, 82, 0) 100%); }
 @media (min-width: 40rem) { .plinks { grid-template-columns: repeat(2, minmax(0, 1fr)); } }
+
+/* ---------- Game-world background (projects with `world` in content.js, e.g. Blast Defence) ---------- */
+.has-world main { position: relative; isolation: isolate; }
+.pworld {
+  position: absolute; z-index: -1; left: 0; right: 0; top: 0; pointer-events: none; overflow: hidden;
+  height: max(49.6vw, 36rem);
+  -webkit-mask-image: linear-gradient(180deg, #000 0, #000 66%, rgba(0, 0, 0, 0.55) 84%, transparent 100%); mask-image: linear-gradient(180deg, #000 0, #000 66%, rgba(0, 0, 0, 0.55) 84%, transparent 100%);
+}
+.pworld-img {
+  position: absolute; inset: -6% 0 0; background-repeat: no-repeat; background-size: cover; background-position: 50% 0;
+  will-change: transform;
+}
+/* very soft navy veil in the middle keeps text readable without hiding the edges */
+.pworld::after {
+  content: ""; position: absolute; inset: 0;
+  background: radial-gradient(48% 62% at 50% 58%, rgba(8, 14, 52, 0.38), transparent 75%);
+}
+/* slow ambient light drift, separate from the artwork */
+.pworld-glow {
+  position: absolute; inset: -10%; mix-blend-mode: screen; opacity: 0.5;
+  background:
+    radial-gradient(30% 26% at 22% 30%, rgba(150, 90, 255, 0.22), transparent 70%),
+    radial-gradient(30% 26% at 78% 30%, rgba(51, 219, 240, 0.18), transparent 70%),
+    radial-gradient(40% 20% at 50% 34%, rgba(70, 130, 255, 0.16), transparent 70%);
+}
+@media (prefers-reduced-motion: no-preference) {
+  .pworld-glow { animation: world-glow 22s ease-in-out infinite alternate; }
+}
+@keyframes world-glow {
+  0% { opacity: 0.35; transform: translate3d(-1.5%, 0, 0); }
+  100% { opacity: 0.6; transform: translate3d(1.5%, 1%, 0); }
+}
+/* the world image replaces the hero photo, overlays and floating clouds/orbs */
+.has-world .phero { background: none; }
+.has-world .phero-bg, .has-world .phero > .fx, .has-world .pbody-bg .fx { display: none; }
+.has-world .phero::before { content: none; }
+.has-world .phero::after { content: none; }
+.has-world .pbody::before { content: none; }
+.has-world .pbody-bg { background: linear-gradient(180deg, transparent 0, transparent 26rem, rgba(14, 22, 78, 0.5) 46rem, rgba(14, 18, 62, 0.4) 80%, transparent 100%); }
+.has-world .pbody-bg .g1 { display: none; }
+@media (max-width: 61.99rem) {
+  /* narrower screens: keep the horizon and side platforms, push the corner blocks out of the content */
+  .pworld { height: max(80vw, 34rem); }
+  .pworld-img { background-position: 50% 0; }
+  .pworld::after { background: linear-gradient(180deg, rgba(8, 14, 52, 0.15), rgba(8, 14, 52, 0.45) 60%, rgba(8, 14, 52, 0.2)); }
+}
+@media (max-width: 61.99rem) {
+  .has-world .phero { -webkit-mask-image: linear-gradient(180deg, #000 calc(100% - 5rem), transparent); mask-image: linear-gradient(180deg, #000 calc(100% - 5rem), transparent); }
+}

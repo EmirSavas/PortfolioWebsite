@@ -173,6 +173,28 @@
   ]);
   hero.style.setProperty("--accent", accent);
   if (p.fx) { hero.setAttribute("data-fx", p.fx); }
+
+  // Optional game-world artwork behind the whole page (hero + content)
+  var world = null;
+  if (p.world) {
+    document.body.classList.add("has-world");
+    var worldImg = el("div", { class: "pworld-img" });
+    worldImg.style.backgroundImage = 'url("' + asset(p.world) + '")';
+    world = el("div", { class: "pworld", "aria-hidden": "true" }, [worldImg, el("div", { class: "pworld-glow" })]);
+    app.appendChild(world);
+    // Gentle parallax on desktop only
+    if (!reduceMotion && window.matchMedia("(min-width: 62rem)").matches) {
+      var ticking = false;
+      window.addEventListener("scroll", function () {
+        if (ticking) { return; }
+        ticking = true;
+        requestAnimationFrame(function () {
+          worldImg.style.transform = "translate3d(0," + Math.min(window.scrollY, 700) * 0.07 + "px,0)";
+          ticking = false;
+        });
+      }, { passive: true });
+    }
+  }
   app.appendChild(hero);
 
   /* ---------- Overview ---------- */
@@ -359,12 +381,17 @@
       ]);
       ul.appendChild(el("li", {}, [a]));
     });
-    var linksBody = el("div", { class: "plinks-body" });
-    if (badgeRow.children.length) { linksBody.appendChild(badgeRow); }
-    if (ul.children.length) { linksBody.appendChild(ul); }
-    linksPanel = panel("link", T.ui.linksTitle, linksBody);
-    linksPanel.classList.add("panel-links");
-    side.appendChild(linksPanel);
+    // Other links (video, website...) stay in a "Project links" card
+    if (ul.children.length) {
+      linksPanel = panel("link", T.ui.linksTitle, ul);
+      linksPanel.classList.add("panel-links");
+      side.appendChild(linksPanel);
+    }
+    // Store badges sit directly on the page background, under Tools & Workflow
+    if (badgeRow.children.length) {
+      badgeRow.classList.add("reveal");
+      side.appendChild(badgeRow);
+    }
   }
   side.setAttribute("data-count", String(side.children.length));
 
