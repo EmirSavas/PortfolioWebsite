@@ -307,8 +307,20 @@
       if (scrollable && list.scrollLeft >= max - 2) { idx = count - 1; }
       Array.prototype.forEach.call(dots.children, function (d, i) { d.classList.toggle("on", i === idx); });
     }
-    prev.addEventListener("click", function () { list.scrollBy({ left: -step(), behavior: reduceMotion ? "auto" : "smooth" }); });
-    next.addEventListener("click", function () { list.scrollBy({ left: step(), behavior: reduceMotion ? "auto" : "smooth" }); });
+    // Arrows go to an exact card position (scrollBy could be undone by scroll-snap mid-animation)
+    var target = null, targetTimer = 0;
+    function go(dir) {
+      var st = step() || 1;
+      var max = list.scrollWidth - list.clientWidth;
+      var pos = target !== null ? target : Math.round(list.scrollLeft / st);
+      var last = Math.round(max / st);
+      target = Math.max(0, Math.min(last, pos + dir));
+      clearTimeout(targetTimer);
+      targetTimer = setTimeout(function () { target = null; }, 700);
+      list.scrollTo({ left: target >= last ? max : target * st, behavior: reduceMotion ? "auto" : "smooth" });
+    }
+    prev.addEventListener("click", function () { go(-1); });
+    next.addEventListener("click", function () { go(1); });
     list.addEventListener("scroll", update, { passive: true });
     window.addEventListener("resize", update);
     setTimeout(update, 60); setTimeout(update, 700);
