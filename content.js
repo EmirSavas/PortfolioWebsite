@@ -510,7 +510,7 @@ window.SITE = {
           // Project page
           overview: "A color-matching puzzle game where players manage an elevator, transport characters to their matching doors, and solve puzzles while managing limited capacity.",
           highlights: ["color-matching", "elevator", "limited capacity"], // words in the overview that are shown in cyan
-          gallery: [], // extra screenshots, e.g. "assets/projects/lift-rush/shot-4.webp". The three phone images are used when this is empty.
+          gallery: [1, 2, 3, 4, 5, 6, 7, 8].map(function (n) { return "assets/projects/lift-rush/shot-" + n + ".webp?v=1"; }), // in-game screenshots (carousel); bump ?v when the images change
           video: "", // YouTube video id, optional
           contributions: [
             { icon: "bulb", title: "Game Concept", text: "Created the game concept and used AI-generated visuals to communicate and guide the development vision.", highlights: ["game concept", "AI-generated visuals"] },
