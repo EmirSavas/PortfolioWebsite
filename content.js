@@ -186,41 +186,8 @@ window.SITE = {
           ]
         },
         {
-          "role": "Founder",
-          "company": "Promander Games",
-          "dates": "March 2025 – February 2026",
-          "level": "compact",
-          "tags": [
-            "Indie Game Development",
-            "PC & Mobile Games",
-            "Game Design"
-          ],
-          "intro": "Founded an independent game studio focused on developing original PC and mobile games.",
-          "introHl": [
-            "independent game studio"
-          ],
-          "points": [
-            {
-              "text": "Established and managed an independent game development initiative.",
-              "hl": []
-            },
-            {
-              "text": "Explored original game concepts and managed projects from initial ideation to production.",
-              "hl": []
-            },
-            {
-              "text": "Worked on game design, gameplay systems and product direction.",
-              "hl": []
-            },
-            {
-              "text": "Evaluated game concepts and planned development priorities.",
-              "hl": []
-            }
-          ]
-        },
-        {
-          "role": "Freelance Game Designer",
-          "company": "Self-employed",
+          "role": "Product Manager / Game Designer",
+          "company": "Freelance / Self-employed",
           "dates": "November 2023 – February 2025",
           "level": "normal",
           "tags": [
@@ -261,7 +228,7 @@ window.SITE = {
         {
           "role": "Product Manager",
           "company": "Perwella",
-          "dates": "June 2023 – November 2023",
+          "dates": "June 2023 – November 2024",
           "level": "normal",
           "tags": [
             "Product Management",
