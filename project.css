@@ -404,5 +404,41 @@
   .pworld[data-world="lift-rush"] .pworld-fx { left: auto; right: 0; transform: none; }
 }
 
+/* ---------- Subway Flow world: underground metro station ---------- */
+.pworld[data-world="subway-flow"] {
+  height: max(49.6vw, 36rem);
+  -webkit-mask-image: linear-gradient(180deg, #000 0, #000 70%, rgba(0, 0, 0, 0.55) 86%, transparent 100%); mask-image: linear-gradient(180deg, #000 0, #000 70%, rgba(0, 0, 0, 0.55) 86%, transparent 100%);
+}
+.pworld[data-world="subway-flow"] .pworld-fx { display: block; --wr: 2.017; }
+.pworld[data-world="subway-flow"] .pworld-glow {
+  background:
+    radial-gradient(22% 30% at 10% 30%, rgba(60, 150, 255, 0.16), transparent 70%),
+    radial-gradient(20% 26% at 90% 18%, rgba(51, 219, 240, 0.16), transparent 70%),
+    radial-gradient(30% 22% at 88% 66%, rgba(60, 140, 255, 0.12), transparent 70%),
+    radial-gradient(40% 24% at 50% 30%, rgba(40, 60, 200, 0.12), transparent 70%);
+}
+/* metro sign (cyan), train headlights, ceiling lights and the platform reflection */
+.pworld[data-world="subway-flow"] .pworld-fx i:nth-child(1) { left: 91.4%; top: 15%; width: 17%; aspect-ratio: 1.6; background: radial-gradient(closest-side, rgba(70, 220, 255, 0.5), rgba(70, 220, 255, 0) 100%); }
+.pworld[data-world="subway-flow"] .pworld-fx i:nth-child(2) { left: 11.8%; top: 49.8%; width: 8%; aspect-ratio: 1.6; background: radial-gradient(closest-side, rgba(255, 210, 120, 0.55), rgba(255, 210, 120, 0) 100%); }
+.pworld[data-world="subway-flow"] .pworld-fx i:nth-child(3) { left: 15.7%; top: 6%; width: 12%; aspect-ratio: 2.4; background: radial-gradient(closest-side, rgba(110, 200, 255, 0.45), rgba(110, 200, 255, 0) 100%); }
+.pworld[data-world="subway-flow"] .pworld-fx i:nth-child(4) { left: 81.5%; top: 6%; width: 12%; aspect-ratio: 2.4; background: radial-gradient(closest-side, rgba(255, 200, 110, 0.4), rgba(255, 200, 110, 0) 100%); }
+.pworld[data-world="subway-flow"] .pworld-fx i:nth-child(5) { left: 90%; top: 68%; width: 18%; aspect-ratio: 2.2; background: radial-gradient(closest-side, rgba(70, 170, 255, 0.3), rgba(70, 170, 255, 0) 100%); }
+@media (prefers-reduced-motion: no-preference) {
+  .pworld[data-world="subway-flow"] .pworld-fx i { animation: sf-breathe 6s ease-in-out infinite alternate; }
+  .pworld[data-world="subway-flow"] .pworld-fx i:nth-child(1) { animation-duration: 4.5s; }
+  .pworld[data-world="subway-flow"] .pworld-fx i:nth-child(3) { animation-duration: 7s; animation-delay: -2s; }
+  .pworld[data-world="subway-flow"] .pworld-fx i:nth-child(4) { animation-duration: 8s; animation-delay: -4s; }
+  .pworld[data-world="subway-flow"] .pworld-fx i:nth-child(5) { animation-duration: 10s; animation-delay: -5s; }
+}
+@keyframes sf-breathe { 0% { opacity: 0.25; } 100% { opacity: 0.65; } }
+@media (max-width: 61.99rem) {
+  .pworld[data-world="subway-flow"] { height: max(49.6vw, 30rem); }
+}
+@media (max-width: 37.5rem) {
+  /* phones: only one side fits, so anchor to the train on the left */
+  .pworld[data-world="subway-flow"] .pworld-img { background-position: 0 0; }
+  .pworld[data-world="subway-flow"] .pworld-fx { left: 0; transform: none; }
+}
+
 /* hero phones fade out softly at the bottom instead of being cut by the hero edge */
 .phero { -webkit-mask-image: linear-gradient(180deg, #000 calc(100% - 9rem), rgba(0, 0, 0, 0.5) calc(100% - 4rem), transparent 100%); mask-image: linear-gradient(180deg, #000 calc(100% - 9rem), rgba(0, 0, 0, 0.5) calc(100% - 4rem), transparent 100%); }

@@ -532,6 +532,7 @@ window.SITE = {
           tags: ["Mobile", "Idle", "Hybrid-casual"],
           accent: "#5eeab5",
           bg: "assets/projects/subway-flow/bg.webp",
+          world: "assets/projects/subway-flow/world.webp", // game-world background behind the whole page
           banner: "assets/projects/subway-flow/banner.webp",
           logo: "assets/projects/subway-flow/logo.webp",
           phones: [
@@ -550,12 +551,12 @@ window.SITE = {
             { icon: "bars", title: "Economy & Progression", text: "Designed the in-game economy, progression, and all game levels and systems.", highlights: ["in-game economy", "progression"] },
             { icon: "people", title: "End-to-End Ownership", text: "Took end-to-end ownership of the project, leading the team and directing development from concept to completion.", highlights: ["end-to-end ownership"] }
           ],
-          info: { platform: "Mobile", genre: "Idle, Management", model: "Hybrid-casual", role: "Game Designer, Product Manager" },
+          info: { platform: "Mobile", genre: "Idle, Management", model: "Hybrid-casual", role: "Product Manager, Game Designer" },
           links: [
             { label: "Gameplay video", url: "" },
             { label: "CPI video", url: "" }
           ], // a link with an empty url is hidden automatically
-          tools: [] // the Technologies & Tools box is hidden when this is empty
+          tools: ["Unity", "Firebase", "Google Analytics", "Jira", "AI Tools", "Google Workspace (Sheets, Docs, Slides)"] // the Technologies & Tools box is hidden when this is empty
         },
         {
           id: "royal-words",
