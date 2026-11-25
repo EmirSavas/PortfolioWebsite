@@ -545,7 +545,8 @@ window.SITE = {
           overview: "An idle management game where players grow a metro station by transporting color-matched passengers and upgrading its operations.",
           highlights: ["idle management", "color-matched passengers"], // words in the overview that are shown in cyan
           gallery: [], // extra screenshots, e.g. "assets/projects/subway-flow/shot-4.webp". The three phone images are used when this is empty.
-          video: "", // YouTube video id, optional
+          video: "", // gameplay video file. Leave empty and just add "gameplay.mp4" (or .webm) to assets/projects/<id>/ and it appears automatically
+          videoPoster: "assets/projects/subway-flow/gameplay-poster.webp", // cover image shown until the video starts
           contributions: [
             { icon: "bulb", title: "Game Concept", text: "Created the game concept and used AI-generated visuals to communicate the vision to the team.", highlights: ["game concept", "AI-generated visuals"] },
             { icon: "bars", title: "Economy & Progression", text: "Designed the in-game economy, progression, and all game levels and systems.", highlights: ["in-game economy", "progression"] },
