@@ -520,7 +520,18 @@
       var n = $(s.id);
       if (n && n.getBoundingClientRect().top <= line) { current = s.nav; }
     });
+    var doc = document.documentElement;
+    if (window.scrollY > 8 && window.innerHeight + window.scrollY >= doc.scrollHeight - 4) { current = "#contact"; }
     setCurrent(current);
+    syncHash(current);
+  }
+  /* Keep the address bar in step with the section in view (no history entries, no jumps) */
+  var lastHash = null;
+  function syncHash(href) {
+    if (href === lastHash || !window.history || !history.replaceState) { return; }
+    lastHash = href;
+    var url = location.pathname + location.search + (href === "#top" ? "" : href);
+    try { history.replaceState(history.state, "", url); } catch (e) { /* ignore */ }
   }
 
   /* ---------- Career journey: the line fills in as you scroll, nodes light up ---------- */
