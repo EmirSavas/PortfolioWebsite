@@ -498,6 +498,7 @@ window.SITE = {
           tags: ["Mobile", "Puzzle", "Hybrid-casual"],
           accent: "#ffd23f",
           bg: "assets/projects/lift-rush/bg.webp",
+          world: "assets/projects/lift-rush/world.webp", // game-world background behind the whole page
           banner: "assets/projects/lift-rush/banner.webp",
           logo: "assets/projects/lift-rush/logo.webp",
           phones: [

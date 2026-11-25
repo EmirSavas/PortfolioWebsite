@@ -180,7 +180,9 @@
     document.body.classList.add("has-world");
     var worldImg = el("div", { class: "pworld-img" });
     worldImg.style.backgroundImage = 'url("' + asset(p.world) + '")';
-    world = el("div", { class: "pworld", "aria-hidden": "true" }, [worldImg, el("div", { class: "pworld-glow" })]);
+    // Light spots pinned to the artwork (styled per game in project.css via data-world)
+    worldImg.appendChild(el("div", { class: "pworld-fx" }, [el("i"), el("i"), el("i"), el("i"), el("i")]));
+    world = el("div", { class: "pworld", "data-world": p.id, "aria-hidden": "true" }, [worldImg, el("div", { class: "pworld-glow" })]);
     app.appendChild(world);
     // Gentle parallax on desktop only
     if (!reduceMotion && window.matchMedia("(min-width: 62rem)").matches) {
