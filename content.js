@@ -518,12 +518,12 @@ window.SITE = {
             { icon: "code", title: "AI Level Tool", text: "Developed an AI-assisted level design tool to support and streamline level creation.", highlights: ["AI-assisted level design tool"] },
             { icon: "people", title: "End-to-End Ownership", text: "Took end-to-end ownership of the project, guiding the team and defining content direction.", highlights: ["end-to-end ownership"] }
           ],
-          info: { platform: "Mobile", genre: "Puzzle", model: "Hybrid-casual", role: "Game Designer, Product Manager" },
+          info: { platform: "Mobile", genre: "Puzzle", model: "Hybrid-casual", role: "Product Manager, Game Designer, Level Designer" },
           links: [
             { label: "App Store", url: "" },
             { label: "Google Play", url: "" }
-          ], // a link with an empty url is hidden automatically
-          tools: [] // the Technologies & Tools box is hidden when this is empty
+          ], // a link with an empty url is hidden automatically; fill in the store URLs and the badges appear under Tools & Workflow
+          tools: ["Unity", "Firebase", "Game Analytics", "Adjust", "Jira", "AI Tools", "Google Workspace (Sheets, Docs, Slides)"] // the Technologies & Tools box is hidden when this is empty
         },
         {
           id: "subway-flow",
