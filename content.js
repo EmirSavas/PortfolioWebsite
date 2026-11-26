@@ -599,6 +599,7 @@ window.SITE = {
           tags: ["Mobile", "Puzzle", "Hybrid-casual"],
           accent: "#ff6fae",
           bg: "assets/projects/move-it-all/bg.webp",
+          world: "assets/projects/move-it-all/world.webp", // game-world background behind the whole page
           banner: "assets/projects/move-it-all/banner.webp",
           logo: "assets/projects/move-it-all/logo.webp",
           phones: [
