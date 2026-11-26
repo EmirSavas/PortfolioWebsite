@@ -218,7 +218,13 @@
   var media = el("div", { class: "pfeat-media" }, [el("div", { class: "pvid-glow", "aria-hidden": "true" })]);
   if (p.videoPoster) { media.classList.add("has-poster"); }
   if (posterSrc) {
-    media.appendChild(el("img", { class: "pvid-poster", src: asset(posterSrc), alt: p.title + " gameplay", width: "676", height: "1200", draggable: "false" }));
+    var posterImg = el("img", { class: "pvid-poster", src: asset(posterSrc), alt: p.title + " gameplay", width: "676", height: "1200", draggable: "false" });
+    media.appendChild(posterImg);
+    // videos are not all the same shape (store format vs full 9:16), so the frame follows the cover image until the video itself loads
+    if (p.videoPoster) {
+      var fitPoster = function () { if (posterImg.naturalWidth && !media.dataset.vidRatio) { media.style.aspectRatio = posterImg.naturalWidth + " / " + posterImg.naturalHeight; } };
+      if (posterImg.complete) { fitPoster(); } else { posterImg.addEventListener("load", fitPoster); }
+    }
   }
 
   function buildVideo(src) {
@@ -246,7 +252,7 @@
     });
     video.addEventListener("playing", function () { play.hidden = true; });
     video.addEventListener("loadedmetadata", function () {
-      if (video.videoWidth && video.videoHeight) { media.style.aspectRatio = video.videoWidth + " / " + video.videoHeight; }
+      if (video.videoWidth && video.videoHeight) { media.dataset.vidRatio = "1"; media.style.aspectRatio = video.videoWidth + " / " + video.videoHeight; }
     });
     video.addEventListener("loadeddata", function () { media.classList.add("is-ready"); });
     if ("IntersectionObserver" in window) {

@@ -579,7 +579,7 @@ window.SITE = {
           highlights: ["word puzzle", "crosswords", "object icons"], // words in the overview that are shown in cyan
           gallery: [1, 2, 3, 4, 5].map(function (n) { return "assets/projects/royal-words/shot-" + n + ".webp?v=1"; }), // in-game screenshots (carousel, shuffled order); bump ?v when the images change
           video: "", // gameplay video file. Leave empty and just add "gameplay.mp4" (or .webm) to assets/projects/<id>/ and it appears automatically
-          videoPoster: "assets/projects/royal-words/gameplay-poster.webp", // cover image shown until the video starts
+          videoPoster: "assets/projects/royal-words/gameplay-poster.webp?v=2", // cover image shown until the video starts
           contributions: [
             { icon: "bulb", title: "Design & Monetization", text: "Improved the overall game design and introduced new monetization features.", highlights: ["game design", "monetization"] },
             { icon: "layers", title: "Level Design", text: "Designed all game levels, shaping the puzzle progression and gameplay experience.", highlights: ["all game levels", "puzzle progression"] },
