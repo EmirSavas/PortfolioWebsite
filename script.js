@@ -526,9 +526,9 @@
     syncHash(current);
   }
   /* Keep the address bar in step with the section in view (no history entries, no jumps) */
-  var lastHash = null;
+  var lastHash = null, holdHash = false;
   function syncHash(href) {
-    if (href === lastHash || !window.history || !history.replaceState) { return; }
+    if (holdHash || href === lastHash || !window.history || !history.replaceState) { return; }
     lastHash = href;
     var url = location.pathname + location.search + (href === "#top" ? "" : href);
     try { history.replaceState(history.state, "", url); } catch (e) { /* ignore */ }
@@ -573,6 +573,18 @@
       py = ((e.clientY - r.top) / r.height - 0.5) * 14;
       request();
     });
+  }
+  /* Arriving with a section in the URL (e.g. "Back to Projects" -> /#projects): jump there once the
+     page has laid out, and keep the hash until then so the first scroll check doesn't strip it */
+  var startTarget = null;
+  try { startTarget = location.hash.length > 1 ? document.getElementById(decodeURIComponent(location.hash.slice(1))) : null; } catch (e) { startTarget = null; }
+  if (startTarget && startTarget.id !== "top") {
+    holdHash = true;
+    lastHash = "#" + startTarget.id;
+    var jumpToStart = function () { startTarget.scrollIntoView({ behavior: "instant", block: "start" }); };
+    jumpToStart();
+    var settleStart = function () { jumpToStart(); setTimeout(function () { holdHash = false; request(); }, 200); };
+    if (document.readyState === "complete") { settleStart(); } else { window.addEventListener("load", settleStart); }
   }
   frame();
 })();

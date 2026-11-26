@@ -565,6 +565,7 @@ window.SITE = {
           tags: ["Mobile", "Puzzle", "Casual"],
           accent: "#ff9d7a",
           bg: "assets/projects/royal-words/bg.webp",
+          world: "assets/projects/royal-words/world.webp", // game-world background behind the whole page
           banner: "assets/projects/royal-words/banner.webp",
           logo: "assets/projects/royal-words/logo.webp",
           phones: [
