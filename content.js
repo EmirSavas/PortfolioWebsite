@@ -585,12 +585,12 @@ window.SITE = {
             { icon: "flask", title: "A/B Testing", text: "Managed the development of a new game version alongside the existing one to support A/B testing.", highlights: ["A/B testing"] },
             { icon: "bars", title: "LiveOps", text: "Planned and executed LiveOps activities to improve player engagement.", highlights: ["LiveOps"] }
           ],
-          info: { platform: "Mobile", genre: "Puzzle, Word", model: "Casual", role: "Game Designer, Product Manager" },
+          info: { platform: "Mobile", genre: "Puzzle, Crossword", model: "Casual", role: "Product Manager, Game Designer, Level Designer" },
           links: [
-            { label: "App Store", url: "" },
-            { label: "Google Play", url: "" }
-          ], // a link with an empty url is hidden automatically
-          tools: [] // the Technologies & Tools box is hidden when this is empty
+            { label: "App Store", url: "https://apps.apple.com/tr/app/royal-words-puzzle/id6758092025?l=tr" },
+            { label: "Google Play", url: "https://play.google.com/store/apps/details?id=com.DinozGames.RoyalWords&hl=tr" }
+          ], // a link with an empty url is hidden automatically; store badges appear under Tools & Workflow
+          tools: ["Unity", "Firebase", "Google Analytics", "Jira", "AI Tools", "LiveOps", "Google Workspace (Sheets, Docs, Slides)", "A/B Testing"] // the Technologies & Tools box is hidden when this is empty
         },
         {
           id: "move-it-all",

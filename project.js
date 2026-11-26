@@ -178,6 +178,7 @@
   var world = null;
   if (p.world) {
     document.body.classList.add("has-world");
+    document.body.setAttribute("data-world", p.id); // lets a game tint the plain page background below its artwork
     var worldImg = el("div", { class: "pworld-img" });
     worldImg.style.backgroundImage = 'url("' + asset(p.world) + '")';
     // Light spots pinned to the artwork (styled per game in project.css via data-world)

@@ -581,9 +581,18 @@
   if (startTarget && startTarget.id !== "top") {
     holdHash = true;
     lastHash = "#" + startTarget.id;
-    var jumpToStart = function () { startTarget.scrollIntoView({ behavior: "instant", block: "start" }); };
+    var userMoved = false;
+    var stopJumps = function () { userMoved = true; };
+    ["wheel", "touchstart", "keydown", "mousedown"].forEach(function (ev) { window.addEventListener(ev, stopJumps, { once: true, passive: true }); });
+    var jumpToStart = function () { if (!userMoved) { startTarget.scrollIntoView({ behavior: "instant", block: "start" }); } };
     jumpToStart();
-    var settleStart = function () { jumpToStart(); setTimeout(function () { holdHash = false; request(); }, 200); };
+    window.requestAnimationFrame(jumpToStart);
+    if (document.fonts && document.fonts.ready) { document.fonts.ready.then(jumpToStart); }
+    var settleStart = function () {
+      jumpToStart();
+      // late layout shifts (images, reveals) can move the section, so check once more before handing the hash back
+      setTimeout(function () { jumpToStart(); holdHash = false; request(); }, 450);
+    };
     if (document.readyState === "complete") { settleStart(); } else { window.addEventListener("load", settleStart); }
   }
   frame();
