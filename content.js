@@ -544,7 +544,7 @@ window.SITE = {
           // Project page
           overview: "An idle management game where players grow a metro station by transporting color-matched passengers and upgrading its operations.",
           highlights: ["idle management", "color-matched passengers"], // words in the overview that are shown in cyan
-          gallery: [], // extra screenshots, e.g. "assets/projects/subway-flow/shot-4.webp". The three phone images are used when this is empty.
+          gallery: [1, 2, 3, 4, 5, 6, 7, 8].map(function (n) { return "assets/projects/subway-flow/shot-" + n + ".webp?v=1"; }), // in-game screenshots (carousel, shuffled order); bump ?v when the images change
           video: "", // gameplay video file. Leave empty and just add "gameplay.mp4" (or .webm) to assets/projects/<id>/ and it appears automatically
           videoPoster: "assets/projects/subway-flow/gameplay-poster.webp", // cover image shown until the video starts
           contributions: [
