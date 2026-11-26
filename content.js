@@ -577,7 +577,7 @@ window.SITE = {
           // Project page
           overview: "A casual word puzzle game where players solve crosswords by placing matching object icons into the correct positions.",
           highlights: ["word puzzle", "crosswords", "object icons"], // words in the overview that are shown in cyan
-          gallery: [], // extra screenshots, e.g. "assets/projects/royal-words/shot-4.webp". The three phone images are used when this is empty.
+          gallery: [1, 2, 3, 4, 5].map(function (n) { return "assets/projects/royal-words/shot-" + n + ".webp?v=1"; }), // in-game screenshots (carousel, shuffled order); bump ?v when the images change
           video: "", // YouTube video id, optional
           contributions: [
             { icon: "bulb", title: "Design & Monetization", text: "Improved the overall game design and introduced new monetization features.", highlights: ["game design", "monetization"] },
