@@ -603,9 +603,9 @@ window.SITE = {
           banner: "assets/projects/move-it-all/banner.webp",
           logo: "assets/projects/move-it-all/logo.webp",
           phones: [
-            "assets/projects/move-it-all/phone-1.webp",
-            "assets/projects/move-it-all/phone-2.webp",
-            "assets/projects/move-it-all/phone-3.webp"
+            "assets/projects/move-it-all/phone-1.webp?v=2",
+            "assets/projects/move-it-all/phone-2.webp?v=2",
+            "assets/projects/move-it-all/phone-3.webp?v=2"
           ],
           short: "A puzzle about fitting everyday items into suitcases before time runs out.",
           // Project page
