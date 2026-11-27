@@ -615,14 +615,14 @@ window.SITE = {
           video: "", // YouTube video id, optional
           contributions: [
             { icon: "bulb", title: "Game Concept", text: "Created and developed the game concept, shaping the core gameplay experience.", highlights: ["game concept", "core gameplay"] },
-            { icon: "layers", title: "AI-Assisted Vision", text: "Used AI-generated visuals and content to communicate the vision and guide the team throughout development.", highlights: ["AI-generated visuals"] },
+            { icon: "layers", title: "AI-Assisted Visuals", text: "Used AI-generated visuals and content to communicate the vision and guide the team throughout development.", highlights: ["AI-generated visuals"] },
             { icon: "people", title: "End-to-End Ownership", text: "Took end-to-end ownership of the project, providing continuous feedback and steering its overall direction.", highlights: ["end-to-end ownership"] }
           ],
-          info: { platform: "Mobile", genre: "Puzzle", model: "Hybrid-casual", role: "Game Designer, Product Manager" },
+          info: { platform: "Mobile", genre: "Puzzle", model: "Hybrid-casual", role: "Product Manager, Game Designer" },
           links: [
             { label: "Gameplay video", url: "" }
           ], // a link with an empty url is hidden automatically
-          tools: [] // the Technologies & Tools box is hidden when this is empty
+          tools: ["Unity", "Firebase", "Google Analytics", "Jira", "AI Tools", "Google Workspace (Sheets, Docs, Slides)"] // the Technologies & Tools box is hidden when this is empty
         },
         {
           id: "ember-born",
