@@ -626,23 +626,24 @@ window.SITE = {
           tools: ["Unity", "Firebase", "Google Analytics", "Jira", "AI Tools", "Google Workspace (Sheets, Docs, Slides)"] // the Technologies & Tools box is hidden when this is empty
         },
         {
-          id: "ember-born",
-          title: "Ember Born",
+          id: "emberborn",
+          title: "Emberborn",
           tags: ["Mobile", "Arcade idle", "Hybrid-casual"],
           accent: "#ffa63d",
-          bg: "assets/projects/ember-born/bg.webp",
-          banner: "assets/projects/ember-born/banner.webp",
-          logo: "assets/projects/ember-born/logo.webp",
+          bg: "assets/projects/emberborn/bg.webp",
+          world: "assets/projects/emberborn/world.webp", // game-world background behind the whole page
+          banner: "assets/projects/emberborn/banner.webp",
+          logo: "assets/projects/emberborn/logo.webp",
           phones: [
-            "assets/projects/ember-born/phone-1.webp",
-            "assets/projects/ember-born/phone-2.webp",
-            "assets/projects/ember-born/phone-3.webp"
+            "assets/projects/emberborn/phone-1.webp",
+            "assets/projects/emberborn/phone-2.webp",
+            "assets/projects/emberborn/phone-3.webp"
           ],
           short: "An arcade idle survival game: keep the bonfire burning and defend the village at night.",
           // Project page
           overview: "An arcade idle survival game where players gather resources to keep the village bonfire burning, develop their settlement, and defend against nightly enemy waves.",
           highlights: ["arcade idle survival", "bonfire burning", "nightly enemy waves"], // words in the overview that are shown in cyan
-          gallery: [], // extra screenshots, e.g. "assets/projects/ember-born/shot-4.webp". The three phone images are used when this is empty.
+          gallery: [], // extra screenshots, e.g. "assets/projects/emberborn/shot-4.webp". The three phone images are used when this is empty.
           video: "", // YouTube video id, optional
           contributions: [
             { icon: "bulb", title: "Game Concept", text: "Created and developed the game concept, defining the core gameplay experience.", highlights: ["game concept", "core gameplay"] },
