@@ -650,11 +650,11 @@ window.SITE = {
             { icon: "code", title: "AI Prototype", text: "Used AI-generated visuals and content to guide the team and developed an AI-powered prototype to explore gameplay ideas.", highlights: ["AI-powered prototype"] },
             { icon: "people", title: "End-to-End Ownership", text: "Took end-to-end ownership of the project, providing continuous feedback and introducing new content throughout development.", highlights: ["end-to-end ownership"] }
           ],
-          info: { platform: "Mobile", genre: "Arcade, Idle, Survival", model: "Hybrid-casual", role: "Game Designer, Product Manager" },
+          info: { platform: "Mobile", genre: "Arcade-Idle, Survival", model: "Hybrid-casual", role: "Product Manager, Game Designer" },
           links: [
             { label: "Gameplay video", url: "" }
           ], // a link with an empty url is hidden automatically
-          tools: [] // the Technologies & Tools box is hidden when this is empty
+          tools: ["Unity", "Firebase", "Google Analytics", "Jira", "AI Tools", "Google Workspace (Sheets, Docs, Slides)"] // the Technologies & Tools box is hidden when this is empty
         }
       ]
     },
