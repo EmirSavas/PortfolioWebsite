@@ -613,7 +613,7 @@ window.SITE = {
           highlights: ["fit everyday items", "before time runs out"], // words in the overview that are shown in cyan
           gallery: [], // extra screenshots, e.g. "assets/projects/move-it-all/shot-4.webp". The three phone images are used when this is empty.
           video: "", // gameplay video file. Leave empty and just add "gameplay.mp4" (or .webm) to assets/projects/<id>/ and it appears automatically
-          videoPoster: "assets/projects/move-it-all/gameplay-poster.webp", // cover image shown until the video starts
+          videoPoster: "assets/projects/move-it-all/gameplay-poster.webp?v=2", // cover image shown until the video starts
           contributions: [
             { icon: "bulb", title: "Game Concept", text: "Created and developed the game concept, shaping the core gameplay experience.", highlights: ["game concept", "core gameplay"] },
             { icon: "layers", title: "AI-Assisted Visuals", text: "Used AI-generated visuals and content to communicate the vision and guide the team throughout development.", highlights: ["AI-generated visuals"] },
