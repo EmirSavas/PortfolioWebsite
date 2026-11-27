@@ -635,9 +635,9 @@ window.SITE = {
           banner: "assets/projects/emberborn/banner.webp",
           logo: "assets/projects/emberborn/logo.webp",
           phones: [
-            "assets/projects/emberborn/phone-1.webp",
-            "assets/projects/emberborn/phone-2.webp",
-            "assets/projects/emberborn/phone-3.webp"
+            "assets/projects/emberborn/phone-1.webp?v=2",
+            "assets/projects/emberborn/phone-2.webp?v=2",
+            "assets/projects/emberborn/phone-3.webp?v=2"
           ],
           short: "An arcade idle survival game: keep the bonfire burning and defend the village at night.",
           // Project page
