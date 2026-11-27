@@ -644,7 +644,8 @@ window.SITE = {
           overview: "An arcade idle survival game where players gather resources to keep the village bonfire burning, develop their settlement, and defend against nightly enemy waves.",
           highlights: ["arcade idle survival", "bonfire burning", "nightly enemy waves"], // words in the overview that are shown in cyan
           gallery: [], // extra screenshots, e.g. "assets/projects/emberborn/shot-4.webp". The three phone images are used when this is empty.
-          video: "", // YouTube video id, optional
+          video: "", // gameplay video file. Leave empty and just add "gameplay.mp4" (or .webm) to assets/projects/<id>/ and it appears automatically
+          videoPoster: "assets/projects/emberborn/gameplay-poster.webp", // cover image shown until the video starts
           contributions: [
             { icon: "bulb", title: "Game Concept", text: "Created and developed the game concept, defining the core gameplay experience.", highlights: ["game concept", "core gameplay"] },
             { icon: "code", title: "AI Prototype", text: "Used AI-generated visuals and content to guide the team and developed an AI-powered prototype to explore gameplay ideas.", highlights: ["AI-powered prototype"] },
